@@ -17,7 +17,6 @@ public class ComponentRepository {
     public void save(ComponentEntity componentEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(componentEntity);
-        entityManager.persist(componentEntity);
         entityManager.getTransaction().commit();
     }
 

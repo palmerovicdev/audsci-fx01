@@ -18,7 +18,6 @@ public class EmployeeRepository {
     public void save(EmployeeEntity employeeEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(employeeEntity);
-        entityManager.persist(employeeEntity);
         entityManager.getTransaction().commit();
     }
     public EmployeeEntity findById(int id) {

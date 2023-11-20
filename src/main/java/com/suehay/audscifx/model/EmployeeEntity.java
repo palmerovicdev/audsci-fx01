@@ -11,6 +11,7 @@ import java.util.Objects;
 @Table(name = "employee", schema = "audsci", catalog = "audsci")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EmployeeEntity {
     @Id
     @Column(name = "id", nullable = false)

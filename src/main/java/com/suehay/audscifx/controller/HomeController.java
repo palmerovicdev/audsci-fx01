@@ -2,9 +2,14 @@ package com.suehay.audscifx.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.suehay.audscifx.model.AreaEntity;
+import com.suehay.audscifx.model.ComponentEntity;
+import com.suehay.audscifx.model.EmployeeEntity;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +19,7 @@ import org.controlsfx.control.ListActionView;
 import org.controlsfx.control.ListSelectionView;
 
 public class HomeController {
+    private AreaEntity latestArea;
     @FXML
     public BorderPane homePane;
     @FXML
@@ -35,15 +41,15 @@ public class HomeController {
     @FXML
     public AnchorPane homeView;
     @FXML
-    public JFXListView componentsListView;
+    public JFXListView<ComponentEntity> componentsListView;
     @FXML
-    public BarChart testResultChart;
+    public BarChart<String, Integer> testResultChart;
     @FXML
     public AnchorPane enterpriseCreationView;
     @FXML
-    public ListActionView areasListView;
+    public JFXListView<AreaEntity> areasListView;
     @FXML
-    public ListActionView employeeListView;
+    public JFXListView<EmployeeEntity> employeeListView;
     @FXML
     public TextField areaNameTextField;
     @FXML
@@ -69,24 +75,25 @@ public class HomeController {
     @FXML
     public TextField guideVersionTestTextField;
     @FXML
-    public ListSelectionView evaluatorsControlAmbListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatorsControlAmbListSelectView;
     @FXML
-    public ListSelectionView evaluatorsGestionPrevListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatorsGestionPrevListSelectView;
     @FXML
-    public ListSelectionView evaluatorsActivitiesCntrlListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatorsActivitiesCntrlListSelectView;
     @FXML
-    public ListSelectionView evaluatorsInformacionComListSelectView;
-    public ListSelectionView evaluatorsSupervisionMonitListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatorsInformacionComListSelectView;
     @FXML
-    public ListSelectionView evaluatedControlAmbListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatorsSupervisionMonitListSelectView;
     @FXML
-    public ListSelectionView evaluatedGestationPrevListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatedControlAmbListSelectView;
     @FXML
-    public ListSelectionView evaluatedActivitiesCntrlListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatedGestationPrevListSelectView;
     @FXML
-    public ListSelectionView evaluatedInformacionComListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatedActivitiesCntrlListSelectView;
     @FXML
-    public ListSelectionView evaluatedSupervicionMonitListSelectView;
+    public ListSelectionView<EmployeeEntity> evaluatedInformacionComListSelectView;
+    @FXML
+    public ListSelectionView<EmployeeEntity> evaluatedSupervicionMonitListSelectView;
     @FXML
     public AnchorPane componentEvaluationView;
 
@@ -137,14 +144,41 @@ public class HomeController {
     }
 
     @FXML
-    public void onAreaAddButtonClicked(MouseEvent mouseEvent) {}
+    public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
+        if (this.areaNameTextField.getText().isEmpty()) return;
+        this.areasListView.getItems().add(new AreaEntity(this.areasListView.getItems().size() + 1, this.areaNameTextField.getText()));
+        if (this.areasListView.getSelectionModel().getSelectedItem() != null)
+            latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
+        areasListView.getItems().addListener((ListChangeListener<? super AreaEntity>) c -> {
+            if (!areasListView.getItems().isEmpty()) {
+                areasListView.getSelectionModel().select(latestArea);
+            }
+        });
+    }
 
     @FXML
-    public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {}
+    public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {
+        if (this.areasListView.getSelectionModel().getSelectedItem() == null) return;
+        latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
+        this.areasListView.getItems().remove(this.areasListView.getSelectionModel().getSelectedItem());
+    }
 
     @FXML
-    public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {}
+    public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
+        if (this.employeeNameTextField.getText().isEmpty() || this.employeePositionTextField.getText().isEmpty()) return;
+        var employee = EmployeeEntity.builder()
+                                     .id(this.employeeListView.getItems().size() + 1)
+                                     .employeeName(this.employeeNameTextField.getText())
+                                     .position(this.employeePositionTextField.getText())
+                                     .build();
+        this.employeeListView.getItems().add(employee);
+        employee.setAreaId(this.areasListView.getSelectionModel().getSelectedItem().getId());
+        System.out.println(employee);
+    }
 
     @FXML
-    public void onEmployeeRemoveButtonClicked(MouseEvent mouseEvent) {}
+    public void onEmployeeRemoveButtonClicked(MouseEvent mouseEvent) {
+        if (this.employeeListView.getSelectionModel().getSelectedItem() == null) return;
+        this.employeeListView.getItems().remove(this.employeeListView.getSelectionModel().getSelectedItem());
+    }
 }

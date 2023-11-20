@@ -17,7 +17,6 @@ public class EvaluatedComponentRepository {
     public void save(EvaluatedComponentEntity evaluatedComponentEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(evaluatedComponentEntity);
-        entityManager.persist(evaluatedComponentEntity);
         entityManager.getTransaction().commit();
     }
 

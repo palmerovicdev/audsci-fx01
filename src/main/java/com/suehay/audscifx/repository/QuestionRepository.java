@@ -15,7 +15,6 @@ public class QuestionRepository {
     public void save(QuestionEntity questionEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(questionEntity);
-        entityManager.persist(questionEntity);
         entityManager.getTransaction().commit();
     }
     public QuestionEntity findById(int id) {

@@ -18,7 +18,6 @@ public class RegulationRepository {
     public void save(RegulationEntity regulationEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(regulationEntity);
-        entityManager.persist(regulationEntity);
         entityManager.getTransaction().commit();
     }
 

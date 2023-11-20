@@ -18,7 +18,6 @@ public class TestRepository {
     public void save( TestEntity testEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(testEntity);
-        entityManager.persist(testEntity);
         entityManager.getTransaction().commit();
     }
    // implement the findByCode method
