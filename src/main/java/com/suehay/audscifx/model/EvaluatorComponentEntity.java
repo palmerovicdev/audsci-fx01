@@ -15,14 +15,14 @@ import java.util.Objects;
 @jakarta.persistence.Table(name = "evaluator_component", schema = "audsci", catalog = "audsci")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EvaluatorComponentEntity {
-    @Id
     @jakarta.persistence.Column(name = "employee_id", nullable = false)
-    private int employeeId;
+    private Integer employeeId;
 
     @Id
     @jakarta.persistence.Column(name = "component_id", nullable = false)
-    private int componentId;
+    private Integer componentId;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

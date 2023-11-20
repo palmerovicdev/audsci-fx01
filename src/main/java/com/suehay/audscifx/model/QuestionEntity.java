@@ -15,25 +15,25 @@ import java.util.Objects;
 public class QuestionEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
-    @Column(name = "label", nullable = false, length = 150)
+    @Column(name = "label", nullable = false, length = 10000)
     private String label;
     @Basic
-    @Column(name = "description", nullable = true, length = 150)
+    @Column(name = "description", length = 10000)
     private String description;
     @Basic
-    @Column(name = "result", nullable = false)
-    private boolean result;
+    @Column(name = "result")
+    private Boolean result;
     @Basic
     @Column(name = "code", nullable = false, length = 5)
     private String code;
     @Basic
     @Column(name = "regulation_id", nullable = false)
-    private int regulationId;
+    private Integer regulationId;
     @Basic
-    @Column(name = "superquestion_id", nullable = false)
-    private int superquestionId;
+    @Column(name = "superquestion_id")
+    private Integer superquestionId;
 
 
     @Override

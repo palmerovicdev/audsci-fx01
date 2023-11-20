@@ -2,8 +2,10 @@ package com.suehay.audscifx.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 @Getter
 @Setter
@@ -18,13 +20,13 @@ public class TestEntity {
     private String code;
     @Basic
     @Column(name = "guide_version", nullable = false)
-    private Timestamp guideVersion;
+    private LocalDate guideVersion;
     @Basic
     @Column(name = "start_date", nullable = false)
-    private Timestamp startDate;
+    private LocalDate startDate;
     @Basic
     @Column(name = "finish_date", nullable = true)
-    private Timestamp finishDate;
+    private LocalDate finishDate;
 
     @Override
     public boolean equals(Object o) {

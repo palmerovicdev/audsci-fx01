@@ -15,7 +15,7 @@ import java.util.Objects;
 public class EmployeeEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "employee_name", nullable = false, length = 30)
     private String employeeName;
@@ -24,7 +24,7 @@ public class EmployeeEntity {
     private String position;
     @Basic
     @Column(name = "area_id", nullable = false)
-    private int areaId;
+    private Integer areaId;
 
 
     @Override

@@ -4,6 +4,8 @@ import com.suehay.audscifx.model.EmployeeEntity;
 import com.suehay.audscifx.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class EmployeeService {
     private static EmployeeRepository employeeRepository=new EmployeeRepository();
@@ -16,5 +18,11 @@ public class EmployeeService {
     }
     public static void deleteEmployee(Integer integer){
         employeeRepository.deleteById(integer);
+    }
+    public static List<EmployeeEntity> findAll(){
+        return employeeRepository.findAll().stream().toList();
+    }
+    public static List<EmployeeEntity> findByAreaId(Integer areaId){
+        return employeeRepository.findByAreaId(areaId).stream().toList();
     }
 }

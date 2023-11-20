@@ -14,7 +14,7 @@ import java.util.Objects;
 public class AreaEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "area_name", nullable = false, length = 30)
     private String areaName;

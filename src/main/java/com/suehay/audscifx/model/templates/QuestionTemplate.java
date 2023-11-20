@@ -19,6 +19,6 @@ public class QuestionTemplate {
     private String code;
     private Integer regulationId;
     private Integer superquestionId;
-    private Byte result;
+    private Boolean result;
     private List<QuestionTemplate> subQuestions = new ArrayList<>();
 }

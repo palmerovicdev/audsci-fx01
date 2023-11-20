@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -20,9 +21,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.ListSelectionView?>
 
-<BorderPane fx:id="homePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="768.0" minWidth="1080.0" prefHeight="768.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.suehay.audscifx.controller.HomeController">
+<BorderPane fx:id="homePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.suehay.audscifx.controller.HomeController">
    <left>
       <VBox fx:id="leftOptionsPane" prefHeight="560.0" prefWidth="40.0" style="-fx-background-color: #161B25;" BorderPane.alignment="CENTER">
          <JFXButton fx:id="enterpriseButton" focusTraversable="false" onMouseClicked="#onEnterpriseButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
@@ -251,8 +251,8 @@
                </font>
             </Label>
          </AnchorPane>
-         <AnchorPane fx:id="testCreationView" prefHeight="766.0" prefWidth="1024.0" visible="false">
-            <GridPane layoutX="23.0" layoutY="310.0" prefHeight="231.0" prefWidth="991.0" AnchorPane.bottomAnchor="266.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <AnchorPane fx:id="testCreationView" prefHeight="766.0" prefWidth="1024.0">
+            <GridPane layoutX="25.0" layoutY="244.0" prefHeight="190.0" prefWidth="990.0" AnchorPane.bottomAnchor="266.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -269,7 +269,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatorsControlAmbListSelectView" />
+                  <JFXListView fx:id="ambienteDeControlListView" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="194.0" text="Gestion y prevencion de riesgos">
@@ -277,7 +277,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatorsGestionPrevListSelectView" />
+                  <JFXListView fx:id="gestionYPrevencionListView" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="2">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="134.0" text="Actividades de control">
@@ -285,7 +285,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatorsActivitiesCntrlListSelectView" />
+                  <JFXListView fx:id="actividadesDeControlListView" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="3">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="172.0" text="Informacion y comunicacion">
@@ -293,7 +293,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatorsInformacionComListSelectView" />
+                  <JFXListView fx:id="informacionYComunicacionListView" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="4">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="149.0" text="Supervicion y monitoreo">
@@ -301,7 +301,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatorsSupervisionMonitListSelectView" prefHeight="231.0" prefWidth="204.0" />
+                  <JFXListView fx:id="supervicionYMonitoreoListView" />
                </VBox>
             </GridPane>
             <Label layoutX="70.0" layoutY="37.0" text="Test code">
@@ -327,8 +327,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="guideVersionTestTextField" layoutX="206.0" layoutY="192.0" prefHeight="26.0" prefWidth="192.0" promptText="11-03-01" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
-            <AnchorPane layoutX="511.0" layoutY="37.0" maxHeight="192.0" maxWidth="533.0" minHeight="100.0" minWidth="100.0" prefHeight="186.0" prefWidth="479.0" AnchorPane.leftAnchor="511.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="37.0">
+            <AnchorPane layoutX="536.0" layoutY="21.0" maxHeight="192.0" maxWidth="533.0" minHeight="100.0" minWidth="100.0" prefHeight="186.0" prefWidth="479.0" AnchorPane.leftAnchor="536.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="21.0">
                <StackPane layoutX="-2.0" prefHeight="186.0" prefWidth="482.0" styleClass="stack-pane" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
                   <VBox prefHeight="190.0" prefWidth="494.0" stylesheets="@css/fullpackstyling.css">
                      <StackPane.margin>
@@ -346,7 +345,7 @@
                      <Label prefHeight="25.0" prefWidth="495.0" text="- Select evaluator and evaluated employees" textFill="WHITE" wrapText="true" />
                   </VBox>
                   <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
-                     <JFXButton prefHeight="63.0" prefWidth="151.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text="I finished!!">
+                     <JFXButton onMouseClicked="#onIFinishedButtonClicked" prefHeight="63.0" prefWidth="151.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text="I finished!!">
                         <VBox.margin>
                            <Insets right="50.0" />
                         </VBox.margin>
@@ -354,17 +353,17 @@
                   </VBox>
                </StackPane>
             </AnchorPane>
-            <Label alignment="CENTER" layoutX="477.0" layoutY="247.0" text="Evaluators" AnchorPane.bottomAnchor="504.0" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0">
+            <Label alignment="CENTER" layoutX="455.0" layoutY="219.0" text="Evaluators" AnchorPane.bottomAnchor="456.0" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="477.0" layoutY="501.0" text="Evaluated" AnchorPane.bottomAnchor="257.0" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0">
+            <Label alignment="CENTER" layoutX="455.0" layoutY="443.0" text="Evaluated" AnchorPane.bottomAnchor="232.0" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <GridPane layoutX="23.0" layoutY="526.0" prefHeight="231.0" prefWidth="991.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+            <GridPane layoutX="25.0" layoutY="468.0" prefHeight="190.0" prefWidth="990.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -381,7 +380,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatedControlAmbListSelectView" />
+                  <JFXListView fx:id="ambienteDeControlListViewEvated" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="194.0" text="Gestion y prevencion de riesgos">
@@ -389,7 +388,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatedGestationPrevListSelectView" />
+                  <JFXListView fx:id="gestionYPrevencionListViewEvated" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="2">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="134.0" text="Actividades de control">
@@ -397,7 +396,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatedActivitiesCntrlListSelectView" />
+                  <JFXListView fx:id="actividadesDeControlListViewEvated" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="3">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="172.0" text="Informacion y comunicacion">
@@ -405,7 +404,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatedInformacionComListSelectView" />
+                  <JFXListView fx:id="informacionYComunicacionListViewEvated" />
                </VBox>
                <VBox alignment="TOP_CENTER" GridPane.columnIndex="4">
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="149.0" text="Supervicion y monitoreo">
@@ -413,12 +412,13 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ListSelectionView fx:id="evaluatedSupervicionMonitListSelectView" prefHeight="231.0" prefWidth="204.0" />
+                  <JFXListView fx:id="supervicionYMonitoreoListViewEvated" />
                </VBox>
             </GridPane>
+            <ChoiceBox fx:id="guideVersionChoiceBox" layoutX="207.0" layoutY="191.0" prefHeight="28.0" prefWidth="189.0" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
          </AnchorPane>
          <AnchorPane fx:id="componentEvaluationView" prefHeight="200.0" prefWidth="200.0" visible="false" />
-         <AnchorPane fx:id="enterpriseCreationView" prefHeight="200.0" prefWidth="200.0">
+         <AnchorPane fx:id="enterpriseCreationView" prefHeight="200.0" prefWidth="200.0" visible="false">
             <GridPane layoutX="82.0" layoutY="268.0" prefHeight="429.0" prefWidth="715.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="268.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="275.0" />

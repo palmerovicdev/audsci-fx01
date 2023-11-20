@@ -3,7 +3,9 @@ package com.suehay.audscifx.repository;
 import jakarta.persistence.EntityManager;
 import com.suehay.audscifx.model.EmployeeEntity;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static com.suehay.audscifx.config.EntityManagerProvider.getEntityManager;
 
@@ -75,5 +77,9 @@ public class EmployeeRepository {
         entityManager.getTransaction().begin();
         entityManager.createQuery("DELETE FROM EmployeeEntity e WHERE e.id = :id").setParameter("id", integer).executeUpdate();
         entityManager.getTransaction().commit();
+    }
+
+    public List<EmployeeEntity> findByAreaId(Integer areaId) {
+        return  entityManager.createQuery("SELECT e FROM EmployeeEntity e WHERE e.areaId = :areaId", EmployeeEntity.class).setParameter("areaId", areaId).getResultList();
     }
 }

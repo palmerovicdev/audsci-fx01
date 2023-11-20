@@ -6,13 +6,17 @@ import com.suehay.audscifx.model.AreaEntity;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
 import com.suehay.audscifx.repository.AreaRepository;
+import com.suehay.audscifx.services.EmployeeService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.Stage;
+import org.controlsfx.control.CheckListView;
+import org.controlsfx.control.ListSelectionView;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,17 +28,18 @@ public class HomeApplication extends Application {
         var parent=fxmlLoader.load();
         initCellsFactories(fxmlLoader);
         init();
-        Scene scene = new Scene(fxmlLoader.getRoot(), 1280, 768);
+        Scene scene = new Scene(fxmlLoader.getRoot(), 1080, 700);
         stage.setTitle("AUDSCI");
         stage.setScene(scene);
         stage.show();
     }
 
     private static void initCellsFactories(FXMLLoader fxmlLoader) {
-        var controller= ((HomeController) fxmlLoader.getController());
+        var controller = ((HomeController) fxmlLoader.getController());
         controller.componentsListView.cellFactoryProperty().set(new ComponentEntityCellFactory());
         controller.areasListView.setCellFactory(new AreaEntityCellFactory());
         controller.employeeListView.setCellFactory(new EmployeeEntityCellFactory());
+        controller.employeeListView.getItems().addAll(EmployeeService.findAll());
     }
 
     public void init(){
@@ -51,6 +56,9 @@ public class HomeApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    // implement a cell factory for all the ListSelectionView<EmployeeEntity>
+
 
     private static class ComponentEntityCellFactory implements javafx.util.Callback<javafx.scene.control.ListView<com.suehay.audscifx.model.ComponentEntity>, javafx.scene.control.ListCell<com.suehay.audscifx.model.ComponentEntity>> {
         @Override
@@ -96,4 +104,19 @@ public class HomeApplication extends Application {
             };
         }
     }
+    private static class EmployeeEntityCheckBoxViewCellFactory implements javafx.util.Callback<CheckListView<EmployeeEntity>, CheckBoxListCell<EmployeeEntity>> {
+        @Override
+        public CheckBoxListCell<EmployeeEntity> call(CheckListView<EmployeeEntity> param) {
+            return new CheckBoxListCell<>() {
+                @Override
+                public void updateItem(EmployeeEntity item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item != null) {
+                        setText(item.getEmployeeName());
+                    }
+                }
+            };
+        }
+    }
+
 }

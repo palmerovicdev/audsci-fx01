@@ -14,13 +14,13 @@ import java.util.Objects;
 public class RegulationEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
-    @Column(name = "label", nullable = false, length = 100)
+    @Column(name = "label", nullable = false, length = 10000)
     private String label;
     @Basic
     @Column(name = "component_id", nullable = false)
-    private int componentId;
+    private Integer componentId;
 
 
     @Override

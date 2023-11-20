@@ -4,6 +4,8 @@ import com.suehay.audscifx.model.AreaEntity;
 import com.suehay.audscifx.repository.AreaRepository;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class AreaService {
     private static AreaRepository areaRepository=new AreaRepository();
@@ -16,5 +18,9 @@ public class AreaService {
     }
     public static void deleteArea(Integer integer){
         areaRepository.deleteById(integer);
+    }
+
+    public static List<AreaEntity> findAll() {
+        return areaRepository.findAll().stream().toList();
     }
 }

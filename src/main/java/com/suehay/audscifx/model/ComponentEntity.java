@@ -14,7 +14,7 @@ import java.util.Objects;
 public class ComponentEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "label", nullable = false, length = 100)
     private String label;

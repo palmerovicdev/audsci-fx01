@@ -1,9 +1,6 @@
 package com.suehay.audscifx.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -11,17 +8,16 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
-@jakarta.persistence.Table(name = "evaluated_component", schema = "audsci", catalog = "audsci")
+@Table(name = "evaluated_component", schema = "audsci", catalog = "audsci")
 @AllArgsConstructor
 @NoArgsConstructor
 public class EvaluatedComponentEntity {
-    @Id
     @jakarta.persistence.Column(name = "employee_id", nullable = false)
-    private int employeeId;
+    private Integer employeeId;
 
     @Id
     @jakarta.persistence.Column(name = "component_id", nullable = false)
-    private int componentId;
+    private Integer componentId;
 
     @Override
     public boolean equals(Object o) {

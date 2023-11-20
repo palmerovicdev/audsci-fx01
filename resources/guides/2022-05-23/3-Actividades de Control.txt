@@ -1,0 +1,1121 @@
+Coordinación entre áreas, separación de tareas y responsabilidades y niveles de autorización
+1.Se tienen implementados los mecanismos que permitan verificar y evaluar la división de funciones y la contrapartida en las tareas y responsabilidades esenciales, relativas al tratamiento, autorización, registro y revisión de las transacciones y hechos, en correspondencia con el contenido y función de cada cargo.
+
+
+
+2.Las funciones de especialistas determinados, se delimitan de tal manera que los mismos no tengan acceso a registros oficiales y a la contabilidad.
+
+
+
+3. Se garantiza que el área contable no tenga acceso a la base de datos de los sistemas automatizados de contabilidad y se definen los niveles de acceso a las mismas.
+
+
+
+4. En los casos donde no se cumple la división de tareas, responsabilidades y contrapartida, si se han identificado los riesgos y se han definido las formas de control y supervisión.
+
+
+
+5. Está realizado el levantamiento de las relaciones de familiaridad y en este se encuentran identificadas las relaciones que afectan la contrapartida y los posibles riesgos.
+
+
+
+6. Se ha elaborado el plan de acción para dar solución a las relaciones de familiaridad cuando se afecta la contrapartida.
+
+
+
+7.Las operaciones que se realizan están específicamente definidas, documentadas, asignadas y comunicadas al responsable de su ejecución.
+
+
+
+8.Está definida por sistema de trabajo:
+a. La relación entre los diversos puestos de trabajo por cada área.
+
+
+
+
+b. La relación entre las áreas.
+
+
+
+9.Se definen las responsabilidades en los procesos estadísticos que involucran a varias áreas, según la estructura aprobada para la entidad.
+
+
+
+10.Están establecidos los mecanismos de aprobación, autorización, supervisión y evaluación de cada proceso, subproceso, actividades y transacciones.
+
+
+
+11.Están definidas las firmas autorizadas para las transacciones y operaciones.
+
+
+
+12.Se cumple con el uso de la firma digital para los jefes, responsables y otros que correspondan.
+
+
+
+13.El Balance de Comprobación de Saldos, impreso al cierre de cada período contable, a nivel de cuentas y subcuentas, se encuentra firmado por la persona responsable de la contabilidad de la entidad, así como, las proformas de Estados Financieros que correspondan, de acuerdo a lo establecido.
+
+
+
+14.Se adoptan medidas cuando se detectan en los controles, deficiencias y violaciones de los procesos, actividades y operaciones, fijando la responsabilidad en quien corresponda.
+
+
+
+15. Se identifican los responsables colaterales de los procesos, actividades y operaciones, cuando se detectan deficiencias y violaciones.
+
+
+
+Documentación, registro oportuno y adecuado de las transacciones y hechos
+16. Las transacciones, operaciones y hechos cuentan con un soporte documental demostrativo, fiable y que garantice la trazabilidad de la misma.
+
+
+
+17.Los registros, submayores y otros modelos que se utilizan en contabilidad, cumplen con los datos obligatorios establecidos en la legislación vigente.
+
+
+
+18.La factura contiene los datos de uso obligatorio establecidos por la legislación vigente.
+
+
+
+19.Se utiliza la factura digital sustituyendo los datos referidos a las firmas, siempre y cuando se utilice alguno de los métodos criptográficos de seguridad aprobados en el país; los canales de pagos electrónicos; mecanismos automatizados de entrega y aceptación de facturas; de forma que se respalde la seguridad, trazabilidad y veracidad del documento emitido y la precisión adicional establecidas en la legislación vigente.
+
+
+
+20.Existe soporte documental en la elaboración de la información estadística (registros primarios, en las diferentes estructuras del centro informante, registros consolidados en el centro informante, proceso de elaboración de los formularios estadísticos, ajustes de información).
+
+
+
+21.Están registrados las transacciones o hechos económicos conforme a lo establecido en la legislación vigente, en el momento de su ejecución, para garantizar su relevancia, oportunidad y utilidad.
+
+
+
+22.Tienen establecido el contrato, como instrumento esencial para la gestión, en sus relaciones económicas con empresas, unidades presupuestadas o con formas de gestión no estatal.
+
+
+
+23. Los órganos consultivos o colegiados de Dirección exigen por la calidad del proceso de negociación, elaboración, firma, ejecución, reclamación y control de los contratos.
+
+
+
+24.Los contratos cumplen con lo establecido en la legislación vigente.
+
+
+
+25. Existe correspondencia entre lo contratado, recibido y pagado, de acuerdo con las clausulas pactadas.
+
+
+
+26.Se le da seguimiento y se actualiza periódicamente el registro interno de contratos de las unidades organizativas correspondientes.
+
+
+
+27. Tienen aprobado procedimiento, en los casos que proceda, para las donaciones y la colaboración que se recibe y ofrece en correspondencia con la legislación vigente, fundamentalmente del MINCEX, MFP y MEP.
+
+
+
+28.Se utilizan como herramienta de dirección el análisis de la información que brindan los estados financieros.
+
+
+
+29. De los estados financieros, en los resultados de la entidad (plan-real) se consideran de proceder las siguientes:
+a)	Razones de actividad: ciclo de cobros, ciclo de pagos y cobertura de inventarios, entre otras.
+
+
+
+
+b)	El comportamiento de los cobros y pagos en correspondencia con lo previsto en el proceso de contratación.
+
+
+
+
+c)	Uso y destino del financiamiento de las inversiones y el cumplimiento de su ejecución según cronograma.
+
+
+
+
+d)	Uso y destino de las asignaciones presupuestarias o subsidios por diferentes conceptos.
+
+
+
+
+e)	Cumplimiento de las obligaciones tributarias y no tributarias y los deberes formales, en correspondencia con lo dispuesto en la Ley Tributaria, la Ley del Presupuesto y demás legislaciones complementarias vigentes.
+
+
+
+
+f)	Daños y perjuicios al patrimonio de la entidad, al Presupuesto del Estado, u otras entidades.
+
+
+
+30.Efectivo en Caja y Banco
+a) Si se comprueba la efectividad de los elementos de control interno en el Subsistema contable Efectivo en Caja y Banco, establecidos en la legislación vigente del Ministerio de Finanzas y Precios.
+
+
+
+
+
+
+
+
+
+
+b) Si están establecidos y se cumplen los procedimientos relacionados con los procesos, actividades y operaciones del subsistema, en correspondencia con las características de la entidad y las disposiciones normativas dictadas por otros organismos vinculados con el tema de Efectivo en Caja y Banco.
+
+
+
+
+c) Si están diseñados y se controlan los modelos a emplear como documentos primarios respetando los datos de uso obligatorios para el subsistema.
+
+
+
+
+d) Se habilitan los registros manuales o automatizados de las cuentas y subcuentas relacionados con el control de los medios monetarios, cuentas y subcuentas se operan correctamente, de acuerdo con sus usos y contenidos económicos.
+
+
+
+
+e) Se efectúan diariamente las anotaciones en los registros que se tengan establecidos, para el control de las operaciones en efectivo y documentos de valor.
+
+
+
+
+f) La tenencia, manipulación, responsabilidad y seguridad del efectivo y documentos valor, recae en una sola persona (cajero) y distinta a la que efectúa la aprobación y contabilización de las operaciones de estos recursos y tienen firmada el Acta de Responsabilidad Material por la custodia del efectivo y otros bienes de valores depositados en la caja.
+
+
+
+
+g) Se realizan arqueos sorpresivos al menos una vez al mes, al cierre del mes a todo el efectivo y a los documentos de valor depositados en la Caja, por personal ajeno al cajero, dejando evidencias de que se han realizado y se realizan arqueos cuando se producen sustituciones o ausencias temporales del cajero, en presencia de un veedor que sirva de testigo ante cualquier irregularidad, levantando acta donde conste lo sucedido.
+
+
+
+
+h) Se utilizan, liquidan y controlan los modelos establecidos, previamente aprobados por las autoridades facultadas, que sustenten los pagos en efectivo (Pagos menores, modelos de Anticipo y Liquidación de gastos de viaje).
+
+
+
+
+i) Se depositan en el Banco el total de los cobros en efectivo recaudados, a más tardar al siguiente día hábil al de su recepción, o en el período autorizado por la autoridad facultada, o en los términos contratados para la recogida del efectivo por las entidades autorizadas para ello.
+
+
+
+
+j) El último día hábil de cada mes el Cajero concilia con el área de contabilidad, los valores pagados y anticipos de gastos de viajes liquidados y pendientes de reembolsar y los anticipos pendientes de liquidar, quedando registradas correctamente estas operaciones en la contabilidad.
+
+
+
+
+k) Tienen establecido el modelo Control de Cheques y Transferencias Bancarias Emitidos, manteniéndolo actualizado, registrando los cargados por el Banco, los caducados y los cancelados.
+
+
+
+
+l) Esta elaborado y actualizado el registro de disponibilidad financiera de las cuentas bancarias en la entidad que garantice los fondos necesarios para la emisión de cheques u otros medios de pago.
+
+
+
+
+m) Utilizan el servicio de banca en línea y banca remotas para efectuar operaciones bancarias de pagos, trasferencias u otras.
+
+
+
+
+n) Tienen procedimiento documentado para realizar el servicio de banca en línea y banca remota en cumplimiento de la legislación vigente establecida a estos fines.
+
+
+
+
+o) Están establecidas las medidas de seguridad y control para las operaciones de la banca remota.
+
+
+
+31.Inventarios
+a) Se comprueba la efectividad de los elementos de control interno en el Subsistema de Inventarios, teniendo en cuenta lo establecido en la legislación vigente del MFP.
+
+
+
+
+b) Si están establecidos y cumplen los procedimientos relacionados con los procesos, actividades y operaciones del subsistema en correspondencia con las características de la entidad y las disposiciones, normas dictadas por otros organismos vinculados con el tema de Inventarios.
+
+
+
+
+c) Sí están diseñados y se controlan los modelos a emplear como documentos primarios respetando los datos de uso obligatorio establecidos para el Subsistema.
+
+
+
+
+d) Se cumple y controla lo establecido para la logística de almacenes tal como lo establecen las normativas vigentes.
+
+
+
+
+e) Se cumple y controla lo establecido en la legislación vigente relacionado con la gestión de los inventarios de lento movimiento y ociosos.
+
+
+
+
+f) Se cumple y controla el tratamiento financiero de precios y contable de los inventarios, incluyendo los de consignación, de lento movimiento y ociosos según lo que establece la resolución vigente.
+
+
+
+
+g) Se cumple con las normas para la comercialización de los inventarios, incluyendo los de consignación, de lento movimiento y ociosos, según lo que establece la legislación vigente.
+
+
+
+
+h) Cuando proceda, si la entidad funge como depositaria de bienes en decomiso o responsabilizada con reservas materiales del Estado (las que se desglosan en reservas estatales y reservas movilizativas), cumple con las obligaciones y responsabilidades asumidas mediante contrato de depósito suscrito con el Instituto Nacional de Reservas Estatales (INRE), en cuanto al almacenamiento, rotación, mantenimiento, conservación, integridad física, calidad, control y protección de dichas reservas según lo establecen las normativas vigentes.
+
+
+
+
+i) En los casos que proceda, a. si se realizó la evaluación de los productos pendientes de devolución y rotación que dependen de importación, durante el proceso de planificación 2023 e incluirlo en el Plan que se aprueba a los OSDE y entidades nacionales.b. Si se efectuó el análisis sobre las deudas sobre las reservas estatales que se generaron con la aplicación de la tarea ordenamiento y se realizaron propuestas que permitan dar solución a los problemas identificados en las empresas
+
+
+
+
+j) Se cumple y controlan los productos químicos y desechos peligrosos (si procede), de acuerdo con las disposiciones vigentes.
+
+
+
+
+k) Cuentan los almacenes con el certificado de categorización en alguno de los niveles establecidos, emitido por la dirección estatal de Comercio, teniendo en cuenta las precisiones instituidas en la legislación vigente.
+
+
+
+
+l) Se analiza y aprueba por el Consejo de Dirección el procedimiento para la formación de precios de productos de lento movimiento y ociosos, para la venta mayorista y minorista, así como validado por su nivel superior.
+
+
+
+32. Tiendas o puntos de venta del comercio minorista
+a) Se comprueba la efectividad del control interno en tiendas o puntos de venta del comercio minorista. (debe cumplir además con los aspectos señalados en los subsistemas de efectivo en caja y de inventarios)
+b) Cumplen con las licencias y permisos establecidos para su funcionamiento.
+
+
+
+
+c) La tienda oferta mercancías de acuerdo a la caracterización establecida en el Certificado Comercial.
+
+
+
+
+d) La caja registradora tiene habilitada la fecha y la hora actualizada, y aparecen los datos del cajero y el código o el nombre de la tienda; así como cuenta con una impresión legible de los registros.
+
+
+
+
+e) Funciona el display de la caja registradora y está dirigido al cliente.
+
+
+
+
+f) De existir POS, este funciona y se encuentra ubicado en el área de venta, de ser necesario cuentan con scanner para el proceso de venta.
+
+
+
+
+g) Existe una adecuada limitación en el acceso y posesión de las llaves de la caja registradora en la tienda.
+
+
+
+
+h) El acta de constitución de los fondos está actualizada, se encuentra actualizada y firmada por cada uno de los cajeros el Acta de Responsabilidad Material para la custodia del fondo para cambio y el efectivo recaudado.
+
+
+
+
+i) Poseen vales de venta en el área de la caja registradora y son controlados.
+
+
+
+
+j) El efectivo en tienda es controlado, siendo depositado en el banco con la frecuencia legalmente establecida.
+
+
+
+
+k) Al realizar la Declaración del efectivo total y valores en caja recaudado al final del día, coincide con los importes que emite la caja registradora.
+
+
+
+
+l) Los precios y tarifas son visibles al cliente y se entrega comprobante de venta, correctamente confeccionados.
+
+
+
+
+m)  La tienda posee control actualizado de los productos perecederos y de aquellos lotes de los productos que lo requieren.
+
+
+
+
+n) Se retiran del área de venta los productos perecederos vencidos y se aplica en la tienda el procedimiento establecido para los productos perecederos próximos a la fecha de vencimiento.
+
+
+
+
+o) Los submayores y/o listados de existencia de la tienda están actualizados.
+
+
+
+
+p) La mercancía de la tienda está debidamente etiquetada y los medios para etiquetar están custodiados por el personal autorizado y se encuentran en lugar adecuado, toda la mercancía en tienda pertenece a la entidad.
+
+
+
+
+q) Se encuentra actualizado y visible al cliente el número de teléfono para atender las quejas.
+
+
+
+
+r) Existen condiciones adecuadas para mantener, sin afectación de la calidad, los productos que se ofertan.
+
+
+
+
+s) Los resultados de la muestra física del inventario se corresponden con lo controlado en el submayor.
+
+
+
+
+t) Se confecciona correctamente el Expediente de merma y el modelo de propuesta de mercancía a declarar como merma donde debe aparecer claramente la causa o el defecto de la mercancía.
+
+
+
+
+u) Los expedientes de mermas están acompañados por el acta que recoja el análisis en el consejo de dirección de las causas y condiciones que originaron las mermas y las medidas adoptadas.
+
+
+
+
+v) Se lleva un registro y se controla el destino final de las devoluciones.
+
+
+
+
+w) Los productos con pérdidas de atributos se encuentran separados en áreas diferenciadas y señalizadas.
+
+
+
+
+x) Se corresponden los destinos de la merma con los aprobados por el nivel superior.
+
+
+
+
+y) El Acta de Declaración y Detalle de las mercancías propuestas a destrucción están confeccionadas correctamente y firmadas.
+
+
+
+
+z) Se comprueba que a la mercancía en merma le fue aplicado el procedimiento establecido para los casos de pérdida de atributos, retirándolos de la venta de acuerdo al tiempo establecido.
+
+
+
+
+aa) La tienda posee los medios para probarle al cliente el correcto funcionamiento de la mercancía que por sus características lo requiera.
+
+
+
+
+bb) Los equipos de medición (pesaje) están certificados y actualizados para su uso y existe equipo de comprobación para el peso de los productos envasados.
+
+
+
+33. Activos Fijos Tangibles e Intangibles
+a) Si se comprueba la efectividad de los elementos del control interno en el Subsistema contable Activos Fijos Tangibles e Intangibles establecidos en la legislación vigente del Ministerio de Finanzas y Precios.
+
+
+
+
+b) Si están establecidos y se cumplen los procedimientos relacionados con los procesos, actividades y operaciones del subsistema, en correspondencia con las características de la entidad y las disposiciones normativas dictadas por otros organismos vinculados con el tema de Activos Fijos Tangibles e Intangibles.
+
+
+
+
+c) Si están diseñados y se controlan los modelos a emplear como documentos primarios respetando los datos de uso obligatorios para el subsistema.
+
+
+
+
+d) Están habilitados y se controlan los registros y Submayores relacionados con estas operaciones, manuales o automatizados según corresponda y realizar las anotaciones en el momento en que se originan las mismas y por los documentos primarios correspondientes
+
+
+
+
+e) Se controlan los activos fijos intangibles en submayores habilitados al efecto, una vez obtenida su titularidad y se calcula y registra correctamente su amortización mensual, en correspondencia con la NCC No.8 y las tasas establecidas.
+
+
+
+
+f) Hacen los chequeos físicos periódicos, según el plan de chequeo elaborado, bajo la supervisión de personas no responsabilizadas con el cuidado y control de estos medios, comparando las existencias físicas entre los submayores y el modelo Control de Activos Fijos Tangibles, dejando evidencia de los mismos.
+
+
+
+
+g) Cada responsable de área tiene firmada un Acta de Responsabilidad Material, donde se hace constar todos y cada uno de los activos fijos tangibles en existencia bajo su control.
+
+
+
+
+h) Avalan los movimientos de activos fijos tangibles, con los documentos probatorios debidamente formulados de acuerdo con los niveles de aprobación previstos. (Modelo SC-1-01 Movimiento de Activos Fijos Tangibles, Modelo SC-2-04- Informe de Recepción, Modelo SC-1-07- Control de Activos Fijos Tangibles de cada área)
+
+
+
+
+i) Dejan evidencias del destino final de activos y contabilizan correctamente estas operaciones en base al modelo Movimiento de Activos Fijos Tangibles.
+
+
+
+j) Calculan y registran correctamente la depreciación de los activos fijos tangibles y la amortización de los activos fijos intangibles y las tasas aplicadas se corresponden con lo legalmente establecido.
+
+
+
+k) Se han realizado reubicación física de un Activo Fijo Tangible, para ser utilizado fuera de la entidad por la aplicación de las modalidades de teletrabajo y trabajo a distancia, utilizando el modelo SC-1-01 - AFT el “Movimientos por la Utilización en Teletrabajo o Trabajo a Distancia”
+
+
+
+
+l) Los Activos Fijos Tangibles tiene colocados el número de inventario.
+
+
+
+
+m)  En caso de arrendamiento de un activo fijo tangible se suscribe un contrato especificando las condiciones de arrendamiento (de equipos, locales, áreas, etc.) con la entidad contratante.
+
+
+
+
+n) En los casos que proceda para el Comercio Interior se cumple lo establecido para el proceso de licitación por la empresa titular del inmueble para asignar el local en arrendamiento.
+
+
+
+
+o) El proceso de baja para los equipos pesados, de construcción y tractores se realiza según las indicaciones de los organismos correspondientes.
+
+
+
+
+p) Se da alta a los AFT al concluir las inversiones y se analizan los gastos que no se transfieren para diferirlos.
+
+
+
+
+q) Cuando un activo fijo tangible es dado de baja y como consecuencia de su desmantelamiento se decide por la autoridad competente venderlo como chatarra a otra entidad, se realiza la contabilización del hecho económico en correspondencia con lo establecido en el procedimiento contable, teniendo en cuenta la relación valor residual y el importe de la venta.
+
+
+
+34. Medios de Transporte Estatal, Licencia de Operación de Transporte, Seguridad Vial y Carta Porte
+a) Se comprueba la efectividad del control interno en Medios de Transporte Estatal, Licencia de Operación de Transporte, Seguridad Vial, Hojas de Ruta y Carta Porte teniendo en cuenta lo siguiente:
+
+
+
+
+b) Se reportan a las áreas de Contabilidad, por la persona que tiene bajo su custodia transporte automotor, cualquier movimiento de éstos por concepto de bajas, deterioros, traslados, enviados a reparar, altas, faltantes y sobrantes.
+
+
+
+
+c)  Realiza el área que atiende la actividad de transporte, las conciliaciones periódicas entre lo registrado en la contabilidad y lo controlado por el Registro de Vehículos.
+
+
+
+
+d) En los casos de medios y equipos de transporte paralizados por largo tiempo y los dados de baja consta el documento emitido por la Oficina del Registro de Vehículos que certifique la entrega de la chapa y la circulación; los expedientes habilitados por estos conceptos se encuentran actualizados y aprobados por la autoridad facultada.
+
+
+
+
+e) La entidad conforma y custodia un expediente con los documentos de baja del activo con destino a chatarra según lo establecido en la legislación vigente del Ministerio de Finanzas y Precios.
+
+
+
+
+f) Se comprueba el cumplimiento de las obligaciones establecidas por la legislación vigente para el uso de los vehículos estatales, en las que se incluyen las relacionadas con el registro de vehículos del Ministerio del Interior.
+
+
+
+
+g) Los equipos de transporte estatal, controlados en la entidad, se corresponden con la información del Registro de Vehículos del MININT y coinciden con el control de las áreas de transporte y contabilidad.
+
+
+
+h) Existe correspondencia entre la descripción de los vehículos y los documentos de control de las áreas de transporte y contabilidad con el Registro de Vehículos en cuanto a: a. valor registrado,b. impuesto sobre transporte terrestre,c. chapa,d. color,e. número de motor y carrocería.
+
+
+
+
+i) Los vehículos que se trasladan para su reparación están controlados y retornan, una vez reparados, según los documentos que lo acreditan.
+
+
+
+
+j)  En los casos de transportes particulares, puestos a disposición de la entidad, se cumple con lo legalmente establecido por el Ministerio de Finanzas y Precios, en cuanto a vehículos compensados.
+
+
+
+
+k) Las entidades propietarias, arrendatarias o poseedoras legales de medios, instalaciones o establecimientos de transporte, que prestan los servicios de transportación de pasajeros, de cargas y servicios auxiliares o conexos a estos, cuentan con la licencia operativa según lo establecido en la legislación vigente.
+
+
+
+
+l) Se controla el cumplimiento de las obligaciones del titular de la Licencia.
+
+
+
+
+m) Se analizan las causas, se determinan las afectaciones económicas y se toman las medidas correspondientes incluidas las disciplinarias, en los casos de infracciones, cuando las licencias o comprobantes son cancelados.
+
+
+
+
+n) Los automóviles, remolques y semirremolques que se encuentran circulando se encuentran en buen estado técnico, de conservación y adecuadamente pintados y en buen estado de limpieza.
+
+
+
+
+o) Los vehículos estatales con que cuenta la entidad portan en un lugar visible de su exterior, el logotipo o distintivo de la entidad, en ambas puertas delanteras, en colores resaltantes.
+
+
+
+
+p) Se encuentra confeccionado y actualizado el expediente técnico por cada vehículo, el que debe contener los datos que establece la legislación vigente del Ministerio de Trasporte sobre el tema de la Seguridad Vial.
+
+
+
+
+q) La entidad tiene habilitado un registro propio para los permisos especiales, a los efectos de tener el control de las personas que son titulares de este documento.
+
+
+
+
+r) Existe la programación y control del cumplimiento de los chequeos médicos, exámenes psicofisiológicos y la recalificación de los conductores profesionales.
+
+
+
+
+s) La carta porte se clasifica atendiendo a la denominación del medio de transporte o modalidad del servicio que realiza la entidad y establecida en la disposición jurídica vigente del Ministerio de Transporte sobre este tema.
+
+
+
+
+t) La Carta de Porte de cada clasificación se identifica por la numeración consecutiva del original y las copias y la fecha de emisión; y la de cualquier clasificación se confecciona atendiendo a las indicaciones metodológicas establecidas en la disposición jurídica vigente del Ministerio de Transporte.
+
+
+
+
+u) Para el control de la Carta de Porte se habilita un Registro de Carta de Porte expedidas donde se anota la información establecida en la disposición jurídica vigente del Ministerio de Transporte.
+
+
+
+
+v) Las desviaciones e irregularidades en las transportaciones y en el movimiento de los vehículos, son analizadas en el día de su detección, con los implicados, adoptándose las medidas que resulten procedentes.
+
+
+
+35. Subsistema de Cuentas y Documentos por Cobrar Se comprueba la efectividad del control interno en el Subsistema de Cuentas y Documentos por Cobrar, teniendo en cuenta lo establecido en la legislación vigente por el MF.
+
+
+
+
+a) Si están establecidos y cumplen los procedimientos relacionados con los procesos, actividades y operaciones del subsistema en correspondencia con las características de la entidad y las normas jurídicas vinculadas.
+
+
+
+
+b) Sí están diseñados y se controlan los modelos a emplear como documentos primarios respetando los datos de uso obligatorio establecidos para el Subsistema
+
+
+
+
+c) Existe separación de funciones entre el personal que opera los registros de cuentas y efectos por cobrar, siempre que existan condiciones para ello con respecto a las labores de almaceneros, facturadores, funcionarios que firman los cheques y documentos de pago.
+
+
+
+
+d) En caso de no existir separación de funciones, la máxima dirección de la entidad implementa mecanismos de control que comprueben y minimicen los riesgos por falta de contrapartida.
+
+
+
+
+e) Están habilitados correctamente los registros, cuentas y subcuentas relacionados con estas operaciones.
+
+
+
+
+f) Se concilian las facturas emitidas y los cobros efectuados según los datos contables, con los clientes, cuidando que se cumpla el principio de división de funciones.
+
+
+
+
+g) Se controla la actualización de los submayores por clientes.
+
+
+
+
+h) Se mantienen actualizadas las cuentas y subcuentas analíticas de las Cuentas por Cobrar Diversas.
+
+
+
+i) Se cuadra la suma de sus saldos mensualmente con el de la cuenta control, verificando que no existan saldos contrarios a su naturaleza.
+
+
+
+
+j) Se efectúa el correspondiente cuadre de la Cuenta Pagos Anticipados con los análisis de los proveedores que la conforman y se concilian mensualmente dichos saldos.
+
+
+
+
+k) Se prioriza llevar a letras de cambio las cuentas por cobrar vencidas, siempre que garanticen los flujos futuros para honrar dichas deudas.
+
+
+
+
+l) Se avalan con los documentos justificativos, los débitos correspondientes a cada Factura o Conduce emitido y los créditos por cada cobro ejecutado, de las partidas registradas en los Submayores de estas cuentas.
+
+
+
+
+m) Se realiza periódicamente el análisis de las Cuentas por Cobrar a Clientes, Cuentas por Cobrar Diversas y se cuadran sus saldos con las cuentas de control respectivas.
+
+
+
+
+n) La provisión para cuentas incobrables está autorizada, se opera correctamente y se ajusta al final de cada año.
+
+
+
+
+o) Existe el registro para el control de los efectos por cobrar (títulos de crédito), analizados por clientes y controlado su vencimiento y cobro; se registran contablemente según el procedimiento.
+
+
+
+
+p) Se reclasifican al final de cada año las cuentas y efectos por cobrar a largo plazo, cobrables en el próximo ejercicio económico.
+
+
+
+
+q) Los saldos mostrados en las cuentas por cobrar en litigio y en proceso judicial están debidamente sustentados por la documentación establecida en el procedimiento.
+
+
+
+36. Cuentas y Documentos por Pagar Se comprueba la efectividad del control interno en el Subsistema Cuentas y Documentos por Pagar, teniendo en cuenta lo establecido en la legislación vigente por el MFP.
+
+
+
+
+a) Si están establecidos y cumplen los procedimientos relacionados con los procesos, actividades y operaciones del subsistema en correspondencia con las características de la entidad.
+
+
+
+b) Sí están diseñados y se controlan los modelos a emplear como documentos primarios respetando los datos de uso obligatorio establecidos para el Subsistema.
+
+
+
+
+c) Se concilian los importes pagados y pendientes de pago según controles contables, con los de los suministradores, dejando evidencia documental de esas conciliaciones.
+
+
+
+
+d) Están habilitados los registros y Submayores de todas las Cuentas por Pagar y de los Cobros Anticipados.
+
+
+
+
+e) En los Registros y Submayores se efectúan las anotaciones en el momento en que se originan las mismas y por los documentos primarios correspondientes.
+
+
+
+f) Se efectúa el correspondiente cuadre de la cuenta Cobros Anticipados con los análisis de los clientes que la conforman y se concilian mensualmente dichos saldos.
+
+
+
+
+g) Se contabilizan correctamente en cuentas por pagar, los importes de cobros anticipados, cuyos productos o servicios no fueron entregados.
+
+
+
+
+h) Se garantiza por procedimiento que las facturas se paguen en tiempo y no existan obligaciones envejecidas.
+
+
+
+
+i) Se concilian los documentos recibidos de los proveedores, con el Submayor de Cuentas por Pagar y se cuadra mensualmente la suma de sus saldos con el de la cuenta control.
+
+
+
+
+j) Al cierre de cada mes se verifica que las sumas de los saldos de todos los Submayores de las cuentas por pagar coincidan con los de las cuentas de control correspondientes. Se deja evidencia de este acto.
+
+
+
+
+k) Los Efectos por Pagar (títulos de crédito) se registran y actualizan correctamente, analizando y controlando sus fechas de vencimiento para efectuar sus pagos correctamente.
+
+
+
+
+l) Se confeccionan los expedientes de cuentas impagables y se registran en las cuentas correspondientes dentro del término establecido para su análisis y aprobar su cancelación por los funcionarios competentes.
+
+
+
+
+m) Se realiza la liquidación de las operaciones de cobros y pagos entre las sucursales bancarias de un mismo banco y entre los bancos interconectados a través de la Red Pública de Transmisión de Datos, por vía electrónica, con el propósito de efectuar en el menor plazo posible los débitos y créditos en las respectivas cuentas de los clientes.
+
+
+
+
+n) Se evalúan periódicamente en el Consejo de Dirección y las Juntas que correspondan las tendencias de las cuentas por cobrar y pagar.
+
+
+
+
+o) Se elaboran informes valorativos de su calidad, donde se describen las causas que las originan, adoptándose acuerdos encaminados a la erradicación o disminución de los impagos entre las entidades.
+
+
+
+
+p) Si se han asumido por el Presupuesto del Estado el diferencial por el efecto de la devaluación de las operaciones previas a la unificación monetaria y cambiaria, siguientes: a. Obligaciones externas que se encuentran vencidas.b. Obligaciones adquiridas por la empresa importadora con vencimientos hasta trescientos sesenta (360) días posteriores.c. Deudas con el exterior que hayan sido renegociadas y que se encuentren registradas en los bancos.
+
+
+
+
+a) Tienen documentado y actualizado, el reglamento o procedimiento aprobado para las formas de pago que implementa la entidad.
+
+
+
+37.Elementos de Control Interno en el Subsistema de Nómina
+b) Si están establecidos y cumplen los procedimientos relacionados con los procesos, actividades y operaciones del subsistema en correspondencia con las características de la entidad y las normas jurídicas vinculadas con las modalidades de pago que son dictadas por otros organismos.
+
+
+
+
+c) Sí están diseñados y se controlan los modelos a emplear como documentos primarios respetando los datos de uso obligatorio establecidos para el Subsistema.
+
+
+
+
+d) Se establecen controles para la extracción y posterior liquidación de las nóminas que se entregan a los establecimientos o unidades o se pagan centralmente.
+
+
+
+
+e) Se consigna en las nóminas el número del cheque de extracción del efectivo o de acreditación de las tarjetas magnéticas para pago de la nómina.
+
+
+
+
+f) Se efectúan y revisan las deducciones en las nóminas sobre la base de los datos de los descuentos parciales de sus adeudos.
+
+
+
+
+g) Se aprueba por Contabilidad, la extracción del efectivo de los salarios no reclamados, cuando proceda la reclamación por parte del trabajador, no debiendo corresponder esta función, al encargado de la preparación de las nóminas.
+
+
+
+
+h) Se actualizan y emiten por el personal designado del área de Recursos Humanos, el modelo Registro de Salario y Tiempo de Servicio; así como, el modelo Certificación de Años de Servicios y Salarios Devengados.
+
+
+
+
+i) Cuadran mensualmente la suma de los saldos de los Submayores de Salarios no Reclamados y de Vacaciones, con los saldos de las cuentas de control correspondientes.
+
+
+
+
+j) Se controla que el importe de la sumatoria de todas las nóminas, coincida con el número e importe del cheque para la extracción del efectivo, o en su lugar con el de la transferencia bancaria realizada para acreditar las tarjetas magnéticas, en los casos en que se utilice este medio de pago.
+
+
+
+
+k) Están establecidos controles eficientes para la forma de pago mediante tarjetas magnéticas y por la entrega del efectivo para pago y liquidación de nóminas.
+
+
+
+
+l) Se efectúa la liquidación de las nóminas pagadas antes del término de cinco días, y se reintegran al Banco los salarios no pagados.
+
+
+
+
+m) Se revisa, por el Área de Contabilidad, que los salarios reintegrados coinciden con el importe reflejado en las nóminas en los espacios que aparecen no firmados, y si en el renglón no firmado por el trabajador se consigna la palabra REINTEGRO, el número y fecha.
+
+
+
+
+n) Se cumple el término establecido para la reclamación de los salarios pendientes de pago.
+
+
+
+
+o) Se cuantifican daños y perjuicios económicos ocasionados al patrimonio de la entidad si se realizan pagos indebidos.
+
+
+
+
+p) Se aplican a los responsables las medidas en correspondencia con lo establecido en los reglamentos de la entidad y en la legislación vigente.
+
+
+
+38. Contratación y Pagos a las Formas de Gestión no Estatal (trabajadores por cuenta propia, cooperativas agropecuarias, no agropecuarias y las micro, peque­ñas y medianas empresas y otras)
+a) Se comprueba la efectividad del control interno en el tema Contratación y Pagos a las Formas de Gestión no Estatal (trabajadores por cuenta propia, cooperativas agropecuarias, no agropecuarias y las micro, peque­ñas y medianas empresas y otras), teniendo en cuenta lo establecido en la legislación vigente.
+
+
+
+
+b) Los contratos con las formas de gestión no estatal, están suscritos por la persona facultada para actuar en representación de la entidad y se toma en consideración la actividad económica que dichos actores estén autorizados a realizar
+
+
+
+
+c) Los contratos pactados con el sector no estatal se rigen por las normativas vigentes en materia de contratación económica.
+
+
+
+
+d) Se realiza un pliego de concurrencia que contenga, como mínimo, tres ofertas, siempre que existan prestaciones en dicha cantidad y oportunidad, antes de la aprobación de los contratos por escrito.
+
+
+
+e) El pago contabilizado por los bienes y servicios contratados a las formas de gestión no estatal se realizan dentro de los límites finan­cieros que tengan establecidos en el plan o el presupuesto aprobado para cada entidad y se realizan en pesos cubanos, CUP.
+
+
+
+
+
+f) Los pagos en efectivo a las formas de gestión no estatal se realizan en cuantías que no sobrepasen las establecidas en la legislación vigente.
+
+
+
+39.Inversiones
+a) Se comprueba la efectividad del control interno en el tema de Inversiones, teniendo en cuenta lo establecido en la legislación vigente.
+
+
+
+
+b) Se realizó el reporte de la desagregación de las inversiones según los modelos establecidos por el MEP del segundo al cuarto trimestre del año, tomando como plan del primer trimestre el real ejecutado en ese periodo.
+
+
+
+
+c) Se inscriben en el plan de ejecución, inversiones no nominales con solo estudios previos (sin estudios de factibilidad) en casos muy excepcionales, por las características y poca complejidad de la inversión.
+d) En el plan de ejecución, los financiamientos planificados se corresponden con el presupuesto total y el cronograma de la inversión según el estudio de factibilidad aprobado.
+e) En caso de modificaciones del presupuesto, este fue aprobado por la instancia correspondiente.
+f) Se elabora o evalúa, según proceda, el estudio de factibilidad técnico – económica según las normas establecidas por el MEP, quien reglamenta su alcance, contenido de acuerdo con las características de las inversiones.
+g) El inversionista tramita ante los órganos competentes, denominados de consulta, y organismos estatales con funciones rectoras, los permisos que son obligatorios para la aprobación y ejecución de la inversión.
+h) Se cuenta con las licencias definitivas (que procedan) emitidas por órganos rectores y la compatibilización con los intereses de la Defensa, Defensa Civil, Seguridad y Orden Interior.
+i) Se elabora la documentación de inversiones por parte del inversionista y de los terceros que contrate, teniendo en cuenta la legislación vigente.
+j) La contratación de las diferentes etapas del proceso inversionista se lleva a cabo según lo establecido en la legislación vigente.
+k) Se controla el cumplimiento del cronograma directivo, el presupuesto y el resto de los indicadores fundamentales de la inversión.
+l) En los casos que proceda, por causa justificada, se solicita al nivel correspondiente y conforme a los procedimientos establecidos, la modificación de estos.
+m) El inversionista realiza las inspecciones técnicas en sus obras y en la ejecución de otros contratos que suscriban para la inversión.
+n) Se ejerce el Control de Autor (de oficio) por el proyectista en la fase de ejecución (garantizando el respeto a la documentación técnica) y el control y supervisión técnica por el inversionista directo, para garantizar el cumplimiento por parte del ejecutor de los requerimientos establecidos en la Ingeniería Básica y en el Proyecto Ejecutivo.
+o) Está previsto y se ejerce, en los casos que proceda, el derecho a exigir al inversionista la paralización total o parcial de una obra cuando esta, a su juicio ofrezca peligro público, así como cuando se ejecute con violación de las condiciones técnicas establecidas en la documentación técnica.
+p) El monto de la ejecución realizada según las certificaciones de avances de obra por el inversionista, es registrada en la cuenta contable correspondiente.
+q) Los saldos de las cuentas utilizadas para el ciclo contable financiero de la inversión están debidamente registradas y sustentadas por la documentación primaria de las operaciones realizadas.
+r) Se confeccionó por el inversionista y el constructor un expediente de cierre o liquidación de la inversión que contiene la documentación de los proyectistas y suministradores y conformado por la documentación establecida para este tipo de expediente.
+s) Hay evidencia documental de la evaluación técnico- económico final con la participación del proyectista, el constructor, el suministrador y el explotador donde se plasma el cumplieron de los objetivos y los aspectos establecidos para este tipo de evaluación según la legislación vigente.
+t) Las inversiones puestas en explotación, cuentan con el Certificado de habitable utilizable.
+40. Combustible y otros portadores energéticos Se comprueba la efectividad del control interno en el tema Combustible y otros portadores energéticos teniendo en cuenta lo siguiente:
+a) Se encuentra elaborado, y debidamente aprobado por la máxima dirección de la entidad el Manual de Normas y Procedimientos Internos, que garanticen el control de los combustibles y otros portadores energéticos, en cada uno de los procesos.
+b) Se identifican en el Plan de Prevención de Riesgos, las vulnerabilidades que afectan el adecuado control y uso de los combustibles, así como las medidas que permitan minimizar o erradicar su ocurrencia.
+c) En el expediente de acciones de control se documentan los informes resultantes de la aplicación sistemática de autocontroles, y acciones de control y supervisiones ejecutadas a la entidad sobre el combustible, así como los planes de medidas derivados.
+d) Se establece el plan de medidas administrativas, organizativas, de control y seguimiento para erradicar las deficiencias.
+e) Las medidas adoptadas por la entidad para corregir las deficiencias detectadas como resultado de las acciones de control recibidas se cumplimentan en las fechas previstas.
+f) Las medidas adoptadas han resultado efectivas.
+g) Se establecen relaciones contractuales con la entidad encargada de la emisión y carga de las tarjetas magnéticas prepagas.
+h) La adquisición de las tarjetas prepagadas para combustibles solo se realiza después de recibida la autorización correspondiente. Queda evidencia documental en el área económica de la entidad que emitió la autorización.
+i) En el caso de los Grupos Electrógenos de Emergencia (GEE), estos cuentan con una tarjeta magnética prepaga por cada uno de ellos, una vez comprobada la necesidad y autorizada excepcionalmente por la Unión Eléctrica.
+j) Para las asignaciones se tiene en cuenta la actividad a desarrollar, el nivel de actividad, el índice de consumo del equipo automotor y los inventarios disponibles de meses anteriores.
+k) La máxima autoridad de la entidad brinda, mensualmente, la información del consumo de combustible mediante tarjetas prepagadas, empleando el Modelo 5073 de la Oficina Nacional de Estadística e Información.
+
+l) Los vehículos privados en funciones de trabajo de la entidad (autos compensados), cumplimentan las disposiciones jurídicas emitidas con respecto a la aprobación y asignación de combustible.
+
+
+
+
+m) Para la realización de tareas específicas (recuperación de viviendas, distribución de agua en pipas, fiestas populares, movilizaciones y otras similares) en las que se utilicen vehículos de varias entidades estatales e incluso privados, estos vehículos son servidos con una cantidad mínima de tarjetas magnéticas prepagadas, evitando siempre el listero.
+n) Para lo anterior, se cuenta con una carta firmada y acuñada por el directivo del nivel municipal que atiende el control de los portadores energéticos, certificando los vehículos que servician.
+
+
+
+o) En el caso de poseer camión cisterna, la entidad cuenta con la autorización del directivo a nivel municipal que atiende el control de los portadores energéticos, y que el vehículo posea el rotulado que lo identifique como tal.
+p) Para lo anterior, poseen el documento firmado y acuñado por el Director de la entidad para cada extracción de combustible, en la que se consignen los datos de matrícula del vehículo; nombres y apellidos y carnet de identidad de la persona; tipo de combustible y cantidad.
+q) En el caso de reportarse extravío de tarjetas magnéticas prepagas, consta evidencia documental de esta situación, cumplimentándose los términos del contrato firmado con FINCIMEX.
+r) Para lo anterior, se analizan las causas. Se determinan los responsables y se aplica responsabilidad material en los casos que proceda.
+s) Se comprueba que no se realicen más de tres descargas de las tarjetas en el día o descargas reiteradas, para poder detectar comportamientos dudosos.
+
+
+
+
+t) Está establecido y se informa a la ONURE, las tarjetas magnéticas prepagas de combustibles que requieren ser cargadas con más de dos mil (2 000) litros de Diésel o quinientos (500) litros de gasolina para su verificación y aprobación, en el interés de mediante su envío a la Financiera CIMEX S.A. (FINCIMEX), no se identifiquen como tarjetas magnéticas prepagas dudosas.
+u) 	Al identificarse tarjetas magnéticas prepagadas dudosas, la entidad aplica las medidas correspondientes con el o los responsables, se identifican las causas que originan dicho comportamiento.
+v) Se elabora el plan de acción para eliminar la posibilidad de repetición del hecho, informándose a la ONURE Provincial y al Ministerio de Energía y Minas.
+w) En esos casos, se concilia en algún momento en los servicentros obre controles en los que se consigne: chapa del vehículo en el que se transporta el combustible, nombre y número de carné de identidad y copia del slip.
+x) En los casos en que ha sido necesario por los gobiernos provinciales asignar combustible a través de tarjetas prepagadas a entidades o empresas que no son de su subordinación, bases de cargas especializadas y otras que son aprobadas para la asignación de combustibles a través de este órgano, se procedió a crear como clientes del gobierno provincial con Financiera CIMEX S.A. y coordinado con la entidad o empresa correspondiente, las tarjetas prepagadas de combustible que se estimen convenientes y el pago del combustible es abonado por la entidad o empresa que lo utilice.
+
+
+
+
+y) Está establecido para los casos en que sea necesario ejecutar traspaso de combustible de la entidad a otra, el procedimiento a emplear y se ajusta a lo dispuesto en las Indicaciones para la Conducción (Control) del Plan de la Economía, emitida por el MEP anualmente.
+z) Realizada la compra de las tarjetas magnéticas prepagas para combustibles, estas son depositadas en el área de la caja, o en el área que se decida en la entidad, mediando un documento firmado por quien recibe y entrega.
+aa) De acuerdo con lo anterior, se encuentran creadas en el área, las condiciones para su debida custodia y protección.
+bb) Existe coincidencia entre las tarjetas en caja o área destinada y en uso, con las activas, según historial de la Financiera CIMEX y el inventario en poder del responsable de la custodia de estas.
+cc) Se habilita el registro de control de tarjetas prepagas para combustible y que en el mismo consta como mínimo la siguiente información: organismo y entidad, número de la tarjeta y tipo de combustible.
+dd) La entidad tiene definida las personas autorizadas a realizar la carga de las tarjetas (autoridad de carga) y copia de esta autorización permanece en la Caja o área autorizada de la entidad.
+ee) Para cargar las tarjetas prepagadas para la adquisición de combustible estas son extraídas de la Caja o área autorizada de la entidad, por la persona autorizada, mediante un documento firmado por la persona encargada del control o el receptor, según se decida.
+ff) Existe la persona encargada del control de las tarjetas prepagadas para combustible, y cuenta con el listado de las personas autorizadas a la recogida de las tarjetas y el de las asignaciones de combustibles a cada una, actualizadas.
+gg) Las tarjetas magnéticas prepagas para la adquisición de combustible se entregan por el encargado del control, mediante un documento que permita exigir responsabilidad material en los casos que proceda.
+hh) En el documento entregado constan los siguientes datos: organismo y entidad, nombre del usuario, área de trabajo o centro de costo, tipo de combustible, No. de la tarjeta magnética prepaga de combustible, importe cargado, firma de quien, recibe y de quien entrega, fecha de entrega y chapa del vehículo.
+ii) El encargado de la entrega y control de las tarjetas, tiene habilitado un registro para cada una de ellas, el proceso de entrega es personal e intransferible excepto en los casos en que se cuente con la correspondiente autorización del usuario de la misma.
+jj) Cuentan como máximo con un veinte porciento (20%) adicional de tarjetas respecto a la cantidad de vehículos existentes, y una personalizada para cada vehículo, las cuales deben permanecer en caja sin saldo.
+kk) En el caso de los Grupos Electrógenos de Emergencia (GEE), estos cuentan con una tarjeta magnética prepaga por cada uno de ellos, una vez comprobada la necesidad y autorizada excepcionalmente por la Unión Eléctrica.
+ll) Las tarjetas prepagadas de combustible sobrantes permanecen en la Caja de la entidad.
+mm) Los consumos se encuentran debidamente avalados por comprobantes de venta emitidos por los servicentros, los cuales al dorso consignan la firma del chofer del vehículo contengan la matrícula, el nombre y la firma del chofer u operador que habilitó el combustible y el número de chapa del auto que fue serviciado, para que el responsable del control realice las anotaciones correspondientes, y que estos comprobantes se entregan al área contable.
+nn) La entidad tiene diseñado un documento primario de entrega-recepción de tarjetas magnéticas prepagas para combustible, donde se recoja la suma de los comprobantes de pago que avalan el consumo durante el mes.
+oo) Está establecido que en los casos de extravío de comprobantes, se tome declaración del incidente por el Jefe inmediato superior a la persona que incurra en ello, y se verifique en el emisor, para justificar el consumo al final del mes.
+pp) La liquidación del combustible consumido se realiza por los comprobantes de pago (vales de consumo) que emiten los servicentros o por documento de entrega–liquidación que confeccione la entidad, en el mes en que fue consumido el combustible.
+qq) En los casos donde se utiliza el documento de entrega–liquidación, se adjuntan a este, los comprobantes de pago (vales de consumo) que emiten los servicentros.
+rr) Las entidades que poseen tarjeta y acceden a los Estados de Cuenta, mediante la página WEB, cotejan el saldo de lectura de la tarjeta, con el obtenido de la página WEB y en los casos que existan diferencias, producto del escaso tiempo que media entre la fecha de compra de combustible, la tele-colecta y su publicación en la WEB, se adjunta a la información obtenida el comprobante de pago que respalde la diferencia sobre los pagos realizados en el período, hasta tanto se realice la confirmación, tal como se establece en la disposición jurídica vigente del MFP.
+ss) El documento de entrega-liquidación cumplimenta en su diseño los siguientes datos de uso obligatorio: organismo y entidad, nombre del usuario, chapa del vehículo, área de trabajo o centro de costo, tipo de combustible, número de la tarjeta magnética prepaga de combustible, saldo al inicio en importe, consumo en importe, saldo final en importe, firma de quien recibe y de quien entrega, fecha de entrega, firma de quien liquida y de quien recibe; así como la fecha de liquidación.
+tt) En el área de Contabilidad se encuentra actualizado el registro por cada tarjeta prepagada de combustible, donde se describen todas las operaciones.
+uu) El reconocimiento contable de las operaciones asociadas a la adquisición, pago, carga, entrega y liquidación del combustible, se realiza en correspondencia con lo dispuesto en la legislación vigente y que estas se encuentran sustentadas de forma documental.
+vv) La entidad cuenta con un sistema automatizado certificado para el control del combustible.
+ww) De ser positiva la respuesta anterior, se cotejan los datos reflejados en el mismo con la documentación primaria correspondiente a la asignación de combustibles de los medios y equipos de transportes registrados.
+xx) En caso de detectarse diferencias, la entidad procede de acuerdo a lo establecido en la legislación vigente.
+yy) Las normas de consumos de los equipos se encuentran debidamente aprobadas.
+zz) Cuando se producen cambios mecánicos o de otro tipo que puedan afectar los indicadores de desempeño energético durante el período de un año, se realizan las pruebas de consumo.
+aaa) Se cancelan las asignaciones de combustible a los medios y equipos de transporte paralizados por largo tiempo o dados de baja.
+bbb) Han determinado si las pruebas de consumo en la entidad son válidas.
+ccc) Se encuentra implementada la Bitácora y si esta es utilizada como medio de auto inspección en el control del uso racional de los combustibles.
+ddd) Se realizan con la participación de la máxima Dirección de la entidad los análisis mensuales del comportamiento de los indicadores del desempeño energético, con el objetivo de aumentar la exigencia en el cumplimiento de los mecanismos de control de los combustibles por parte de la administración.
+eee) Se aplica con rigor la responsabilidad material, y las medidas disciplinarias a los responsables de las violaciones detectadas.
+fff) Existen los documentos primarios para el control de los movimientos de los todos los equipos de trasporte y carga, (hoja de ruta, y reportes de combustible habilitado y kilómetros recorridos (para los vehículos administrativos), debidamente registrados en correspondencia con lo establecido por los organismos rectores.
+ggg) Existen los documentos primarios de control de la actividad realizada por los medios de transporte de carga (carta de porte, conduces, facturas, vales de pesa).
+hhh) Los odómetros de todos los equipos en explotación se encuentran funcionando.
+iii) En caso contrario se realizan gestiones por la administración para su sustitución o reparación.
+jjj) En las entidades que tengan implementado el Sistema de Gestión y Control de Flota se cumplen los procedimientos establecidos para su operación por las piqueras.
+kkk) De no tener implementado el sistema de control de flota, se comprueba el funcionamiento de los odómetros de los equipos de transporte y su trazabilidad con la información en los documentos primarios, en caso que no funcionen, se comprueba que para el equipo esté implementado un sistema que permita auditar su nivel de actividad.
+lll) En las entidades que cuentan con pipas excepcionales para abastecer los equipos vinculados directamente a la producción de bienes y servicios tienen establecido, además del GPS, la certificación de los flujómetros y el aforo.
+mmm) Se encuentra elaborado el plan de enfrentamiento al robo de combustible.
+nnn) Se encuentra implementado el control mensual, mediante inspecciones y despachos, del cumplimiento las medidas adoptadas para el enfrentamiento al robo de combustible a realizar por los directivos facultados.
+ooo) Se realiza y actualiza el levantamiento de las tarjetas prepagadas de combustibles activas por centros y entidades, así como de la persona y el vehículo a los cuales se asigna.
+ppp) Con respecto a la elaboración de la demanda de combustibles y lubricantes se tiene en cuenta y cumple lo establecido para la certificación de la información exigida por el MEP, según proceda.
+qqq) Se comprueba que la cantidad de combustible utilizado, por la entidad, a partir del nivel de actividad real informada, es igual o menor al asignado.
+rrr) El control de los portadores energéticos se enfoca en el seguimiento de las medidas adoptadas durante la contingencia energética y las acciones establecidas durante el año 2020, e incorpora otras para el año 2021, con el objetivo de establecer un control proactivo durante todo el año.
+sss) La fuente de información para los controles establecidos por el MEP, a través del Sistema de Control del Plan la constituye el Modelo 5073 de la ONEI.
+ttt) La entidad informa en los controles establecidos por el MEP (CDA-002), las cifras de portadores energéticos consumidas en los períodos correspondientes.
+uuu) Cuando son detectadas deficiencias, la entidad es penalizada por descontrol en el tema combustible (descuentos del 50 por ciento de diésel y gasolina destinados a la actividad administrativa por un período de tres meses.
+vvv) Las entidades implementan y ejecutan el autocontrol de los portadores energéticos, en correspondencia con su misión y características.
+www) Implementan como sistema de trabajo para el control del combustible, la lista de chequeos indicada en el Manual de Inspección a los Portadores Energéticos dictada por el MINEM.
+
+
+xxx) Las entidades que poseen Depósitos, Tanques, Grupos electrógenos, pistas excepcionales, etc. establecen y cumplen:a. Los procedimientos para la recepción y servicio del combustible físico;b. la debida correspondencia entre los datos de los informes de recepción y las facturas;c. el registro de las mediciones diarias, con las anotaciones del área de contabilidad;d. los depósitos, tanques, medios de medición, etc. están debidamente aforados y cumplimentan las indicaciones emitidas por la Oficina Nacional de Normalización;e. el registro del personal autorizado a distribuir el producto;f. la existencia de un submayor por cada tipo de producto;g. en caso de diferencias de inventarios físicos y contables, se encuentran dentro de los índices o valores permisibles al finalizar el mesh. condiciones seguras en la instalación de combustible y se verifique la certificación de la Agencia de Protección Contra Incendios;i. la utilización del combustible físico solamente para equipos tecnológicos; j. la coincidencia del balance realizado con lo plasmado en el Modelo 5073.
+
+
+
+
+yyy) Que la cantidad de tarjetas a utilizar por cada camión cisterna excepcional que transporta combustible, están aprobadas por la ONURE.
+
+
+
+
+
+40.5) En las entidades que operan maquinarias agrícolas e ingeniera, montacargas, grupos electrógenos, calderas, quemadores, hornos, equipos
+estacionarios y otros que por sus características y particularidades tecnológicas no pueden acudir a los Servicentros (Combustible Tecnológico), establecen y cumplen:
+a. Los equipos tecnológicos forman parte de los activos fijos;
+b. que las tarjetas asignadas a medios tecnológicos están personalizadas con el número de inventario de estos;
+c. contar con la evidencia certificada de las normas de consumo de combustibles actualizadas, y los documentos primarios para el control del nivel actividad;
+d. la debida correspondencia entre el combustible consumido, la norma de consumo y el nivel de actividad realizado por equipo;
+e. documentar los análisis realizados producto de las desviaciones en el uso del combustible, y tomar las medidas correctivas, y de seguimiento en el comité de prevención y control y su seguimiento en las rendiciones de cuenta en los niveles correspondientes;
+f. que se encuentren actualizados los registros de las maquinarias;
+g. el registro diario para el caso de los grupos electrógenos, calderas, quemadores y hornos;
+h. la existencia de los análisis de las desviaciones en el uso del combustible.
+
+40.6)  Para el caso de los grupos electrógenos conectados al Sistema Eléctrico Nacional (si procede):
+
+a. La existencia de un sistema de recolección de purgas, drenajes y residuales y sus operaciones se registren en el libro de incidencias;
+b. se encuentran definidas las posibles causas, relacionadas con el régimen de operación de los equipos que puedan originar sobreconsumos de combustibles; y
+c. la existencia de una instalación que contenga el flujómetro y su comprobación contra el aforo del tanque, cumplimentándose en este último las indicaciones emitidas por la Oficina Nacional de Normalización.
+d. Cuentan con tanques auxiliares, realizar conteo físico del combustible en tanque, para ello deben estar aforados y contar con una regla de medición certificada y actualizada por la Oficina Nacional de Normalización.
+e. Si el consumo de combustible de los GEE está en correspondencia con el nivel de actividad generado.
+f. Las operaciones para el control del combustible consumido, se reportan a la Unidad Empresarial de Base de Generación de Emergencia Provincial subordinada a las Empresas Eléctricas Provinciales.
+g. El operario del GEE está certificado para la operación de los mismos.
+h. Se realizan las pruebas del litro del GEE en correspondencia con lo establecido en el Procedimiento para el control del combustible consumido por los Grupos Electrógenos de Emergencia emitido por la Unión Eléctrica, de fecha 2 de mayo de 2016.
+i. Existe un contrato que ampare la utilización del Grupo Electrógeno, el cual está firmado por la entidad montadora y la inversionista.
+
+
+
+40.7) Hay un registro de control de entregas de los modelos Hoja de Ruta, y de los Reporte de combustible habilitado y kilómetros recorridos, donde se
+ anote el número consecutivo, la fecha de entrega, el nombre de la persona a quien se le entrega y el número de chapa del vehículo.
+
+
+
+
+40.8) Se emite con frecuencia mensual un ejemplar único de los modelos Hoja de Ruta, y de los Reporte de combustible habilitado y kilómetros
+    recorridos para cada vehículo administrativo, y este se entrega por la persona expresamente autorizada para ello en el área de transporte.
+
+
+
+
+40.9) Se controla que los asientos en los modelos Hoja de Ruta, y en los Reporte de combustible habilitado y kilómetros recorridos se realizan con bolígrafo, en los espacios expresamente habilitados al efecto, por las personas autorizadas.
+
+
+
+
+40.91) Las anotaciones son legibles, sin borrones ni tachaduras y que estas respondan con exactitud a los datos reales, exigidos en los escaques correspondientes.
+
+
+
+
+ffff) 	Se realiza mensualmente un análisis de los kilómetros recorridos, el combustible consumido, el índice de consumo y los mantenimientos realizados a los vehículos durante el mes, comparándolos con los datos planificados y analizando las desviaciones que se produzcan en cada caso.
+
+
+
+
+gggg) 	Los datos referidos al kilometraje y combustible estimado en tanque, del modelo Reporte de combustible habilitado y kilómetros recorridos, coinciden con los datos del cierre del mes anterior.
+
+
+
+
+hhhh) Se archivan por el término de un año los modelos Hoja de Ruta, y de los Reporte de combustible habilitado y kilómetros recorridos por su número de orden consecutivo.
+
+
+
+
+iiii) Se custodian y preservan los modelos Hoja de Ruta, y de los Reporte de combustible habilitado y kilómetros recorridos, de forma que estos no sufran deterioro ni pérdida.
+
+
+
+
+jjjj) Los Reportes de combustible habilitado y kilómetros recorridos para cada uno de los vehículos administrativos de la entidad, se completan los escaques desde el 1 hasta el 11 por el personal de transporte autorizado.
+
+
+
+
+kkkk) Las firmas en el Reporte de combustible habilitado y kilómetros recorridos coinciden con las declaradas en el registro de las personas autorizadas a habilitar combustible por vehículo administrativo.
+
+
+
+
+llll) Se confecciona correctamente el Resumen del Reporte de combustible habilitado y kilómetros recorridos.
+
+
+
+
+mmmm) Se realiza balance del combustible cargado en las tarjetas magnéticas prepagas.
+
+
+
+
+nnnn) En los casos donde se utiliza Sistema de Posicionamiento Global (GPS) en los vehículos, se comprueba la correspondencia con las Hojas de Ruta la distancia recorrida, el combustible consumido y en los casos que proceda, verificar la carga física real con respecto a la reflejada en los documentos.
