@@ -5,6 +5,9 @@ import com.jfoenix.controls.JFXListView;
 import com.suehay.audscifx.model.AreaEntity;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
+import com.suehay.audscifx.repository.AreaRepository;
+import com.suehay.audscifx.services.AreaService;
+import com.suehay.audscifx.services.EmployeeService;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -145,6 +148,7 @@ public class HomeController {
 
     @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
+        AreaEntity areaEntity = new AreaEntity(this.areasListView.getItems().size() + 1, this.areaNameTextField.getText());
         if (this.areaNameTextField.getText().isEmpty()) return;
         this.areasListView.getItems().add(new AreaEntity(this.areasListView.getItems().size() + 1, this.areaNameTextField.getText()));
         if (this.areasListView.getSelectionModel().getSelectedItem() != null)
@@ -154,12 +158,14 @@ public class HomeController {
                 areasListView.getSelectionModel().select(latestArea);
             }
         });
+        AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
     }
 
     @FXML
     public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {
         if (this.areasListView.getSelectionModel().getSelectedItem() == null) return;
         latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
+        AreaService.deleteArea(this.areasListView.getSelectionModel().getSelectedItem());
         this.areasListView.getItems().remove(this.areasListView.getSelectionModel().getSelectedItem());
     }
 
@@ -173,12 +179,14 @@ public class HomeController {
                                      .build();
         this.employeeListView.getItems().add(employee);
         employee.setAreaId(this.areasListView.getSelectionModel().getSelectedItem().getId());
+        EmployeeService.saveEmployee(employee.getId(), employee.getEmployeeName(), employee.getPosition(), employee.getAreaId());
         System.out.println(employee);
     }
 
     @FXML
     public void onEmployeeRemoveButtonClicked(MouseEvent mouseEvent) {
         if (this.employeeListView.getSelectionModel().getSelectedItem() == null) return;
+        EmployeeService.deleteEmployee(this.employeeListView.getSelectionModel().getSelectedItem());
         this.employeeListView.getItems().remove(this.employeeListView.getSelectionModel().getSelectedItem());
     }
 }

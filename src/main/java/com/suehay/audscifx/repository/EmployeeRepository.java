@@ -69,4 +69,11 @@ public class EmployeeRepository {
         entityManager.createQuery("DELETE FROM EmployeeEntity e WHERE e.areaId = :areaId").setParameter("areaId", areaId).executeUpdate();
         entityManager.getTransaction().commit();
     }
+
+    public void deleteById(Integer integer) {
+        // delete an employee by id
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("DELETE FROM EmployeeEntity e WHERE e.id = :id").setParameter("id", integer).executeUpdate();
+        entityManager.getTransaction().commit();
+    }
 }

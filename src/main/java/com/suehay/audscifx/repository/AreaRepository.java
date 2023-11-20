@@ -26,6 +26,11 @@ public class AreaRepository {
         entityManager.remove(areaEntity);
         entityManager.getTransaction().commit();
     }
+    public void deleteById(int id) {
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("DELETE FROM AreaEntity a WHERE a.id = :id").setParameter("id", id).executeUpdate();
+        entityManager.getTransaction().commit();
+    }
     public void update(AreaEntity areaEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(areaEntity);
