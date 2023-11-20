@@ -13,7 +13,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "code", nullable = false, length = 10)
     private String code;

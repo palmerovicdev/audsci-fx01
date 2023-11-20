@@ -6,7 +6,6 @@ import com.suehay.audscifx.model.AreaEntity;
 import java.util.Collection;
 
 import static com.suehay.audscifx.config.EntityManagerProvider.getEntityManager;
-import static com.suehay.audscifx.config.EntityManagerProvider.getEntityManager;
 public class AreaRepository {
     private final EntityManager entityManager = getEntityManager();
     // implement the all method
@@ -17,7 +16,6 @@ public class AreaRepository {
     public void save(AreaEntity areaEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(areaEntity);
-        entityManager.persist(areaEntity);
         entityManager.getTransaction().commit();
     }
     public AreaEntity findById(int id) {

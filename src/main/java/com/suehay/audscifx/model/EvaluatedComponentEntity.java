@@ -15,12 +15,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EvaluatedComponentEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @jakarta.persistence.Column(name = "employee_id", nullable = false)
     private int employeeId;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @jakarta.persistence.Column(name = "component_id", nullable = false)
     private int componentId;
