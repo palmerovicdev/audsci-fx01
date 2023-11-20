@@ -1,0 +1,230 @@
+.button-plus {
+    -fx-background-color: rgba(55, 252, 211, 0.50);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+
+}
+
+.button-plus:hover {
+    -fx-background-color: rgba(55, 252, 211, 0.70);
+}
+.button-remove {
+    -fx-background-color: rgba(194, 78, 154, 0.50);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+
+}
+
+.button-remove:hover {
+    -fx-background-color: rgba(194, 78, 154, 0.70);
+}
+
+.date-picker {
+    -fx-background-color: #343C4A;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+/* formato para las celdas del tableview*/
+.table-cell {
+    -fx-padding: 0.5em 0.5em 0.1em 0.3em;
+    -fx-border-color: -fx-box-border -fx-box-border transparent transparent;
+    -fx-font: 13px "Segoe UI";
+    -fx-border-insets: 0;
+}
+
+/* color de fondo para cuando el raton este sobre la celda*/
+.table-cell:hover {
+    -fx-background-color: #9769A3;
+}
+
+/* color para filas vacias,*/
+/* aplicar el mismo color cuando el raton este sobre una celda de una fila vacia*/
+.table-row-cell:empty, .table-cell:empty:hover {
+    -fx-background-color: whitesmoke;
+}
+
+/* eliminar borde de celdas en las filas vacias*/
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+/* color de una fila cuando en raton se encuentra sobre la misma*/
+.table-view:row-selection .table-row-cell:filled:hover {
+    -fx-background-color: rgba(228, 183, 236, 0.80);
+}
+
+/* color de una fila cuando en raton se encuentra sobre una fila que esta seleccionada*/
+.table-view:row-selection .table-row-cell:filled:selected:hover {
+    -fx-background-color: rgba(228, 183, 236, 1.10);
+}
+
+/* color de una fila seleccionada por el usuario*/
+.table-view:row-selection .table-row-cell:filled:selected {
+    -fx-background-color: #AEEBEB;
+}
+
+/* eliminar border del table que aparece cuando el mismo tiene el foco*/
+.table-view, .table-view:focused {
+    -fx-background-color: transparent, -fx-box-border, -fx-control-inner-background;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: 1.4, 0, 0;
+}
+
+/* centrar y cambiar color de los titulos de columnas*/
+.table-view .column-header .label {
+    -fx-text-fill: #52677A;
+    -fx-alignment: CENTER;
+}
+
+/* color de fondo del titulo de columna cuando en roton esta sobre ella*/
+.table-view .column-header:hover {
+    -fx-background-color: rgba(228, 183, 236, 0.90);
+}
+
+/* tamaño, bordes y color de fondo de los titulos*/
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: white;
+    -fx-size: 30;
+    -fx-border-color: -fx-box-border;
+    -fx-border-width: 0 1 1 0;
+    -fx-border-insets: 0;
+}
+
+/* hacer transparente el fondo de los titulos*/
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+/* estylo para el boton que permite ocultar o mostrar las columnas*/
+.table-view .show-hide-columns-button {
+    -fx-background-color: white;
+    -fx-border-color: -fx-box-border;
+    -fx-border-insets: 0;
+}
+
+/* scroll bar starts here */
+
+/* The increment and decrement button CSS class of scrollbar */
+.table-view .increment-button, .table-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: derive(rgb(128, 128, 128), 80%);
+}
+
+/* The main scrollbar **track** CSS class  */
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: derive(rgb(128, 128, 128), 80%);
+    -fx-background-radius: 0em;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black, 90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+
+}
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.table-view .scroll-bar:horizontal:hover .track,
+.table-view .scroll-bar:horizontal:pressed .track,
+.table-view .scroll-bar:vertical:hover .track,
+.table-view .scroll-bar:vertical:pressed .track {
+    -fx-background-color: derive(#434343, 20%);
+
+    -fx-opacity: 0.2;
+    -fx-background-radius: 0em;
+
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+.table-view .scroll-bar .thumb:hover,
+.table-view .scroll-bar .thumb:pressed {
+    -fx-background-color: derive(black, 50%);
+}
+
+.table-view .increment-button:hover, .table-view .decrement-button:hover {
+    -fx-background-color: derive(rgb(128, 128, 128), 100%);
+    -fx-border-color: derive(rgb(128, 128, 128), 80%);
+    -fx-padding: 2px;
+}
+
+.scroll-bar:horizontal,
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black, 90%);
+    -fx-background-radius: 2em;
+
+}
+
+.scroll-bar:horizontal:hover .track,
+.scroll-bar:horizontal:pressed .track,
+.scroll-bar:vertical:hover .track,
+.scroll-bar:vertical:pressed .track {
+    -fx-background-color: derive(#434343, 20%);
+
+    -fx-opacity: 0.2;
+    -fx-background-radius: 0em;
+
+}
+
+.card {
+    -fx-background-color: #343C4A;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #343C4A;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+.scroll-bar .thumb:hover,
+.scroll-bar .thumb:pressed {
+    -fx-background-color: derive(black, 50%);
+}
+
+.increment-button:hover, .table-view .decrement-button:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 2px;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #30BBD7;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.chart-plot-background {
+    -fx-background: transparent;
+}
+
+.stack-pane {
+    -fx-background-radius: 5px;
+    -fx-background-color: #343C4A;
+    -fx-border-radius: 5px;
+    -fx-border-color: #343C4A;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
