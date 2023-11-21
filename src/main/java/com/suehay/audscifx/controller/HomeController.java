@@ -48,8 +48,6 @@ public class HomeController {
     public ListView<AreaEntity> areasListView;
     @FXML
     public ListView<EmployeeEntity> employeeListView;
-
-    private AreaEntity latestArea;
     @FXML
     public BorderPane homePane;
     @FXML
@@ -100,7 +98,7 @@ public class HomeController {
     public DatePicker endTestDatePicker;
     @FXML
     public AnchorPane componentEvaluationView;
-
+    private AreaEntity latestArea;
 
     void visibilityChange(boolean home, boolean enterpriseCreation, boolean testCreation, boolean testEvaluate, boolean reportGeneration, boolean help, boolean config) {
         homeView.setVisible(home);
@@ -119,16 +117,26 @@ public class HomeController {
     }
 
     private void initEnterpriseCreationView() {
-        this.areasListView.getItems().setAll(FXCollections.observableList(AreaService.findAll()));
-
-        this.areasListView.getSelectionModel().select(0);
-        this.employeeListView.getItems().clear();
-        this.employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(this.areasListView.getSelectionModel().getSelectedItem().getId())));
-        this.employeeListView.refresh();
+        areasListView.getItems().setAll(FXCollections.observableList(AreaService.findAll()));
+        if (areasListView.getItems().isEmpty()) {
+            areasListView.setPrefHeight(0);
+            employeeListView.setPrefHeight(0);
+            return;
+        }
+        areasListView.getSelectionModel().select(0);
+        latestArea = areasListView.getSelectionModel().getSelectedItem();
+        employeeListView.getItems().clear();
+        employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(areasListView.getSelectionModel().getSelectedItem().getId())));
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
 
         // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
         areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        this.areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
+        setAreasListViewSelectionModel();
+    }
+
+    private void setAreasListViewSelectionModel() {
+        areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
             if (t1 != null) {
                 Platform.runLater(() -> {
                     latestArea = areasListView.getSelectionModel().getSelectedItem();
@@ -239,57 +247,112 @@ public class HomeController {
 
     @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
-        AreaEntity areaEntity = new AreaEntity(this.areasListView.getItems().size() + 1, this.areaNameTextField.getText());
-        if (this.areaNameTextField.getText().isEmpty()) return;
-        this.areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
-                this.areasListView.getItems().size() + 1,
-                this.areaNameTextField.getText()))));
-        if (this.areasListView.getSelectionModel().getSelectedItem() != null)
-            latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
+        // if the database
+        Integer areaId = AreaService.getLatestAreaId();
+        if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("Area name already exists!!!");
+            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            alert.showAndWait();
+            return;
+        }
+        AreaEntity areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
+        if (areaNameTextField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("Area name is empty!!!");
+            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            alert.showAndWait();
+            return;
+        }
+        areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
+                areaId == null ? 0 : areaId + 1,
+                areaNameTextField.getText()))));
+        if (areasListView.getSelectionModel().getSelectedItem() != null)
+            latestArea = areasListView.getItems().get(Math.max((areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
         AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+        // set areaNameTextField border color to black with transparency 0.5
+        areaNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+        setAreasListViewSelectionModel();
     }
 
     @FXML
     public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {
-        if (this.areasListView.getSelectionModel().getSelectedItem() == null) return;
-        AreaService.deleteArea(this.areasListView.getSelectionModel().getSelectedItem());
-        this.areasListView.getItems().remove(this.areasListView.getSelectionModel().getSelectedItem());
-        this.areasListView.getSelectionModel().select(areasListView.getItems().get(Math.max(areasListView.getItems().size() - 1, 0)));
-        latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
+        if (areasListView.getSelectionModel().getSelectedItem() == null) return;
+        AreaService.deleteArea(areasListView.getSelectionModel().getSelectedItem().getId());
+        areasListView.getItems().remove(areasListView.getSelectionModel().getSelectedItem());
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+        if (areasListView.getItems().isEmpty()) {
+            return;
+        }
+        areasListView.getSelectionModel().select(areasListView.getItems().get(areasListView.getItems().size() - 1));
+        latestArea = areasListView.getItems().get((areasListView.getItems().size() - 1));
     }
 
     @FXML
     public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
-        if (this.employeeNameTextField.getText().isEmpty() || this.employeePositionTextField.getText().isEmpty() || this.areasListView.getSelectionModel().getSelectedItem() == null)
+        if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("Employee name or position is empty!!!");
+            // set border color red with transparency
+            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            alert.showAndWait();
             return;
-        latestArea = this.areasListView.getSelectionModel().getSelectedItem();
-        int latestId = EmployeeService.getLatestId();
+        }
+        var employees = EmployeeService.findAllByAreaId(latestArea.getId());
+        if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("Employee name already exists!!!");
+            // set border color red with transparency
+            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            alert.showAndWait();
+            return;
+        }
+        latestArea = areasListView.getSelectionModel().getSelectedItem();
+        Integer latestId = EmployeeService.getLatestId();
         var employee = EmployeeEntity.builder()
-                                     .id(latestId + 1)
-                                     .employeeName(this.employeeNameTextField.getText())
-                                     .position(this.employeePositionTextField.getText())
+                                     .id(latestId == null ? 1 : latestId + 1)
+                                     .employeeName(employeeNameTextField.getText())
+                                     .position(employeePositionTextField.getText())
                                      .build();
-        this.employeeListView.getItems().add(employee);
+        employeeListView.getItems().add(employee);
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
         employee.setAreaId(latestArea.getId());
         EmployeeService.saveEmployee(employee.getId(), employee.getEmployeeName(), employee.getPosition(), employee.getAreaId());
         System.out.println(employee);
+        // set employeeNameTextField and employeePositionTextField border color to black with transparency 0.5
+        employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+        employeePositionTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
     }
 
     @FXML
     public void onEmployeeRemoveButtonClicked(MouseEvent mouseEvent) {
-        if (this.employeeListView.getSelectionModel().getSelectedItem() == null) return;
-        EmployeeService.deleteEmployee(this.employeeListView.getSelectionModel().getSelectedItem());
-        this.employeeListView.getItems().remove(this.employeeListView.getSelectionModel().getSelectedItem());
+        if (employeeListView.getSelectionModel().getSelectedItem() == null) return;
+        EmployeeService.deleteEmployee(employeeListView.getSelectionModel().getSelectedItem());
+        employeeListView.getItems().remove(employeeListView.getSelectionModel().getSelectedItem());
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
     }
 
     public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
         var testResultDB = GuideConfig.testTemplateResults.stream().filter(testResult -> testResult.getTest().getGuideVersion().equals(guideVersionChoiceBox.getSelectionModel().getSelectedItem())).findFirst().orElse(null);
-        var testCode = this.testCodeTextField.getText();
-        var startTestDate = this.startTestDatePicker.getValue();
-        var endTestDate = this.endTestDatePicker.getValue();
-        var guideVersion = this.guideVersionChoiceBox.getValue();
+        var testCode = testCodeTextField.getText();
+        var startTestDate = startTestDatePicker.getValue();
+        var endTestDate = endTestDatePicker.getValue();
+        var guideVersion = guideVersionChoiceBox.getValue();
 
         assert testResultDB != null;
         testResultDB.getTest().setCode(testCode);

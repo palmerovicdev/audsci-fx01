@@ -23,7 +23,7 @@ public class EmployeeRepository {
         entityManager.getTransaction().commit();
     }
 
-    public int getLatestId() {
+    public Integer getLatestId() {
         return entityManager.createQuery("SELECT MAX(e.id) FROM EmployeeEntity e", Integer.class).getSingleResult();
     }
 

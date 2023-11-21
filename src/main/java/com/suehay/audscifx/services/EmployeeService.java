@@ -3,8 +3,12 @@ package com.suehay.audscifx.services;
 import com.suehay.audscifx.model.EmployeeEntity;
 import com.suehay.audscifx.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @AllArgsConstructor
 public class EmployeeService {
@@ -14,7 +18,7 @@ public class EmployeeService {
         employeeRepository.save(new EmployeeEntity(integer, employeeName, position, areaId));
     }
 
-    public static int getLatestId() {
+    public static Integer getLatestId() {
         return employeeRepository.getLatestId();
     }
 
@@ -32,5 +36,9 @@ public class EmployeeService {
 
     public static List<EmployeeEntity> findByAreaId(Integer areaId) {
         return employeeRepository.findByAreaId(areaId).stream().toList();
+    }
+
+    public static List<EmployeeEntity> findAllByAreaId(Integer id) {
+        return employeeRepository.findAllByAreaId(id).stream().toList();
     }
 }
