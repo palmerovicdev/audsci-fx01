@@ -112,10 +112,6 @@ public class GuideConfig {
     private void processTemplatesCharge() throws URISyntaxException, IOException {
         var resourcesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
         testTemplateResults.clear();
-        AtomicInteger i = new AtomicInteger(1);
-        AtomicInteger j = new AtomicInteger(1);
-        AtomicInteger k = new AtomicInteger(1);
-        AtomicInteger l = new AtomicInteger(1);
 
         list(resourcesPath).forEach(path -> {
             try {
@@ -180,6 +176,7 @@ public class GuideConfig {
     public List<TestResult> createTestResults() throws URISyntaxException, IOException {
         var testResults = new ArrayList<TestResult>();
         var guidesPath = getPath("resources" + File.separator + "guides");
+        // create a folder with mkdir
         var guideVersions = directoryDirectoryList(guidesPath + File.separator);
         for (String guideVersion : guideVersions) {
             testResults.add(TestResult.builder().test(createTestTemplate(guideVersion)).build());
@@ -225,9 +222,12 @@ public class GuideConfig {
                 lastSubQuestion.push(QuestionTemplate.builder().label(line).build());
             }
         }
-        lastQuestion.peek().getSubQuestions().add(lastSubQuestion.pop());
-        lastRegulation.peek().getQuestionTemplates().add(lastQuestion.pop());
-        componentTemplate.getRegulationTemplates().add(lastRegulation.pop());
+        if (!lastSubQuestion.isEmpty())
+            lastQuestion.peek().getSubQuestions().add(lastSubQuestion.pop());
+        if (!lastRegulation.isEmpty() && !lastQuestion.isEmpty())
+            lastRegulation.peek().getQuestionTemplates().add(lastQuestion.pop());
+        if (!lastRegulation.isEmpty())
+            componentTemplate.getRegulationTemplates().add(lastRegulation.pop());
         return componentTemplate;
     }
 

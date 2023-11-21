@@ -19,8 +19,11 @@ public class EmployeeRepository {
     }
     public void save(EmployeeEntity employeeEntity) {
         entityManager.getTransaction().begin();
-        entityManager.merge(employeeEntity);
+        entityManager.persist(employeeEntity);
         entityManager.getTransaction().commit();
+    }
+    public int getLatestId(){
+        return entityManager.createQuery("SELECT id from EmployeeEntity order by id desc limit 1", Integer.class).getSingleResult();
     }
     public EmployeeEntity findById(int id) {
         return entityManager.find(EmployeeEntity.class, id);

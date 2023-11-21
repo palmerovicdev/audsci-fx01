@@ -13,6 +13,9 @@ public class EmployeeService {
     public static void saveEmployee(Integer integer, String employeeName, String position, Integer areaId){
         employeeRepository.save(new EmployeeEntity(integer,employeeName,position,areaId));
     }
+    public static int getLatestId(){
+        return employeeRepository.getLatestId();
+    }
     public static void deleteEmployee(EmployeeEntity employeeEntity){
         employeeRepository.delete(employeeEntity);
     }

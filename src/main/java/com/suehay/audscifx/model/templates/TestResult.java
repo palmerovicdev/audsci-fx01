@@ -8,6 +8,7 @@ import com.suehay.audscifx.model.EvaluatedComponentEntity;
 import com.suehay.audscifx.model.EvaluatorComponentEntity;
 import com.suehay.audscifx.model.common.TestResultData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class TestResult {
     TestResultData testResultData;
-    List<EvaluatedComponentEntity> evaluatedComponents;
-    List<EvaluatorComponentEntity> evaluatorComponents;
+    List<EvaluatedComponentEntity> evaluatedComponents=new ArrayList<>();
+    List<EvaluatorComponentEntity> evaluatorComponents=new ArrayList<>();
     TestTemplate test;
 }

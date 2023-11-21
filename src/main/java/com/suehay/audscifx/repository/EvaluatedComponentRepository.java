@@ -12,7 +12,6 @@ import static com.suehay.audscifx.config.Injector.getContext;
 
 public class EvaluatedComponentRepository {
     private final EntityManager entityManager = getEntityManager();
-    private final EmployeeRepository employeeRepository = getContext().getBean(EmployeeRepository.class);
 
     public void save(EvaluatedComponentEntity evaluatedComponentEntity) {
         entityManager.getTransaction().begin();

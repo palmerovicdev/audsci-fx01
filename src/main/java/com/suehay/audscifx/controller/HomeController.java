@@ -6,12 +6,15 @@ import com.suehay.audscifx.config.GuideConfig;
 import com.suehay.audscifx.model.*;
 import com.suehay.audscifx.repository.QuestionRepository;
 import com.suehay.audscifx.services.*;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.CacheHint;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +47,10 @@ public class HomeController {
     public JFXListView<CheckBoxModel> actividadesDeControlListViewEvated;
     public JFXListView<CheckBoxModel> informacionYComunicacionListViewEvated;
     public JFXListView<CheckBoxModel> supervicionYMonitoreoListViewEvated;
+    @FXML
+    public ListView<AreaEntity> areasListView;
+    @FXML
+    public ListView<EmployeeEntity> employeeListView;
 
     private AreaEntity latestArea;
     @FXML
@@ -72,10 +79,6 @@ public class HomeController {
     public BarChart<String, Integer> testResultChart;
     @FXML
     public AnchorPane enterpriseCreationView;
-    @FXML
-    public JFXListView<AreaEntity> areasListView;
-    @FXML
-    public JFXListView<EmployeeEntity> employeeListView;
     @FXML
     public TextField areaNameTextField;
     @FXML
@@ -119,16 +122,31 @@ public class HomeController {
     }
 
     private void initEnterpriseCreationView() {
-        this.areasListView.getItems().setAll(AreaService.findAll());
-        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
-        this.areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
-            if (t1 != null) {
-                this.employeeListView.getItems().setAll(EmployeeService.findByAreaId(t1.getId()));
-            }
-        });
+        this.areasListView.getItems().setAll(FXCollections.observableList(AreaService.findAll()));
 
         this.areasListView.getSelectionModel().select(0);
-        this.employeeListView.getItems().setAll(EmployeeService.findByAreaId(this.areasListView.getSelectionModel().getSelectedItem().getId()));
+        this.employeeListView.getItems().clear();
+        this.employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(this.areasListView.getSelectionModel().getSelectedItem().getId())));
+        this.employeeListView.refresh();
+
+        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
+        areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        this.areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
+            if (t1 != null) {
+                Platform.runLater(() -> {
+                    latestArea = areasListView.getSelectionModel().getSelectedItem();
+                    employeeListView.getItems().clear();
+                    System.out.println(latestArea.getId());
+                    System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
+                    employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
+                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+                    /*if (employeeListView.getItems().isEmpty()) {
+                        employeeListView.setPlaceholder(new Label());
+                    }
+                    employeeListView.refresh();*/
+                });
+            }
+        });
     }
 
     @FXML
@@ -226,35 +244,37 @@ public class HomeController {
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
         AreaEntity areaEntity = new AreaEntity(this.areasListView.getItems().size() + 1, this.areaNameTextField.getText());
         if (this.areaNameTextField.getText().isEmpty()) return;
-        this.areasListView.getItems().add(new AreaEntity(this.areasListView.getItems().size() + 1, this.areaNameTextField.getText()));
+        this.areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
+                this.areasListView.getItems().size() + 1,
+                this.areaNameTextField.getText()))));
         if (this.areasListView.getSelectionModel().getSelectedItem() != null)
             latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
-        areasListView.getItems().addListener((ListChangeListener<? super AreaEntity>) c -> {
-            if (!areasListView.getItems().isEmpty()) {
-                areasListView.getSelectionModel().select(latestArea);
-            }
-        });
         AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
     }
 
     @FXML
     public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {
         if (this.areasListView.getSelectionModel().getSelectedItem() == null) return;
-        latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
         AreaService.deleteArea(this.areasListView.getSelectionModel().getSelectedItem());
         this.areasListView.getItems().remove(this.areasListView.getSelectionModel().getSelectedItem());
+        this.areasListView.getSelectionModel().select(areasListView.getItems().get(Math.max(areasListView.getItems().size() - 1, 0)));
+        latestArea = areasListView.getItems().get(Math.max((this.areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
     }
 
     @FXML
     public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
-        if (this.employeeNameTextField.getText().isEmpty() || this.employeePositionTextField.getText().isEmpty()) return;
+        if (this.employeeNameTextField.getText().isEmpty() || this.employeePositionTextField.getText().isEmpty() || this.areasListView.getSelectionModel().getSelectedItem() == null)
+            return;
+        latestArea = this.areasListView.getSelectionModel().getSelectedItem();
+        int latestId = EmployeeService.getLatestId();
         var employee = EmployeeEntity.builder()
-                                     .id(this.employeeListView.getItems().size() + 1)
+                                     .id(latestId + 1)
                                      .employeeName(this.employeeNameTextField.getText())
                                      .position(this.employeePositionTextField.getText())
                                      .build();
         this.employeeListView.getItems().add(employee);
-        employee.setAreaId(this.areasListView.getSelectionModel().getSelectedItem().getId());
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+        employee.setAreaId(latestArea.getId());
         EmployeeService.saveEmployee(employee.getId(), employee.getEmployeeName(), employee.getPosition(), employee.getAreaId());
         System.out.println(employee);
     }
@@ -264,6 +284,7 @@ public class HomeController {
         if (this.employeeListView.getSelectionModel().getSelectedItem() == null) return;
         EmployeeService.deleteEmployee(this.employeeListView.getSelectionModel().getSelectedItem());
         this.employeeListView.getItems().remove(this.employeeListView.getSelectionModel().getSelectedItem());
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
     }
 
     public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
@@ -295,23 +316,25 @@ public class HomeController {
                 regulationTemplate.getQuestionTemplates().forEach(questionTemplate -> {
                     questionTemplate.setRegulationId(regulationTemplate.getId());
                     questionTemplate.setId(k.getAndIncrement());
-                    QuestionService.saveQuestion(new QuestionEntity(questionTemplate.getId(),
-                                                                    questionTemplate.getLabel(),
-                                                                    questionTemplate.getDescription(),
-                                                                    questionTemplate.getResult(),
-                                                                    questionTemplate.getLabel().substring(0, 2),
-                                                                    questionTemplate.getRegulationId(),
-                                                                    null));
+                    QuestionService.saveQuestion(new QuestionEntity(
+                            questionTemplate.getId(),
+                            questionTemplate.getLabel(),
+                            questionTemplate.getDescription(),
+                            questionTemplate.getResult(),
+                            questionTemplate.getLabel().substring(0, 2),
+                            questionTemplate.getRegulationId(),
+                            null));
                     questionTemplate.getSubQuestions().forEach(subQuestionTemplate -> {
                         subQuestionTemplate.setId(l.getAndIncrement());
                         subQuestionTemplate.setSuperquestionId(questionTemplate.getId());
-                        QuestionService.saveQuestion(new QuestionEntity(subQuestionTemplate.getId(),
-                                                                        subQuestionTemplate.getLabel(),
-                                                                        subQuestionTemplate.getDescription(),
-                                                                        subQuestionTemplate.getResult(),
-                                                                        subQuestionTemplate.getLabel().substring(0, 2),
-                                                                        questionTemplate.getRegulationId(),
-                                                                        subQuestionTemplate.getSuperquestionId()));
+                        QuestionService.saveQuestion(new QuestionEntity(
+                                subQuestionTemplate.getId(),
+                                subQuestionTemplate.getLabel(),
+                                subQuestionTemplate.getDescription(),
+                                subQuestionTemplate.getResult(),
+                                subQuestionTemplate.getLabel().substring(0, 2),
+                                questionTemplate.getRegulationId(),
+                                subQuestionTemplate.getSuperquestionId()));
                     });
                 });
             });
@@ -338,21 +361,29 @@ public class HomeController {
         var gestionYPrevencionIdEvated =
                 getIds(gestionYPrevencionListViewEvated.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
 
-        testResultDB.getEvaluatorComponents().addAll(Stream.of( // add all the evaluator components
-                                                                ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
-                                                                gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
-                                                                actividadesDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 3)).toList(),
-                                                                informacionYComunicacionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 4)).toList(),
-                                                                supervicionYMonitoreoId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
-                                                              ).flatMap(List::stream).toList());
-        testResultDB.getEvaluatedComponents().addAll(Stream.of(
+        testResultDB.setEvaluatorComponents(Stream.of( // add all the evaluator components
+                                                       ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
+                                                       gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
+                                                       actividadesDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 3)).toList(),
+                                                       informacionYComunicacionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 4)).toList(),
+                                                       supervicionYMonitoreoId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
+                                                     ).flatMap(List::stream).toList());
+        testResultDB.setEvaluatedComponents(Stream.of(
                 ambienteDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 1)).toList(),
                 gestionYPrevencionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 2)).toList(),
                 actividadesDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 3)).toList(),
                 informacionYComunicacionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 4)).toList(),
                 supervicionYMonitoreoIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 5)).toList()
-                                                              ).flatMap(List::stream).toList());
-        System.out.println();
+                                                     ).flatMap(List::stream).toList());
+        EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
+        EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        // customize the alert
+        alert.setAlertType(Alert.AlertType.INFORMATION);
+        alert.setTitle("Successfully!!!");
+        alert.setHeaderText("Evaluation created successfully!!!");
+        alert.showAndWait();
+
     }
 
 
