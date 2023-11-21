@@ -1,14 +1,13 @@
 package com.suehay.audscifx.repository;
 
-import jakarta.persistence.EntityManager;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
 import com.suehay.audscifx.model.EvaluatedComponentEntity;
+import jakarta.persistence.EntityManager;
 
 import java.util.Collection;
 
 import static com.suehay.audscifx.config.EntityManagerProvider.getEntityManager;
-import static com.suehay.audscifx.config.Injector.getContext;
 
 public class EvaluatedComponentRepository {
     private final EntityManager entityManager = getEntityManager();

@@ -5,18 +5,15 @@ import com.suehay.audscifx.controller.HomeController;
 import com.suehay.audscifx.model.AreaEntity;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
-import com.suehay.audscifx.repository.AreaRepository;
 import com.suehay.audscifx.services.EmployeeService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckListView;
-import org.controlsfx.control.ListSelectionView;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,7 +22,7 @@ public class HomeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home-view.fxml"));
-        var parent=fxmlLoader.load();
+        var parent = fxmlLoader.load();
         initCellsFactories(fxmlLoader);
         init();
         Scene scene = new Scene(fxmlLoader.getRoot(), 1080, 700);
@@ -42,8 +39,8 @@ public class HomeApplication extends Application {
         controller.employeeListView.getItems().addAll(EmployeeService.findAll());
     }
 
-    public void init(){
-        GuideConfig guideConfig=new GuideConfig();
+    public void init() {
+        GuideConfig guideConfig = new GuideConfig();
         try {
             guideConfig.saveTestTemplates();
             guideConfig.chargeTestTemplates();
@@ -104,6 +101,7 @@ public class HomeApplication extends Application {
             };
         }
     }
+
     private static class EmployeeEntityCheckBoxViewCellFactory implements javafx.util.Callback<CheckListView<EmployeeEntity>, CheckBoxListCell<EmployeeEntity>> {
         @Override
         public CheckBoxListCell<EmployeeEntity> call(CheckListView<EmployeeEntity> param) {

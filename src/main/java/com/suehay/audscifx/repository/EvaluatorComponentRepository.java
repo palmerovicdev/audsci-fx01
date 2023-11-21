@@ -1,9 +1,9 @@
 package com.suehay.audscifx.repository;
 
-import jakarta.persistence.EntityManager;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
 import com.suehay.audscifx.model.EvaluatorComponentEntity;
+import jakarta.persistence.EntityManager;
 
 import java.util.Collection;
 
@@ -17,11 +17,13 @@ public class EvaluatorComponentRepository {
         entityManager.merge(evaluatorComponentEntity);
         entityManager.getTransaction().commit();
     }
+
     public void delete(EvaluatorComponentEntity evaluatorComponentEntity) {
         entityManager.getTransaction().begin();
         entityManager.remove(evaluatorComponentEntity);
         entityManager.getTransaction().commit();
     }
+
     public void update(EvaluatorComponentEntity evaluatorComponentEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(evaluatorComponentEntity);

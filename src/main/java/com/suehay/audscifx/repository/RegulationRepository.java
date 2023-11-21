@@ -1,7 +1,7 @@
 package com.suehay.audscifx.repository;
 
-import jakarta.persistence.EntityManager;
 import com.suehay.audscifx.model.RegulationEntity;
+import jakarta.persistence.EntityManager;
 
 import java.util.Collection;
 
@@ -24,12 +24,13 @@ public class RegulationRepository {
     public RegulationEntity findById(int id) {
         return entityManager.find(RegulationEntity.class, id);
     }
+
     // implement the delete by id method
     public void deleteById(int id) {
         entityManager.getTransaction().begin();
         entityManager.createQuery("DELETE FROM RegulationEntity r WHERE r.id = :id")
-                            .setParameter("id", id)
-                            .executeUpdate();
+                     .setParameter("id", id)
+                     .executeUpdate();
         entityManager.getTransaction().commit();
     }
 

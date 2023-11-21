@@ -1,19 +1,21 @@
 package com.suehay.audscifx.repository;
 
-import jakarta.persistence.EntityManager;
 import com.suehay.audscifx.model.ComponentEntity;
+import jakarta.persistence.EntityManager;
 
 import java.util.Collection;
 
 import static com.suehay.audscifx.config.EntityManagerProvider.getEntityManager;
+
 public class ComponentRepository {
     private final EntityManager entityManager = getEntityManager();
 
     // implement the all method
     public Collection<ComponentEntity> findAll() {
         return entityManager.createQuery("SELECT c FROM ComponentEntity c", ComponentEntity.class)
-                .getResultList();
+                            .getResultList();
     }
+
     public void save(ComponentEntity componentEntity) {
         entityManager.getTransaction().begin();
         entityManager.merge(componentEntity);
@@ -35,6 +37,7 @@ public class ComponentRepository {
         entityManager.merge(componentEntity);
         entityManager.getTransaction().commit();
     }
+
     public ComponentEntity findByTestCode(String testCode) {
         return entityManager.createQuery("SELECT c FROM ComponentEntity c WHERE c.testCode = :testCode", ComponentEntity.class).setParameter("testCode", testCode).getSingleResult();
     }

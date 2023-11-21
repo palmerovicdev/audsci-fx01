@@ -8,15 +8,21 @@ import java.util.List;
 
 @AllArgsConstructor
 public class AreaService {
-    private static AreaRepository areaRepository=new AreaRepository();
+    private static final AreaRepository areaRepository = new AreaRepository();
 
-    public static void saveArea(Integer integer, String areaName){
-        areaRepository.save(new AreaEntity(integer,areaName));
+    public static Integer getLatestAreaId() {
+        return areaRepository.getLatestId();
     }
-    public static void deleteArea(AreaEntity areaEntity){
+
+    public static void saveArea(Integer integer, String areaName) {
+        areaRepository.save(new AreaEntity(integer, areaName));
+    }
+
+    public static void deleteArea(AreaEntity areaEntity) {
         areaRepository.delete(areaEntity);
     }
-    public static void deleteArea(Integer integer){
+
+    public static void deleteArea(Integer integer) {
         areaRepository.deleteById(integer);
     }
 

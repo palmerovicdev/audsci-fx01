@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+
 public class Persistence implements PersistenceUnitInfo {
     @Override
     public String getPersistenceUnitName() {

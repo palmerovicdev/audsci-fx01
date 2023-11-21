@@ -1,9 +1,12 @@
 package com.suehay.audscifx.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.util.Objects;
+
 @Getter
 @Setter
 @ToString

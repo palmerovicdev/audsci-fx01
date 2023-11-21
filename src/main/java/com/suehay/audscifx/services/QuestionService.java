@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class QuestionService {
     private static final QuestionRepository questionRepository = new QuestionRepository();
+
     public static void saveQuestion(QuestionEntity questionEntity) {
         questionRepository.save(questionEntity);
     }
+
     public static void deleteQuestion(QuestionEntity questionEntity) {
         questionRepository.delete(questionEntity);
     }

@@ -14,22 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.suehay.audscifx.utils.FileExtractor.*;
+import static com.suehay.audscifx.utils.FileLocator.getPath;
 import static java.lang.String.valueOf;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.list;
-import static com.suehay.audscifx.utils.FileExtractor.*;
-import static com.suehay.audscifx.utils.FileLocator.getPath;
 
 public class GuideConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final String CONFIG_PATH = "resources"+File.separator+"config.json";
-    private final String GUIDE_TEMPLATES_PATH = "resources"+File.separator+"test-templates";
-    private final String LOGS_PATH = "resources"+File.separator+"logs";
-    private final String TEST_RESULTS_PATH = "resources"+File.separator+"test-results";
+    private final String CONFIG_PATH = "resources" + File.separator + "config.json";
+    private final String GUIDE_TEMPLATES_PATH = "resources" + File.separator + "test-templates";
+    private final String LOGS_PATH = "resources" + File.separator + "logs";
+    private final String TEST_RESULTS_PATH = "resources" + File.separator + "test-results";
     // results for test, this list is used to save the test results in the json files in the resources/test-results directory
     public static List<TestResult> testResults = new ArrayList<>();
     // templates for tests

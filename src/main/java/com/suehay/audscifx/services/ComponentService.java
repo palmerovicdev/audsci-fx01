@@ -11,13 +11,14 @@ public class ComponentService {
     public static void saveComponent(ComponentEntity componentEntity) {
         componentRepository.save(componentEntity);
     }
+
     public static void deleteComponent(ComponentEntity componentEntity) {
         componentRepository.delete(componentEntity);
     }
+
     public static void deleteComponentByTestCode(String testCode) {
         componentRepository.deleteByTestCode(testCode);
     }
-
 
 
 }

@@ -2,11 +2,10 @@ package com.suehay.audscifx.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
+
 @Getter
 @Setter
 @ToString

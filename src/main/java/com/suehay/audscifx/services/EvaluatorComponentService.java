@@ -7,6 +7,7 @@ import java.util.List;
 
 public class EvaluatorComponentService {
     private static final EvaluatorComponentRepository evaluatorComponentRepository = new EvaluatorComponentRepository();
+
     public static void saveEvaluatorComponents(List<EvaluatorComponentEntity> evaluatorComponents) {
         evaluatorComponents.forEach(evaluatorComponentRepository::save);
     }

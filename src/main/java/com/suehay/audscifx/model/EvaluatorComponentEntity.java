@@ -1,8 +1,6 @@
 package com.suehay.audscifx.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -23,6 +21,7 @@ public class EvaluatorComponentEntity {
     @Id
     @jakarta.persistence.Column(name = "component_id", nullable = false)
     private Integer componentId;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
