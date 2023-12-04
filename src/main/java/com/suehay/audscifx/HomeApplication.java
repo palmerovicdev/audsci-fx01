@@ -5,6 +5,7 @@ import com.suehay.audscifx.controller.HomeController;
 import com.suehay.audscifx.model.AreaEntity;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
+import com.suehay.audscifx.model.RegulationEntity;
 import com.suehay.audscifx.services.EmployeeService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -93,21 +94,6 @@ public class HomeApplication extends Application {
             return new ListCell<>() {
                 @Override
                 protected void updateItem(EmployeeEntity item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item.getEmployeeName());
-                    }
-                }
-            };
-        }
-    }
-
-    private static class EmployeeEntityCheckBoxViewCellFactory implements javafx.util.Callback<CheckListView<EmployeeEntity>, CheckBoxListCell<EmployeeEntity>> {
-        @Override
-        public CheckBoxListCell<EmployeeEntity> call(CheckListView<EmployeeEntity> param) {
-            return new CheckBoxListCell<>() {
-                @Override
-                public void updateItem(EmployeeEntity item, boolean empty) {
                     super.updateItem(item, empty);
                     if (item != null) {
                         setText(item.getEmployeeName());

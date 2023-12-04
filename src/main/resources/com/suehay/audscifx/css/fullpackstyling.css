@@ -9,14 +9,14 @@
     -fx-background-color: rgba(55, 252, 211, 0.70);
 }
 .button-remove {
-    -fx-background-color: rgba(194, 78, 154, 0.50);
+    -fx-background-color: rgba(204, 40, 70, 0.60);
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
 }
 
 .button-remove:hover {
-    -fx-background-color: rgba(194, 78, 154, 0.70);
+    -fx-background-color: rgba(204, 40, 70, 0.80);
 }
 
 .date-picker {
@@ -193,6 +193,15 @@
     -fx-border-style: solid;
 
 }
+.card2 {
+    -fx-background-color: #161B25;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #161B25;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+
+}
 
 /* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
 .scroll-bar .thumb:hover,
@@ -237,4 +246,28 @@
     -fx-mark-stroke-color: #30BBD7;
     -fx-mark-stroke-width: 2px;
 
+}
+/*
+.tab-pane {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #343C4A;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+*/
+.tab-pane .tab-header-area .tab {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-text-fill: #30BBD7;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
 }

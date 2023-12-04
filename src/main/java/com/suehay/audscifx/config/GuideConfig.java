@@ -36,6 +36,12 @@ public class GuideConfig {
 
     private long logsCount;
 
+    // method to set the isUpdated property of the sonfig.json file to true
+    public void updateGuidesTemplates() throws IOException, URISyntaxException {
+        Config config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        saveConfig(config, true, logsCount);
+    }
+
     /**
      * This method is used to save the test templates in the json files in the resources/test-templates directory
      *

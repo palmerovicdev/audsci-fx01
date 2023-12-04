@@ -60,7 +60,8 @@ public class QuestionRepository {
 
     // implement the all for regulationId, retunrs a collection
     public Collection<QuestionEntity> findAllByRegulationId(int regulationId) {
-        return entityManager.createQuery("SELECT q FROM QuestionEntity q WHERE q.regulationId = :regulationId", QuestionEntity.class)
+        return entityManager.createQuery("SELECT q FROM QuestionEntity q WHERE q.regulationId = :regulationId ORDER BY q.id ASC",
+                                         QuestionEntity.class)
                             .setParameter("regulationId", regulationId)
                             .getResultList();
     }

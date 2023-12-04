@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "question", schema = "audsci", catalog = "audsci")
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionEntity {
+public class QuestionEntity implements Comparable<QuestionEntity> {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
@@ -47,5 +47,10 @@ public class QuestionEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, label, description, result, code, regulationId, superquestionId);
+    }
+
+    @Override
+    public int compareTo(QuestionEntity o) {
+        return this.label.compareTo(o.label);
     }
 }

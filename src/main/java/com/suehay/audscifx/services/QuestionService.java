@@ -4,6 +4,8 @@ import com.suehay.audscifx.model.QuestionEntity;
 import com.suehay.audscifx.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class QuestionService {
     private static final QuestionRepository questionRepository = new QuestionRepository();
@@ -16,4 +18,7 @@ public class QuestionService {
         questionRepository.delete(questionEntity);
     }
 
+    public static List<QuestionEntity> getQuestionsByRegulationId(Integer id) {
+        return questionRepository.findAllByRegulationId(id).stream().toList();
+    }
 }

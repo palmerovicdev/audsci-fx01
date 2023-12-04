@@ -2,15 +2,24 @@ package com.suehay.audscifx.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.suehay.audscifx.config.EntityManagerProvider;
 import com.suehay.audscifx.config.GuideConfig;
 import com.suehay.audscifx.model.*;
+import com.suehay.audscifx.model.common.Properties;
+import com.suehay.audscifx.model.templates.ComponentTemplate;
+import com.suehay.audscifx.model.templates.QuestionTemplate;
+import com.suehay.audscifx.model.templates.RegulationTemplate;
 import com.suehay.audscifx.services.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
@@ -21,12 +30,15 @@ import javafx.scene.layout.VBox;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HomeController {
+    private final GuideConfig guideConfig = new GuideConfig();
     @FXML
     public ChoiceBox<String> guideVersionChoiceBox;
     @FXML
@@ -39,10 +51,15 @@ public class HomeController {
     public JFXListView<CheckBoxModel> informacionYComunicacionListView = new JFXListView<>();
     @FXML
     public JFXListView<CheckBoxModel> supervicionYMonitoreoListView = new JFXListView<>();
+    @FXML
     public JFXListView<CheckBoxModel> ambienteDeControlListViewEvated;
+    @FXML
     public JFXListView<CheckBoxModel> gestionYPrevencionListViewEvated;
+    @FXML
     public JFXListView<CheckBoxModel> actividadesDeControlListViewEvated;
+    @FXML
     public JFXListView<CheckBoxModel> informacionYComunicacionListViewEvated;
+    @FXML
     public JFXListView<CheckBoxModel> supervicionYMonitoreoListViewEvated;
     @FXML
     public ListView<AreaEntity> areasListView;
@@ -98,22 +115,52 @@ public class HomeController {
     public DatePicker endTestDatePicker;
     @FXML
     public AnchorPane componentEvaluationView;
+    @FXML
+    public AnchorPane printReportView;
+    @FXML
+    public AnchorPane helpView;
+    @FXML
+    public AnchorPane configurationView;
+    @FXML
+    public JFXButton updateDatabaseProperties;
+    @FXML
+    public JFXButton guideRechargeButton;
+    public TextField databaseConfigTextField;
+    @FXML
+    public TextField userConfigTextField;
+    @FXML
+    public TextField passwordConfigTextField;
+    @FXML
+    public ListView<RegulationEntity> ambCntrlRegulationEntityListView;
+    @FXML
+    public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView;
+    @FXML
+    public ListView<RegulationEntity> gestPrevRegulationEntityListView;
+    @FXML
+    public TreeView<QuestionEntity> gestPrevQuestionEntityTreeView;
+    public ListView<RegulationEntity> actvCntrlRegulationEntityListView;
+    public TreeView<QuestionEntity> actvCntrlQuestionEntityTreeView;
+    public ListView<RegulationEntity> infMonRegulationEntityListView;
+    public TreeView<QuestionEntity> infMonQuestionEntityTreeView;
+    public ListView<RegulationEntity> supMonRegulationEntityListView;
+    public TreeView<QuestionEntity> supMonQuestionEntityTreeView;
+    @FXML
     private AreaEntity latestArea;
+
+    @FXML
+    public void onEnterpriseButtonClicked(MouseEvent mouseEvent) {
+        visibilityChange(false, true, false, false, false, false, false);
+        initEnterpriseCreationView();
+    }
 
     void visibilityChange(boolean home, boolean enterpriseCreation, boolean testCreation, boolean testEvaluate, boolean reportGeneration, boolean help, boolean config) {
         homeView.setVisible(home);
         enterpriseCreationView.setVisible(enterpriseCreation);
         testCreationView.setVisible(testCreation);
         componentEvaluationView.setVisible(testEvaluate);
-        // reportGenerationView.setVisible(reportGeneration);
-        // helpView.setVisible(help);
-        // configView.setVisible(config);
-    }
-
-    @FXML
-    public void onEnterpriseButtonClicked(MouseEvent mouseEvent) {
-        visibilityChange(false, true, false, false, false, false, false);
-        initEnterpriseCreationView();
+        printReportView.setVisible(reportGeneration);
+        helpView.setVisible(help);
+        configurationView.setVisible(config);
     }
 
     private void initEnterpriseCreationView() {
@@ -123,16 +170,16 @@ public class HomeController {
             employeeListView.setPrefHeight(0);
             return;
         }
+
+        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
+        areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        setAreasListViewSelectionModel();
         areasListView.getSelectionModel().select(0);
         latestArea = areasListView.getSelectionModel().getSelectedItem();
         employeeListView.getItems().clear();
         employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(areasListView.getSelectionModel().getSelectedItem().getId())));
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
         areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
-
-        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
-        areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        setAreasListViewSelectionModel();
     }
 
     private void setAreasListViewSelectionModel() {
@@ -187,15 +234,6 @@ public class HomeController {
 
     }
 
-
-    private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
-        ambienteDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        actividadesDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        informacionYComunicacionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        supervicionYMonitoreoListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        gestionYPrevencionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-    }
-
     private void setCellFactory(ListView<CheckBoxModel> listView) {
         listView.setCellFactory(param -> new ListCell<CheckBoxModel>() {
             @Override
@@ -219,10 +257,82 @@ public class HomeController {
         });
     }
 
+    private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
+        ambienteDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        actividadesDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        informacionYComunicacionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        supervicionYMonitoreoListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        gestionYPrevencionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+    }
 
     @FXML
     public void onTestEvaluateButtonClicked(MouseEvent mouseEvent) {
+        initTestEvaluationViewRegulationListView(1, ambCntrlRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(2, gestPrevRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(3, actvCntrlRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(4, infMonRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(5, supMonRegulationEntityListView);
+
+        setRegulationEntityListViewSelectionModel(ambCntrlQuestionEntityTreeView, ambCntrlRegulationEntityListView);
+        setRegulationEntityListViewSelectionModel(gestPrevQuestionEntityTreeView, gestPrevRegulationEntityListView);
+        setRegulationEntityListViewSelectionModel(actvCntrlQuestionEntityTreeView, actvCntrlRegulationEntityListView);
+        setRegulationEntityListViewSelectionModel(infMonQuestionEntityTreeView, infMonRegulationEntityListView);
+        setRegulationEntityListViewSelectionModel(supMonQuestionEntityTreeView, supMonRegulationEntityListView);
+
         visibilityChange(false, false, false, true, false, false, false);
+    }
+
+    private void initTestEvaluationViewRegulationListView(Integer componentId, ListView<RegulationEntity> regulationEntityListViews) {
+        var regulations = RegulationService.getRegulationsByComponentId(componentId);
+        regulationEntityListViews.getItems().clear();
+        regulationEntityListViews.setCellFactory(new RegulationEntityCellFactory());
+        regulationEntityListViews.getItems().addAll(regulations);
+    }
+
+    private void setRegulationEntityListViewSelectionModel(
+            TreeView<QuestionEntity> questionEntityTreeView,
+            ListView<RegulationEntity> regulationEntityListView) {
+        questionEntityTreeView.setCellFactory(param -> new TreeCell<>() {
+            @Override
+            protected void updateItem(QuestionEntity item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item.getLabel());
+                    setGraphic(null);
+                }
+            }
+        });
+        regulationEntityListView.getSelectionModel().selectedItemProperty().addListener((observableValue, regulationEntity, t1) -> {
+            if (t1 != null) Platform.runLater(() -> rechargeTreeView(t1, questionEntityTreeView));
+
+        });
+        questionEntityTreeView.setShowRoot(false);
+    }
+
+    private void rechargeTreeView(RegulationEntity t1, TreeView<QuestionEntity> questionEntityTreeView) {
+        questionEntityTreeView.setRoot(null);
+        var questions = QuestionService.getQuestionsByRegulationId(t1.getId());
+        var root = new TreeItem<QuestionEntity>(new QuestionEntity());
+        root.setExpanded(true);
+        for (QuestionEntity questionEntity : questions) {
+            var question = new TreeItem<>(questionEntity);
+            question.setExpanded(true);
+            if (questionEntity.getSuperquestionId() == null) {
+                root.getChildren().add(question);
+            } else {
+                for (TreeItem<QuestionEntity> questionEntityTreeItem : root.getChildren()) {
+                    if (questionEntityTreeItem.getValue().getId().equals(questionEntity.getSuperquestionId())) {
+                        questionEntityTreeItem.getChildren().add(question);
+                    }
+                }
+            }
+        }
+        questionEntityTreeView.setRoot(root);
+        questionEntityTreeView.setPrefHeight(questionEntityTreeView.getChildrenUnmodifiable().size() * 25);
+        questionEntityTreeView.refresh();
     }
 
     @FXML
@@ -237,7 +347,15 @@ public class HomeController {
 
     @FXML
     public void onConfigButtonClicked(MouseEvent mouseEvent) {
+        initConfigurationView();
         visibilityChange(false, false, false, false, false, false, true);
+    }
+
+    private void initConfigurationView() {
+        // set the textfields with the properties values
+        databaseConfigTextField.setText(EntityManagerProvider.DATABASE);
+        userConfigTextField.setText(EntityManagerProvider.USER);
+        passwordConfigTextField.setText(EntityManagerProvider.PASSWORD);
     }
 
     @FXML
@@ -254,7 +372,7 @@ public class HomeController {
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
-            alert.setHeaderText("Area name already exists!!!");
+            alert.setHeaderText("El nombre del area ya existe!!!");
             areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
             alert.showAndWait();
             return;
@@ -265,13 +383,13 @@ public class HomeController {
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
-            alert.setHeaderText("Area name is empty!!!");
+            alert.setHeaderText("El nombre del area esta vacio!!!");
             areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
             alert.showAndWait();
             return;
         }
         areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
-                areaId == null ? 0 : areaId + 1,
+                areaId == null ? 1 : areaId + 1,
                 areaNameTextField.getText()))));
         if (areasListView.getSelectionModel().getSelectedItem() != null)
             latestArea = areasListView.getItems().get(Math.max((areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
@@ -303,10 +421,32 @@ public class HomeController {
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
-            alert.setHeaderText("Employee name or position is empty!!!");
+            alert.setHeaderText("El nombre del empleado o el cargo esta vacio!!!");
             // set border color red with transparency
             employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
             employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            alert.showAndWait();
+            return;
+        }
+        if (employeePositionTextField.getText().length()>50){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("El cargo del empleado no puede tener mas de 50 caracteres!!!");
+            // set border color red with transparency
+            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            alert.showAndWait();
+            return;
+        }
+        if (employeeNameTextField.getText().length()>50){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("El nombre del empleado no puede tener mas de 50 caracteres!!!");
+            // set border color red with transparency
+            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
             alert.showAndWait();
             return;
         }
@@ -316,13 +456,12 @@ public class HomeController {
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
-            alert.setHeaderText("Employee name already exists!!!");
+            alert.setHeaderText("El nombre del empleado ya existe!!!");
             // set border color red with transparency
             employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
             alert.showAndWait();
             return;
         }
-        latestArea = areasListView.getSelectionModel().getSelectedItem();
         Integer latestId = EmployeeService.getLatestId();
         var employee = EmployeeEntity.builder()
                                      .id(latestId == null ? 1 : latestId + 1)
@@ -331,7 +470,8 @@ public class HomeController {
                                      .build();
         employeeListView.getItems().add(employee);
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-        employee.setAreaId(latestArea.getId());
+        var area=latestArea;
+        employee.setAreaId(area.getId());
         EmployeeService.saveEmployee(employee.getId(), employee.getEmployeeName(), employee.getPosition(), employee.getAreaId());
         System.out.println(employee);
         // set employeeNameTextField and employeePositionTextField border color to black with transparency 0.5
@@ -364,16 +504,15 @@ public class HomeController {
         AtomicInteger i = new AtomicInteger(1);
         AtomicInteger j = new AtomicInteger(1);
         AtomicInteger k = new AtomicInteger(1);
-        AtomicInteger l = new AtomicInteger(1);
-        testResultDB.getTest().getComponentTemplates().forEach(componentTemplate -> {
+        for (ComponentTemplate componentTemplate : testResultDB.getTest().getComponentTemplates()) {
             componentTemplate.setId(i.getAndIncrement());
             componentTemplate.setTestCode(testCode);
             ComponentService.saveComponent(new ComponentEntity(componentTemplate.getId(), componentTemplate.getLabel(), componentTemplate.getTestCode()));
-            componentTemplate.getRegulationTemplates().forEach(regulationTemplate -> {
+            for (RegulationTemplate regulationTemplate : componentTemplate.getRegulationTemplates()) {
                 regulationTemplate.setId(j.getAndIncrement());
                 regulationTemplate.setComponentId(componentTemplate.getId());
                 RegulationService.saveRegulation(new RegulationEntity(regulationTemplate.getId(), regulationTemplate.getLabel(), regulationTemplate.getComponentId()));
-                regulationTemplate.getQuestionTemplates().forEach(questionTemplate -> {
+                for (QuestionTemplate questionTemplate : regulationTemplate.getQuestionTemplates()) {
                     questionTemplate.setRegulationId(regulationTemplate.getId());
                     questionTemplate.setId(k.getAndIncrement());
                     QuestionService.saveQuestion(new QuestionEntity(
@@ -382,10 +521,10 @@ public class HomeController {
                             questionTemplate.getDescription(),
                             questionTemplate.getResult(),
                             questionTemplate.getLabel().substring(0, 2),
-                            questionTemplate.getRegulationId(),
+                            regulationTemplate.getId(),
                             null));
-                    questionTemplate.getSubQuestions().forEach(subQuestionTemplate -> {
-                        subQuestionTemplate.setId(l.getAndIncrement());
+                    for (QuestionTemplate subQuestionTemplate : questionTemplate.getSubQuestions()) {
+                        subQuestionTemplate.setId(k.getAndIncrement());
                         subQuestionTemplate.setSuperquestionId(questionTemplate.getId());
                         QuestionService.saveQuestion(new QuestionEntity(
                                 subQuestionTemplate.getId(),
@@ -393,12 +532,12 @@ public class HomeController {
                                 subQuestionTemplate.getDescription(),
                                 subQuestionTemplate.getResult(),
                                 subQuestionTemplate.getLabel().substring(0, 2),
-                                questionTemplate.getRegulationId(),
+                                regulationTemplate.getId(),
                                 subQuestionTemplate.getSuperquestionId()));
-                    });
-                });
-            });
-        });
+                    }
+                }
+            }
+        }
         var ambienteDeControlId =
                 getIds(ambienteDeControlListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
         var actividadesDeControlId =
@@ -440,8 +579,8 @@ public class HomeController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         // customize the alert
         alert.setAlertType(Alert.AlertType.INFORMATION);
-        alert.setTitle("Successfully!!!");
-        alert.setHeaderText("Evaluation created successfully!!!");
+        alert.setTitle("Perfecto!!!");
+        alert.setHeaderText("Evaluacion creada correctamente!!!");
         alert.showAndWait();
 
     }
@@ -450,6 +589,111 @@ public class HomeController {
     public List<Integer> getIds(List<ObjectProperty<EmployeeEntity>> employees) {
         return employees.stream().map(ObjectProperty::get).map(EmployeeEntity::getId).toList();
     }
+
+    @FXML
+    public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
+        // show an alert to confirm the update
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        // customize the alert
+        alert.setAlertType(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmacion!!!");
+        alert.setHeaderText("Estas seguro que quieres actualizar las propiedades??");
+        alert.setContentText("Si atualizas las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
+        alert.showAndWait();
+        if (alert.getResult() != ButtonType.OK) return;
+        // update the properties
+        EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
+                                                            databaseConfigTextField.getText(),"audsci"));
+        // show an alert to get a success message
+        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+        // customize the alert
+        alert1.setAlertType(Alert.AlertType.INFORMATION);
+        alert1.setTitle("Perfecto!!!");
+        alert1.setHeaderText("Propiedades actualizadas correctamente!!!");
+        alert1.setContentText("Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
+        alert1.showAndWait();
+    }
+
+    @FXML
+    public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
+        try {
+            // show an alert to confirm the recharge
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            // customize the alert
+            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmacion!!!");
+            alert.setHeaderText("Estas seguro que quieres recargar las guias??");
+            alert.showAndWait();
+            if (alert.getResult() != ButtonType.OK) return;
+            // recharge the guides
+            guideConfig.updateGuidesTemplates();
+            guideConfig.saveTestTemplates();
+            guideConfig.chargeTestTemplates();
+            // init cells factories
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
+    public void onAmbCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
+        // set the width of te listview plus one waiting 50 millis beteewn plus
+        animateListView(ambCntrlRegulationEntityListView);
+    }
+
+    private void animateListView(ListView<RegulationEntity> regulationEntityListView) {
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(100), new KeyValue(regulationEntityListView.prefWidthProperty(), 400)));
+        timeline.play();
+    }
+
+    @FXML
+    public void onAmbCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
+        ambCntrlRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onGestPrevListViewTestMouseEntered(MouseEvent mouseEvent) {
+        // set the width of te listview plus one waiting 50 millis beteewn plus
+        animateListView(gestPrevRegulationEntityListView);
+    }
+
+    @FXML
+    public void onGestPrevListViewTestMouseExited(MouseEvent mouseEvent) {
+        gestPrevRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onActvCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(actvCntrlRegulationEntityListView);
+    }
+
+    @FXML
+    public void onActvCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
+        actvCntrlRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onInfMonListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(infMonRegulationEntityListView);
+    }
+
+    @FXML
+    public void onInfMonListViewTestMouseExited(MouseEvent mouseEvent) {
+        infMonRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onSupMonListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(supMonRegulationEntityListView);
+    }
+
+    @FXML
+    public void onSupMonListViewTestMouseExited(MouseEvent mouseEvent) {
+        supMonRegulationEntityListView.setPrefWidth(30);
+    }
+
 
     @Data
     public static class CheckBoxModel {
@@ -461,6 +705,21 @@ public class HomeController {
             this.checked = new SimpleBooleanProperty(checked);
         }
 
+    }
+
+    private static class RegulationEntityCellFactory implements javafx.util.Callback<ListView<com.suehay.audscifx.model.RegulationEntity>, ListCell<com.suehay.audscifx.model.RegulationEntity>> {
+        @Override
+        public ListCell<RegulationEntity> call(ListView<RegulationEntity> param) {
+            return new ListCell<>() {
+                @Override
+                protected void updateItem(RegulationEntity item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item != null) {
+                        setText(item.getLabel());
+                    }
+                }
+            };
+        }
     }
 
 }
