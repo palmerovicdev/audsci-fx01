@@ -2,6 +2,7 @@ package com.suehay.audscifx.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
 import com.suehay.audscifx.config.EntityManagerProvider;
 import com.suehay.audscifx.config.GuideConfig;
 import com.suehay.audscifx.model.*;
@@ -19,10 +20,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -30,8 +32,6 @@ import javafx.scene.layout.VBox;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -125,6 +125,7 @@ public class HomeController {
     public JFXButton updateDatabaseProperties;
     @FXML
     public JFXButton guideRechargeButton;
+    @FXML
     public TextField databaseConfigTextField;
     @FXML
     public TextField userConfigTextField;
@@ -144,6 +145,56 @@ public class HomeController {
     public TreeView<QuestionEntity> infMonQuestionEntityTreeView;
     public ListView<RegulationEntity> supMonRegulationEntityListView;
     public TreeView<QuestionEntity> supMonQuestionEntityTreeView;
+    @FXML
+    public JFXButton ambContSaveButton;
+    @FXML
+    public CheckBox ambContYesCheckBox;
+    @FXML
+    public CheckBox ambContNoCheckBox;
+    @FXML
+    public Label ambContTextLabel;
+    @FXML
+    public JFXTextArea ambContTextArea;
+    @FXML
+    public Label gestPrevTextLabel1;
+    @FXML
+    public JFXTextArea gestPrevTextArea1;
+    @FXML
+    public CheckBox gestPrevNoCheckBox1;
+    @FXML
+    public JFXButton gestPrevSaveButton1;
+    @FXML
+    public CheckBox gestPrevYesCheckBox1;
+    @FXML
+    public Label actContTextLabel11;
+    @FXML
+    public JFXTextArea actContTextArea11;
+    @FXML
+    public CheckBox actContNoCheckBox11;
+    @FXML
+    public JFXButton actContSaveButton11;
+    @FXML
+    public CheckBox actContYesCheckBox11;
+    @FXML
+    public JFXButton infMonSaveButton;
+    @FXML
+    public CheckBox infMonYesCheckBox;
+    @FXML
+    public CheckBox infMonNoCheckBox;
+    @FXML
+    public Label infMonTextLabel;
+    @FXML
+    public JFXTextArea infMonTextArea;
+    @FXML
+    public JFXButton supMonSaveButton;
+    @FXML
+    public CheckBox supMonYesCheckBox;
+    @FXML
+    public CheckBox supMonNoCheckBox;
+    @FXML
+    public Label supMonTextLabel;
+    @FXML
+    public JFXTextArea supMonTextArea;
     @FXML
     private AreaEntity latestArea;
 
@@ -273,11 +324,11 @@ public class HomeController {
         initTestEvaluationViewRegulationListView(4, infMonRegulationEntityListView);
         initTestEvaluationViewRegulationListView(5, supMonRegulationEntityListView);
 
-        setRegulationEntityListViewSelectionModel(ambCntrlQuestionEntityTreeView, ambCntrlRegulationEntityListView);
-        setRegulationEntityListViewSelectionModel(gestPrevQuestionEntityTreeView, gestPrevRegulationEntityListView);
-        setRegulationEntityListViewSelectionModel(actvCntrlQuestionEntityTreeView, actvCntrlRegulationEntityListView);
-        setRegulationEntityListViewSelectionModel(infMonQuestionEntityTreeView, infMonRegulationEntityListView);
-        setRegulationEntityListViewSelectionModel(supMonQuestionEntityTreeView, supMonRegulationEntityListView);
+        setRegulationEntityListViewSelectionModel(ambCntrlQuestionEntityTreeView, ambCntrlRegulationEntityListView, ambContTextLabel, ambContTextArea, ambContYesCheckBox, ambContNoCheckBox);
+        setRegulationEntityListViewSelectionModel(gestPrevQuestionEntityTreeView, gestPrevRegulationEntityListView, gestPrevTextLabel1, gestPrevTextArea1, gestPrevYesCheckBox1, gestPrevNoCheckBox1);
+        setRegulationEntityListViewSelectionModel(actvCntrlQuestionEntityTreeView, actvCntrlRegulationEntityListView, actContTextLabel11, actContTextArea11, actContYesCheckBox11, actContNoCheckBox11);
+        setRegulationEntityListViewSelectionModel(infMonQuestionEntityTreeView, infMonRegulationEntityListView, infMonTextLabel, infMonTextArea, infMonYesCheckBox, infMonNoCheckBox);
+        setRegulationEntityListViewSelectionModel(supMonQuestionEntityTreeView, supMonRegulationEntityListView, supMonTextLabel, supMonTextArea, supMonYesCheckBox, supMonNoCheckBox);
 
         visibilityChange(false, false, false, true, false, false, false);
     }
@@ -291,7 +342,8 @@ public class HomeController {
 
     private void setRegulationEntityListViewSelectionModel(
             TreeView<QuestionEntity> questionEntityTreeView,
-            ListView<RegulationEntity> regulationEntityListView) {
+            ListView<RegulationEntity> regulationEntityListView, Label label, JFXTextArea jfxTextArea,
+            CheckBox checkBox, CheckBox checkBox1) {
         questionEntityTreeView.setCellFactory(param -> new TreeCell<>() {
             @Override
             protected void updateItem(QuestionEntity item, boolean empty) {
@@ -306,13 +358,15 @@ public class HomeController {
             }
         });
         regulationEntityListView.getSelectionModel().selectedItemProperty().addListener((observableValue, regulationEntity, t1) -> {
-            if (t1 != null) Platform.runLater(() -> rechargeTreeView(t1, questionEntityTreeView));
+            if (t1 != null) Platform.runLater(() -> rechargeTreeView(t1, questionEntityTreeView, label, jfxTextArea, checkBox, checkBox1));
 
         });
         questionEntityTreeView.setShowRoot(false);
     }
 
-    private void rechargeTreeView(RegulationEntity t1, TreeView<QuestionEntity> questionEntityTreeView) {
+    private void rechargeTreeView(
+            RegulationEntity t1, TreeView<QuestionEntity> questionEntityTreeView, Label label, JFXTextArea jfxTextArea,
+            CheckBox checkBox, CheckBox checkBox1) {
         questionEntityTreeView.setRoot(null);
         var questions = QuestionService.getQuestionsByRegulationId(t1.getId());
         var root = new TreeItem<QuestionEntity>(new QuestionEntity());
@@ -326,11 +380,22 @@ public class HomeController {
                 for (TreeItem<QuestionEntity> questionEntityTreeItem : root.getChildren()) {
                     if (questionEntityTreeItem.getValue().getId().equals(questionEntity.getSuperquestionId())) {
                         questionEntityTreeItem.getChildren().add(question);
+                        // when you select a item of the tree view the label of the question will be set into the label
+                        // and the description of the question will be set into the text area
+
                     }
                 }
             }
         }
         questionEntityTreeView.setRoot(root);
+        questionEntityTreeView.getSelectionModel().selectedItemProperty().addListener((observableValue, questionEntity1, t11) -> {
+            if (t11 != null) {
+                label.setText(t11.getValue().getLabel());
+                jfxTextArea.setText(t11.getValue().getDescription());
+                checkBox.setSelected(t11.getValue().getResult() != null && t11.getValue().getResult());
+                checkBox1.setSelected(t11.getValue().getResult() != null && !t11.getValue().getResult());
+            }
+        });
         questionEntityTreeView.setPrefHeight(questionEntityTreeView.getChildrenUnmodifiable().size() * 25);
         questionEntityTreeView.refresh();
     }
@@ -428,7 +493,7 @@ public class HomeController {
             alert.showAndWait();
             return;
         }
-        if (employeePositionTextField.getText().length()>50){
+        if (employeePositionTextField.getText().length() > 50) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
@@ -439,7 +504,7 @@ public class HomeController {
             alert.showAndWait();
             return;
         }
-        if (employeeNameTextField.getText().length()>50){
+        if (employeeNameTextField.getText().length() > 50) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
@@ -470,7 +535,7 @@ public class HomeController {
                                      .build();
         employeeListView.getItems().add(employee);
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-        var area=latestArea;
+        var area = latestArea;
         employee.setAreaId(area.getId());
         EmployeeService.saveEmployee(employee.getId(), employee.getEmployeeName(), employee.getPosition(), employee.getAreaId());
         System.out.println(employee);
@@ -603,7 +668,7 @@ public class HomeController {
         if (alert.getResult() != ButtonType.OK) return;
         // update the properties
         EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
-                                                            databaseConfigTextField.getText(),"audsci"));
+                                                            databaseConfigTextField.getText(), "audsci"));
         // show an alert to get a success message
         Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
         // customize the alert
@@ -692,6 +757,132 @@ public class HomeController {
     @FXML
     public void onSupMonListViewTestMouseExited(MouseEvent mouseEvent) {
         supMonRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onAmbContSaveButtonClicked(MouseEvent mouseEvent) {
+
+
+    }
+
+    @FXML
+    public void onGestPrevSaveButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @FXML
+    public void onActContSaveButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @FXML
+    public void onAmbContCheckBoxClicked(MouseEvent mouseEvent) {
+        // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
+        checkBoxChanged(ambCntrlQuestionEntityTreeView, true, ambContNoCheckBox);
+    }
+
+    @FXML
+    public void onAmbContNoCheckBoxClicked(MouseEvent mouseEvent) {
+        // set the result of the question that match with the selected in the tree view to false
+        checkBoxChanged(ambCntrlQuestionEntityTreeView, false, ambContYesCheckBox);
+    }
+
+    @FXML
+    public void onAmbContTextAreaChanged(KeyEvent inputMethodEvent) {
+        // set the description of the question that match with the selected in the tree view to the text area text
+        textAreaChanged(ambCntrlQuestionEntityTreeView, ambContTextArea, inputMethodEvent);
+    }
+
+    private void textAreaChanged(TreeView<QuestionEntity> treeView, JFXTextArea jfxTextArea, KeyEvent inputMethodEvent) {
+        if (inputMethodEvent.getCode() == KeyCode.ENTER){
+            var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
+            questionEntity.setDescription(jfxTextArea.getText());
+            QuestionService.saveQuestion(questionEntity);
+        }
+    }
+
+    @FXML
+    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {}
+
+    @FXML
+    public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
+        // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
+        checkBoxChanged(infMonQuestionEntityTreeView, true, infMonNoCheckBox);
+    }
+
+    @FXML
+    public void onInfMonNoCheckBoxClicked(MouseEvent mouseEvent) {
+        // set the result of the question that match with the selected in the tree view to false
+        checkBoxChanged(infMonQuestionEntityTreeView, false, infMonYesCheckBox);
+    }
+
+    @FXML
+    public void onInfMonTextAreaChanged(KeyEvent inputMethodEvent) {
+        // set the description of the question that match with the selected in the tree view to the text area text
+        textAreaChanged(infMonQuestionEntityTreeView, infMonTextArea, inputMethodEvent);
+    }
+
+    @FXML
+    public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {}
+
+    @FXML
+    public void onSupMonCheckBoxClicked(MouseEvent mouseEvent) {
+        // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
+        checkBoxChanged(supMonQuestionEntityTreeView, true, supMonNoCheckBox);
+    }
+
+    @FXML
+    public void onSupMonNoCheckBoxClicked(MouseEvent mouseEvent) {
+        // set the result of the question that match with the selected in the tree view to false
+        checkBoxChanged(supMonQuestionEntityTreeView, false, supMonYesCheckBox);
+    }
+
+    private void checkBoxChanged(TreeView<QuestionEntity> treeView, boolean result, CheckBox checkBox) {
+        var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
+        questionEntity.setResult(result);
+        QuestionService.saveQuestion(questionEntity);
+        checkBox.setSelected(false);
+    }
+
+    @FXML
+    public void onSupMonTextAreaChanged(KeyEvent inputMethodEvent) {
+        // set the description of the question that match with the selected in the tree view to the text area text
+        textAreaChanged(supMonQuestionEntityTreeView, supMonTextArea, inputMethodEvent);
+    }
+
+    @FXML
+
+    public void onActConYesCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(actvCntrlQuestionEntityTreeView, true, actContNoCheckBox11);
+    }
+
+    @FXML
+
+    public void onActConNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(actvCntrlQuestionEntityTreeView, false, actContYesCheckBox11);
+    }
+
+    @FXML
+    public void onActContTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(actvCntrlQuestionEntityTreeView, actContTextArea11, inputMethodEvent);
+    }
+
+    @FXML
+
+    public void onGestPrevYesCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(gestPrevQuestionEntityTreeView, true, gestPrevNoCheckBox1);
+    }
+
+    @FXML
+
+    public void onGestPrevNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(gestPrevQuestionEntityTreeView, false, gestPrevYesCheckBox1);
+    }
+
+    @FXML
+
+    public void onGesPrevTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(gestPrevQuestionEntityTreeView, gestPrevTextArea1, inputMethodEvent);
     }
 
 

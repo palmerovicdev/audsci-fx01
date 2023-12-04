@@ -2,11 +2,13 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -134,6 +136,8 @@
     <center>
         <StackPane BorderPane.alignment="CENTER">
             <AnchorPane fx:id="homeView" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane prefHeight="271.0" prefWidth="1040.0" style="-fx-background-color: #254173;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <AnchorPane layoutX="21.0" layoutY="11.0" prefHeight="112.0" prefWidth="584.0" style="-fx-background-radius: 8px; -fx-background-color: #FFFFFF;" />
                 <JFXListView fx:id="componentsListView" layoutX="435.0" layoutY="393.0" prefHeight="142.0" prefWidth="398.0" styleClass="table-view" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="395.0" />
                 <Label layoutX="437.0" layoutY="368.0" text="Componentes" AnchorPane.rightAnchor="328.0" AnchorPane.topAnchor="368.0">
                     <font>
@@ -148,7 +152,7 @@
                         <NumberAxis side="LEFT" />
                     </yAxis>
                 </BarChart>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="14.0" stylesheets="@css/fullpackstyling.css" text="AUDCSI makes easy." AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="14.0">
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="14.0" stylesheets="@css/fullpackstyling.css" text="AUDCSI lo hace facil." AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="14.0">
                     <font>
                         <Font name="System Bold" size="36.0" />
                     </font>
@@ -165,7 +169,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <StackPane styleClass="stack-pane" stylesheets="@css/fullpackstyling.css" GridPane.columnIndex="4">
-                        <GridPane style="-fx-background-color: #343C4A;">
+                        <GridPane style="-fx-background-radius: 5px;" styleClass="card2" stylesheets="@css/fullpackstyling.css">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1000.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
@@ -192,7 +196,7 @@
                         </VBox>
                     </StackPane>
                     <StackPane styleClass="stack-pane" stylesheets="@css/fullpackstyling.css" GridPane.columnIndex="2">
-                        <GridPane style="-fx-background-color: #343C4A;">
+                        <GridPane style="-fx-background-radius: 5px;" styleClass="card2" stylesheets="@css/fullpackstyling.css">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1000.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
@@ -218,7 +222,7 @@
                         </VBox>
                     </StackPane>
                     <StackPane styleClass="stack-pane" stylesheets="@css/fullpackstyling.css">
-                        <GridPane style="-fx-background-color: #343C4A;">
+                        <GridPane style="-fx-background-radius: 5px;" styleClass="card2" stylesheets="@css/fullpackstyling.css">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1000.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
@@ -246,12 +250,12 @@
                 </GridPane>
                 <Label layoutX="80.0" layoutY="62.0" text="- La mas rapida y sencilla herramienta a tu alcance." AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="62.0">
                     <font>
-                        <Font size="12.0" />
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
                 <Label layoutX="81.0" layoutY="73.0" prefHeight="46.0" prefWidth="501.0" text="- Crea tu estructura empresarial de forma cencilla, captura tus datos de evaluacion, y comienza!!!" wrapText="true">
                     <font>
-                        <Font size="12.0" />
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
             </AnchorPane>
@@ -440,6 +444,7 @@
                 </AnchorPane>
             </AnchorPane>
             <AnchorPane fx:id="testCreationView" prefHeight="766.0" prefWidth="1024.0" visible="false">
+            <AnchorPane layoutX="37.0" layoutY="21.0" prefHeight="186.0" prefWidth="445.0" style="-fx-background-radius: 5px;" styleClass="card" stylesheets="@css/fullpackstyling.css" />
                 <GridPane layoutX="25.0" layoutY="244.0" prefHeight="190.0" prefWidth="990.0" AnchorPane.bottomAnchor="266.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -492,27 +497,27 @@
                         <JFXListView fx:id="supervicionYMonitoreoListView" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                 </GridPane>
-                <Label layoutX="70.0" layoutY="37.0" text="Codigo de evaluacion">
+                <Label layoutX="67.0" layoutY="33.0" text="Codigo de evaluacion" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <TextField fx:id="testCodeTextField" layoutX="269.0" layoutY="37.0" prefHeight="26.0" prefWidth="192.0" promptText="EA-D54" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
-                <Label layoutX="70.0" layoutY="85.0" text="Fecha de inicio">
+                <TextField fx:id="testCodeTextField" layoutX="266.0" layoutY="33.0" prefHeight="26.0" prefWidth="192.0" promptText="EA-D54" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                <Label layoutX="67.0" layoutY="78.0" text="Fecha de inicio" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <DatePicker fx:id="startTestDatePicker" layoutX="270.0" layoutY="82.0" promptText="11/3/01" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
-                <Label layoutX="70.0" layoutY="133.0" text="Fecha de fin">
+                <DatePicker fx:id="startTestDatePicker" layoutX="267.0" layoutY="75.0" promptText="11/3/01" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                <Label layoutX="67.0" layoutY="121.0" text="Fecha de fin" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <DatePicker fx:id="endTestDatePicker" layoutX="269.0" layoutY="130.0" promptText="11/3/23" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
-                <Label layoutX="71.0" layoutY="179.0" text="Version de la guia">
+                <DatePicker fx:id="endTestDatePicker" layoutX="266.0" layoutY="118.0" promptText="11/3/23" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                <Label layoutX="67.0" layoutY="164.0" text="Version de la guia" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                     </font>
                 </Label>
                 <AnchorPane layoutX="536.0" layoutY="21.0" maxHeight="192.0" maxWidth="533.0" minHeight="100.0" minWidth="100.0" prefHeight="186.0" prefWidth="479.0" AnchorPane.leftAnchor="536.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="21.0">
@@ -603,105 +608,198 @@
                         <JFXListView fx:id="supervicionYMonitoreoListViewEvated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                 </GridPane>
-                <ChoiceBox fx:id="guideVersionChoiceBox" layoutX="270.0" layoutY="177.0" prefHeight="28.0" prefWidth="189.0" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                <ChoiceBox fx:id="guideVersionChoiceBox" layoutX="266.0" layoutY="162.0" prefHeight="28.0" prefWidth="189.0" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
             </AnchorPane>
             <AnchorPane fx:id="componentEvaluationView" prefHeight="200.0" prefWidth="200.0">
-                <TabPane layoutX="-1.0" prefHeight="700.0" prefWidth="1041.0" stylesheets="@css/fullpackstyling.css" tabClosingPolicy="UNAVAILABLE"
-                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <TabPane layoutX="-1.0" prefHeight="700.0" prefWidth="1041.0" stylesheets="@css/fullpackstyling.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <Tab closable="false" text="Ambiente de control">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <BorderPane layoutX="54.0" layoutY="10.0" prefHeight="667.0" prefWidth="797.0" AnchorPane.bottomAnchor="0.0"
-                                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="0.0">
+                            <BorderPane layoutX="54.0" layoutY="10.0" prefHeight="667.0" prefWidth="797.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="0.0">
                                 <left>
-                                    <ListView fx:id="ambCntrlRegulationEntityListView" focusTraversable="false"
-                                              onMouseEntered="#onAmbCntrlListViewTestMouseEntered"
-                                              onMouseExited="#onAmbCntrlListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0"
-                                              BorderPane.alignment="CENTER"/>
+                                    <ListView fx:id="ambCntrlRegulationEntityListView" focusTraversable="false" onMouseEntered="#onAmbCntrlListViewTestMouseEntered" onMouseExited="#onAmbCntrlListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                                 </left>
                                 <center>
                                     <AnchorPane BorderPane.alignment="CENTER">
-                                        <TreeView fx:id="ambCntrlQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0"
-                                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                        <TreeView fx:id="ambCntrlQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
+                     <JFXButton fx:id="ambContSaveButton" layoutX="826.0" layoutY="612.0" onMouseClicked="#onAmbContSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
+                        </graphic>
+                        <padding>
+                           <Insets left="8.0" />
+                        </padding>
+                     </JFXButton>
+                     <CheckBox fx:id="ambContYesCheckBox" layoutX="833.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#onAmbContCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <CheckBox fx:id="ambContNoCheckBox" layoutX="964.0" layoutY="547.0" mnemonicParsing="false" onMouseClicked="#onAmbContNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <Label fx:id="ambContTextLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="826.0" layoutY="52.0" prefHeight="271.0" prefWidth="192.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="345.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <JFXTextArea fx:id="ambContTextArea" layoutX="823.0" layoutY="334.0" onKeyPressed="#onAmbContTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
                         </AnchorPane>
                     </Tab>
                     <Tab closable="false" text="Gestion y prevencion de riesgos">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <BorderPane prefHeight="667.0" prefWidth="797.0">
                                 <left>
-                                    <ListView fx:id="gestPrevRegulationEntityListView" focusTraversable="false"
-                                              onMouseEntered="#onGestPrevListViewTestMouseEntered"
-                                              onMouseExited="#onGestPrevListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0"
-                                              BorderPane.alignment="CENTER"/>
+                                    <ListView fx:id="gestPrevRegulationEntityListView" focusTraversable="false" onMouseEntered="#onGestPrevListViewTestMouseEntered" onMouseExited="#onGestPrevListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                                 </left>
                                 <center>
                                     <AnchorPane BorderPane.alignment="CENTER">
-                                        <TreeView fx:id="gestPrevQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0"
-                                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                        <TreeView fx:id="gestPrevQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
+                     <Label fx:id="gestPrevTextLabel1" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="824.0" layoutY="29.0" prefHeight="271.0" prefWidth="192.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="346.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <JFXTextArea fx:id="gestPrevTextArea1" layoutX="826.0" layoutY="257.0" onKeyPressed="#onGesPrevTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
+                     <CheckBox fx:id="gestPrevNoCheckBox1" layoutX="958.0" layoutY="532.0" mnemonicParsing="false" onMouseClicked="#onGestPrevNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <JFXButton fx:id="gestPrevSaveButton1" layoutX="862.0" layoutY="589.0" onMouseClicked="#onGestPrevSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
+                        </graphic>
+                        <padding>
+                           <Insets left="8.0" />
+                        </padding>
+                     </JFXButton>
+                     <CheckBox fx:id="gestPrevYesCheckBox1" layoutX="869.0" layoutY="541.0" mnemonicParsing="false" onMouseClicked="#onGestPrevYesCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
                         </AnchorPane>
                     </Tab>
                     <Tab closable="false" text="Actividades de Control">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <BorderPane prefHeight="667.0" prefWidth="797.0">
                                 <left>
-                                    <ListView fx:id="actvCntrlRegulationEntityListView" focusTraversable="false"
-                                              onMouseEntered="#onActvCntrlListViewTestMouseEntered"
-                                              onMouseExited="#onActvCntrlListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0"
-                                              BorderPane.alignment="CENTER"/>
+                                    <ListView fx:id="actvCntrlRegulationEntityListView" focusTraversable="false" onMouseEntered="#onActvCntrlListViewTestMouseEntered" onMouseExited="#onActvCntrlListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                                 </left>
                                 <center>
                                     <AnchorPane BorderPane.alignment="CENTER">
-                                        <TreeView fx:id="actvCntrlQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0"
-                                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                        <TreeView fx:id="actvCntrlQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
+                     <Label fx:id="actContTextLabel11" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="271.0" prefWidth="192.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="346.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <JFXTextArea fx:id="actContTextArea11" onKeyPressed="#onActContTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
+                     <CheckBox fx:id="actContNoCheckBox11" mnemonicParsing="false" onMouseClicked="#onActConNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <JFXButton fx:id="actContSaveButton11" onMouseClicked="#onActContSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <padding>
+                           <Insets left="8.0" />
+                        </padding>
+                        <graphic>
+                           <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
+                        </graphic>
+                     </JFXButton>
+                     <CheckBox fx:id="actContYesCheckBox11" mnemonicParsing="false" onMouseClicked="#onActConYesCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
                         </AnchorPane>
                     </Tab>
                     <Tab closable="false" text="Información y Comunicación">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <BorderPane prefHeight="667.0" prefWidth="797.0">
                                 <left>
-                                    <ListView fx:id="infMonRegulationEntityListView" focusTraversable="false"
-                                              onMouseEntered="#onInfMonListViewTestMouseEntered"
-                                              onMouseExited="#onInfMonListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0"
-                                              BorderPane.alignment="CENTER"/>
+                                    <ListView fx:id="infMonRegulationEntityListView" focusTraversable="false" onMouseEntered="#onInfMonListViewTestMouseEntered" onMouseExited="#onInfMonListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                                 </left>
                                 <center>
                                     <AnchorPane BorderPane.alignment="CENTER">
-                                        <TreeView fx:id="infMonQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0"
-                                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                        <TreeView fx:id="infMonQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
+                     <JFXButton fx:id="infMonSaveButton" onMouseClicked="#onInfMonSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
+                        </graphic>
+                        <padding>
+                           <Insets left="8.0" />
+                        </padding>
+                     </JFXButton>
+                     <CheckBox fx:id="infMonYesCheckBox" mnemonicParsing="false" onMouseClicked="#onInfMonCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <CheckBox fx:id="infMonNoCheckBox" mnemonicParsing="false" onMouseClicked="#onInfMonNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <Label fx:id="infMonTextLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="271.0" prefWidth="192.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="346.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <JFXTextArea fx:id="infMonTextArea" onKeyPressed="#onInfMonTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
                         </AnchorPane>
                     </Tab>
                     <Tab closable="false" text="Supervisión y Monitoreo">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <BorderPane prefHeight="667.0" prefWidth="797.0">
                                 <left>
-                                    <ListView fx:id="supMonRegulationEntityListView" focusTraversable="false"
-                                              onMouseEntered="#onSupMonListViewTestMouseEntered"
-                                              onMouseExited="#onSupMonListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0"
-                                              BorderPane.alignment="CENTER"/>
+                                    <ListView fx:id="supMonRegulationEntityListView" focusTraversable="false" onMouseEntered="#onSupMonListViewTestMouseEntered" onMouseExited="#onSupMonListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                                 </left>
                                 <center>
                                     <AnchorPane BorderPane.alignment="CENTER">
-                                        <TreeView fx:id="supMonQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0"
-                                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                        <TreeView fx:id="supMonQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
+                     <JFXButton fx:id="supMonSaveButton" onMouseClicked="#onSupMonSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
+                        </graphic>
+                        <padding>
+                           <Insets left="8.0" />
+                        </padding>
+                     </JFXButton>
+                     <CheckBox fx:id="supMonYesCheckBox" mnemonicParsing="false" onMouseClicked="#onSupMonCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <CheckBox fx:id="supMonNoCheckBox" mnemonicParsing="false" onMouseClicked="#onSupMonNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </CheckBox>
+                     <Label fx:id="supMonTextLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="271.0" prefWidth="192.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="346.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <JFXTextArea fx:id="supMonTextArea" onKeyPressed="#onSupMonTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
                         </AnchorPane>
                     </Tab>
                 </TabPane>
