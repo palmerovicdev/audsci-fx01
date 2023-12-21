@@ -280,13 +280,13 @@ public class HomeController {
         // set the items into the listviews
         setItems(employees, ambienteDeControlListView, actividadesDeControlListView, informacionYComunicacionListView, supervicionYMonitoreoListView, gestionYPrevencionListView);
 
-        // set the items into the evated listviews
+        // set the items into the evaluated listviews
         setItems(employees, ambienteDeControlListViewEvated, actividadesDeControlListViewEvated, informacionYComunicacionListViewEvated, supervicionYMonitoreoListViewEvated, gestionYPrevencionListViewEvated);
 
     }
 
     private void setCellFactory(ListView<CheckBoxModel> listView) {
-        listView.setCellFactory(param -> new ListCell<CheckBoxModel>() {
+        listView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(CheckBoxModel item, boolean empty) {
                 super.updateItem(item, empty);
@@ -297,9 +297,7 @@ public class HomeController {
                 } else {
                     CheckBox checkBox = new CheckBox();
                     checkBox.setSelected(item.getChecked().getValue());
-                    checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-                        item.setChecked(new SimpleBooleanProperty(isSelected));
-                    });
+                    checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> item.setChecked(new SimpleBooleanProperty(isSelected)));
 
                     setText(item.getEmployee().getValue().getEmployeeName());
                     setGraphic(checkBox);
@@ -318,17 +316,47 @@ public class HomeController {
 
     @FXML
     public void onTestEvaluateButtonClicked(MouseEvent mouseEvent) {
-        initTestEvaluationViewRegulationListView(1, ambCntrlRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(2, gestPrevRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(3, actvCntrlRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(4, infMonRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(5, supMonRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(1,
+                                                 ambCntrlRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(2,
+                                                 gestPrevRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(3,
+                                                 actvCntrlRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(4,
+                                                 infMonRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(5,
+                                                 supMonRegulationEntityListView);
 
-        setRegulationEntityListViewSelectionModel(ambCntrlQuestionEntityTreeView, ambCntrlRegulationEntityListView, ambContTextLabel, ambContTextArea, ambContYesCheckBox, ambContNoCheckBox);
-        setRegulationEntityListViewSelectionModel(gestPrevQuestionEntityTreeView, gestPrevRegulationEntityListView, gestPrevTextLabel1, gestPrevTextArea1, gestPrevYesCheckBox1, gestPrevNoCheckBox1);
-        setRegulationEntityListViewSelectionModel(actvCntrlQuestionEntityTreeView, actvCntrlRegulationEntityListView, actContTextLabel11, actContTextArea11, actContYesCheckBox11, actContNoCheckBox11);
-        setRegulationEntityListViewSelectionModel(infMonQuestionEntityTreeView, infMonRegulationEntityListView, infMonTextLabel, infMonTextArea, infMonYesCheckBox, infMonNoCheckBox);
-        setRegulationEntityListViewSelectionModel(supMonQuestionEntityTreeView, supMonRegulationEntityListView, supMonTextLabel, supMonTextArea, supMonYesCheckBox, supMonNoCheckBox);
+        setRegulationEntityListViewSelectionModel(ambCntrlQuestionEntityTreeView,
+                                                  ambCntrlRegulationEntityListView,
+                                                  ambContTextLabel,
+                                                  ambContTextArea,
+                                                  ambContYesCheckBox,
+                                                  ambContNoCheckBox);
+        setRegulationEntityListViewSelectionModel(gestPrevQuestionEntityTreeView,
+                                                  gestPrevRegulationEntityListView,
+                                                  gestPrevTextLabel1,
+                                                  gestPrevTextArea1,
+                                                  gestPrevYesCheckBox1,
+                                                  gestPrevNoCheckBox1);
+        setRegulationEntityListViewSelectionModel(actvCntrlQuestionEntityTreeView,
+                                                  actvCntrlRegulationEntityListView,
+                                                  actContTextLabel11,
+                                                  actContTextArea11,
+                                                  actContYesCheckBox11,
+                                                  actContNoCheckBox11);
+        setRegulationEntityListViewSelectionModel(infMonQuestionEntityTreeView,
+                                                  infMonRegulationEntityListView,
+                                                  infMonTextLabel,
+                                                  infMonTextArea,
+                                                  infMonYesCheckBox,
+                                                  infMonNoCheckBox);
+        setRegulationEntityListViewSelectionModel(supMonQuestionEntityTreeView,
+                                                  supMonRegulationEntityListView,
+                                                  supMonTextLabel,
+                                                  supMonTextArea,
+                                                  supMonYesCheckBox,
+                                                  supMonNoCheckBox);
 
         visibilityChange(false, false, false, true, false, false, false);
     }
@@ -358,18 +386,27 @@ public class HomeController {
             }
         });
         regulationEntityListView.getSelectionModel().selectedItemProperty().addListener((observableValue, regulationEntity, t1) -> {
-            if (t1 != null) Platform.runLater(() -> rechargeTreeView(t1, questionEntityTreeView, label, jfxTextArea, checkBox, checkBox1));
+            if (t1 != null) Platform.runLater(() -> rechargeTreeView(t1,
+                                                                     questionEntityTreeView,
+                                                                     label,
+                                                                     jfxTextArea,
+                                                                     checkBox,
+                                                                     checkBox1));
 
         });
         questionEntityTreeView.setShowRoot(false);
     }
 
     private void rechargeTreeView(
-            RegulationEntity t1, TreeView<QuestionEntity> questionEntityTreeView, Label label, JFXTextArea jfxTextArea,
-            CheckBox checkBox, CheckBox checkBox1) {
+            RegulationEntity t1,
+            TreeView<QuestionEntity> questionEntityTreeView,
+            Label label,
+            JFXTextArea jfxTextArea,
+            CheckBox checkBox,
+            CheckBox checkBox1) {
         questionEntityTreeView.setRoot(null);
         var questions = QuestionService.getQuestionsByRegulationId(t1.getId());
-        var root = new TreeItem<QuestionEntity>(new QuestionEntity());
+        var root = new TreeItem<>(new QuestionEntity());
         root.setExpanded(true);
         for (QuestionEntity questionEntity : questions) {
             var question = new TreeItem<>(questionEntity);
@@ -537,7 +574,10 @@ public class HomeController {
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
         var area = latestArea;
         employee.setAreaId(area.getId());
-        EmployeeService.saveEmployee(employee.getId(), employee.getEmployeeName(), employee.getPosition(), employee.getAreaId());
+        EmployeeService.saveEmployee(employee.getId(),
+                                     employee.getEmployeeName(),
+                                     employee.getPosition(),
+                                     employee.getAreaId());
         System.out.println(employee);
         // set employeeNameTextField and employeePositionTextField border color to black with transparency 0.5
         employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
@@ -565,7 +605,10 @@ public class HomeController {
         testResultDB.getTest().setFinishDate(endTestDate.toString());
         testResultDB.getTest().setGuideVersion(guideVersion);
 
-        TestService.saveTest(new TestEntity(testCode, startTestDate, endTestDate, LocalDate.parse(guideVersion)));
+        TestService.saveTest(new TestEntity(testCode,
+                                            startTestDate,
+                                            endTestDate,
+                                            LocalDate.parse(guideVersion)));
         AtomicInteger i = new AtomicInteger(1);
         AtomicInteger j = new AtomicInteger(1);
         AtomicInteger k = new AtomicInteger(1);
@@ -912,5 +955,4 @@ public class HomeController {
             };
         }
     }
-
 }
