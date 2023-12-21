@@ -1,11 +1,6 @@
 package com.suehay.audscifx.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.suehay.audscifx.model.EvaluatedComponentEntity;
-import com.suehay.audscifx.model.EvaluatorComponentEntity;
-import com.suehay.audscifx.model.TestEntity;
-import com.suehay.audscifx.model.common.Result;
-import com.suehay.audscifx.model.common.TestResultData;
 import com.suehay.audscifx.model.templates.*;
 
 import java.io.File;
@@ -37,7 +32,7 @@ public class GuideConfig {
     // results for test, this list is used to save the test results in the json files in the resources/test-results directory
     public static List<TestResult> testResults = new ArrayList<>();
     // templates for tests
-    public static List<TestResult> testTemplateResults = new ArrayList<>();
+    public static List<TestResult> testTemplates = new ArrayList<>();
 
     private long logsCount;
 
@@ -121,11 +116,11 @@ public class GuideConfig {
 
     private void processTemplatesCharge() throws URISyntaxException, IOException {
         var resourcesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
-        testTemplateResults.clear();
+        testTemplates.clear();
 
         list(resourcesPath).forEach(path -> {
             try {
-                testTemplateResults.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
+                testTemplates.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -135,7 +130,7 @@ public class GuideConfig {
 
     private void processResultsCharge() throws URISyntaxException, IOException {
         var resourcesPath = Path.of(getPath(TEST_RESULTS_PATH));
-        testTemplateResults.clear();
+        testTemplates.clear();
         list(resourcesPath).forEach(path -> {
             try {
                 testResults.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
@@ -149,11 +144,11 @@ public class GuideConfig {
         var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
 
         if (!config.getIsUpdated()) {
-            testTemplateResults = createTestResults();
+            testTemplates = createTestResults();
             var guideTemplatesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
 
             deleteFilesInDirectory(guideTemplatesPath);
-            writeTestResultsToFile(testTemplateResults, guideTemplatesPath, objectMapper);
+            writeTestResultsToFile(testTemplates, guideTemplatesPath, objectMapper);
         }
         saveConfig(config, true, logsCount);
     }
@@ -245,6 +240,8 @@ public class GuideConfig {
         // map the tests to test results
 
     }
+
+
 
 /*    public static void main(String[] args) throws IOException, URISyntaxException {
         GuideConfig guideConfig = new GuideConfig();

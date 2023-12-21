@@ -7,10 +7,7 @@ import com.suehay.audscifx.config.EntityManagerProvider;
 import com.suehay.audscifx.config.GuideConfig;
 import com.suehay.audscifx.model.*;
 import com.suehay.audscifx.model.common.Properties;
-import com.suehay.audscifx.model.templates.ComponentTemplate;
-import com.suehay.audscifx.model.templates.QuestionTemplate;
-import com.suehay.audscifx.model.templates.RegulationTemplate;
-import com.suehay.audscifx.model.templates.TestResult;
+import com.suehay.audscifx.model.templates.*;
 import com.suehay.audscifx.services.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -282,7 +279,7 @@ public class HomeController {
     }
 
     void initTestCreationView() {
-        guideVersionChoiceBox.getItems().setAll(GuideConfig.testTemplateResults.stream().map(testResult -> testResult.getTest().getGuideVersion()).collect(Collectors.toList()));
+        guideVersionChoiceBox.getItems().setAll(GuideConfig.testTemplates.stream().map(testResult -> testResult.getTest().getGuideVersion()).collect(Collectors.toList()));
         guideVersionChoiceBox.getSelectionModel().selectFirst();
         var employees = EmployeeService.findAll();
 
@@ -629,7 +626,7 @@ public class HomeController {
     }
 
     public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
-        var testResultDB = GuideConfig.testTemplateResults.stream().filter(testResult -> testResult.getTest().getGuideVersion().equals(guideVersionChoiceBox.getSelectionModel().getSelectedItem())).findFirst().orElse(null);
+        var testResultDB = GuideConfig.testTemplates.stream().filter(testResult -> testResult.getTest().getGuideVersion().equals(guideVersionChoiceBox.getSelectionModel().getSelectedItem())).findFirst().orElse(null);
         var testCode = testCodeTextField.getText();
         var startTestDate = startTestDatePicker.getValue();
         var endTestDate = endTestDatePicker.getValue();
@@ -853,6 +850,53 @@ public class HomeController {
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void chargeTestResultsFromDB() {
+        // charge the test results from the database
+        var testList = TestService.findAll();
+        //map the testList to testTemplateList using builder
+        var testTemplate = testList.stream().map(testEntity -> TestTemplate.builder()
+                                                                             .code(testEntity.getCode())
+                                                                             .startDate(testEntity.getStartDate().toString())
+                                                                             .finishDate(testEntity.getFinishDate().toString())
+                                                                             .guideVersion(testEntity.getGuideVersion().toString())
+                                                                             .build()).toList().get(0);
+        var componentList = ComponentService.findAllByTestCode(testList.get(0).getCode());
+        //map the componentList to componentTemplateList using builder and add it to the testTemplateList
+        var componentTemplates = componentList.stream().map(componentEntity -> ComponentTemplate.builder()
+                                                                                                   .label(componentEntity.getLabel())
+                                                                                                   .build()).toList();
+        testTemplate.setComponentTemplates(componentTemplates);
+        componentTemplates.forEach(componentTemplate -> {
+            var regulationList = RegulationService.getRegulationsByComponentId(componentTemplate.getId());
+            //map the regulationList to regulationTemplateList using builder and add it to the componentTemplateList
+            var regulationTemplates = regulationList.stream().map(regulationEntity -> RegulationTemplate.builder()
+                                                                                                           .label(regulationEntity.getLabel())
+                                                                                                           .build()).toList();
+            componentTemplate.setRegulationTemplates(regulationTemplates);
+            regulationTemplates.forEach(regulationTemplate -> {
+                var questionList = QuestionService.getQuestionsByRegulationId(regulationTemplate.getId());
+                //map the questionList to questionTemplateList using builder and add it to the regulationTemplateList
+                var questionTemplates = questionList.stream().map(questionEntity -> QuestionTemplate.builder()
+                                                                                                      .label(questionEntity.getLabel())
+                                                                                                      .description(questionEntity.getDescription())
+                                                                                                      .result(questionEntity.getResult())
+                                                                                                      .build()).toList();
+                regulationTemplate.setQuestionTemplates(questionTemplates);
+                questionTemplates.forEach(questionTemplate -> {
+                    var subQuestionList = QuestionService.getQuestionsBySuperQuestionId(questionTemplate.getId());
+                    //map the subQuestionList to subQuestionTemplateList using builder and add it to the questionTemplateList
+                    var subQuestionTemplates = subQuestionList.stream().map(subQuestionEntity -> QuestionTemplate.builder()
+                                                                                                                  .label(subQuestionEntity.getLabel())
+                                                                                                                  .description(subQuestionEntity.getDescription())
+                                                                                                                  .result(subQuestionEntity.getResult())
+                                                                                                                  .build()).toList();
+                    questionTemplate.setSubQuestions(subQuestionTemplates);
+                });
+            });
+        });
+
     }
 
     @FXML

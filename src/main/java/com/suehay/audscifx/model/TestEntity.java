@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.*;
 
 @Getter
 @Setter
@@ -39,4 +41,5 @@ public class TestEntity {
     public int hashCode() {
         return Objects.hash(code, guideVersion, startDate, finishDate);
     }
+
 }

@@ -66,11 +66,9 @@ public class QuestionRepository {
                             .getResultList();
     }
 
-    // implement the all for superquestionId, retunrs a collection
-    public Collection<QuestionEntity> findAllBySuperquestionId(int superquestionId) {
+    public Collection<QuestionEntity> findAllBySuperQuestionId(Integer id) {
         return entityManager.createQuery("SELECT q FROM QuestionEntity q WHERE q.superquestionId = :superquestionId", QuestionEntity.class)
-                            .setParameter("superquestionId", superquestionId)
+                            .setParameter("superquestionId", id)
                             .getResultList();
     }
-
 }

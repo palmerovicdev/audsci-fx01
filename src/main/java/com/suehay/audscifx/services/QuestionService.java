@@ -21,4 +21,8 @@ public class QuestionService {
     public static List<QuestionEntity> getQuestionsByRegulationId(Integer id) {
         return questionRepository.findAllByRegulationId(id).stream().toList();
     }
+
+    public static List<QuestionEntity> getQuestionsBySuperQuestionId(Integer id) {
+        return questionRepository.findAllBySuperQuestionId(id).stream().toList();
+    }
 }
