@@ -318,7 +318,7 @@ public class HomeController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    CheckBox checkBox = new CheckBox();
+                    var checkBox = new CheckBox();
                     checkBox.setSelected(item.getChecked().getValue());
                     checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> item.setChecked(new SimpleBooleanProperty(isSelected)));
 
@@ -503,7 +503,7 @@ public class HomeController {
     @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
         // if the database
-        Integer areaId = AreaService.getLatestAreaId();
+        var areaId = AreaService.getLatestAreaId();
         if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
@@ -514,7 +514,7 @@ public class HomeController {
             alert.showAndWait();
             return;
         }
-        AreaEntity areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
+        var areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
         if (areaNameTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
@@ -554,7 +554,7 @@ public class HomeController {
     public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
         if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            var alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
@@ -566,7 +566,7 @@ public class HomeController {
             return;
         }
         if (employeePositionTextField.getText().length() > 50) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            var alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
@@ -577,7 +577,7 @@ public class HomeController {
             return;
         }
         if (employeeNameTextField.getText().length() > 50) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            var alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
@@ -589,7 +589,7 @@ public class HomeController {
         }
         var employees = EmployeeService.findAllByAreaId(latestArea.getId());
         if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            var alert = new Alert(Alert.AlertType.ERROR);
             // customize the alert
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error!!!");
@@ -599,7 +599,7 @@ public class HomeController {
             alert.showAndWait();
             return;
         }
-        Integer latestId = EmployeeService.getLatestId();
+        var latestId = EmployeeService.getLatestId();
         var employee = EmployeeEntity.builder()
                                      .id(latestId == null ? 1 : latestId + 1)
                                      .employeeName(employeeNameTextField.getText())
@@ -721,7 +721,7 @@ public class HomeController {
                                                      ).flatMap(List::stream).toList());
         EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
         EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        var alert = new Alert(Alert.AlertType.INFORMATION);
         // customize the alert
         alert.setAlertType(Alert.AlertType.INFORMATION);
         alert.setTitle("Perfecto!!!");
@@ -738,7 +738,7 @@ public class HomeController {
     @FXML
     public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
         // show an alert to confirm the update
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        var alert = new Alert(Alert.AlertType.CONFIRMATION);
         // customize the alert
         alert.setAlertType(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmacion!!!");
@@ -750,7 +750,7 @@ public class HomeController {
         EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
                                                             databaseConfigTextField.getText(), "audsci"));
         // show an alert to get a success message
-        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+        var alert1 = new Alert(Alert.AlertType.INFORMATION);
         // customize the alert
         alert1.setAlertType(Alert.AlertType.INFORMATION);
         alert1.setTitle("Perfecto!!!");
@@ -763,7 +763,7 @@ public class HomeController {
     public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
         try {
             // show an alert to confirm the recharge
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            var alert = new Alert(Alert.AlertType.CONFIRMATION);
             // customize the alert
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmacion!!!");
@@ -841,7 +841,14 @@ public class HomeController {
 
     @FXML
     public void onAmbContSaveButtonClicked(MouseEvent mouseEvent) {
+        saveButtonClickedLogic();
+    }
+
+    private void saveButtonClickedLogic() {
         try {
+            var tests = TestService.findAll();
+            //set tests to test results in guideConfig
+            guideConfig.setTestResults();
             guideConfig.saveTestResultList();
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
@@ -850,20 +857,12 @@ public class HomeController {
 
     @FXML
     public void onGestPrevSaveButtonClicked(MouseEvent mouseEvent) {
-        try {
-            guideConfig.saveTestResultList();
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveButtonClickedLogic();
     }
 
     @FXML
     public void onActContSaveButtonClicked(MouseEvent mouseEvent) {
-        try {
-            guideConfig.saveTestResultList();
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveButtonClickedLogic();
     }
 
     @FXML
@@ -900,11 +899,7 @@ public class HomeController {
     }
 
     @FXML
-    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {try {
-        guideConfig.saveTestResultList();
-    } catch (URISyntaxException | IOException e) {
-        throw new RuntimeException(e);
-    }}
+    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {saveButtonClickedLogic();}
 
     @FXML
     public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
@@ -926,11 +921,7 @@ public class HomeController {
 
     @FXML
     public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {
-        try {
-            guideConfig.saveTestResultList();
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveButtonClickedLogic();
     }
 
     @FXML
@@ -952,13 +943,11 @@ public class HomeController {
     }
 
     @FXML
-
     public void onActConYesCheckBoxClicked(MouseEvent mouseEvent) {
         checkBoxChanged(actvCntrlQuestionEntityTreeView, true, actContNoCheckBox11);
     }
 
     @FXML
-
     public void onActConNoCheckBoxClicked(MouseEvent mouseEvent) {
         checkBoxChanged(actvCntrlQuestionEntityTreeView, false, actContYesCheckBox11);
     }
@@ -969,19 +958,16 @@ public class HomeController {
     }
 
     @FXML
-
     public void onGestPrevYesCheckBoxClicked(MouseEvent mouseEvent) {
         checkBoxChanged(gestPrevQuestionEntityTreeView, true, gestPrevNoCheckBox1);
     }
 
     @FXML
-
     public void onGestPrevNoCheckBoxClicked(MouseEvent mouseEvent) {
         checkBoxChanged(gestPrevQuestionEntityTreeView, false, gestPrevYesCheckBox1);
     }
 
     @FXML
-
     public void onGesPrevTextAreaChanged(KeyEvent inputMethodEvent) {
         textAreaChanged(gestPrevQuestionEntityTreeView, gestPrevTextArea1, inputMethodEvent);
     }

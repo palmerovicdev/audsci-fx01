@@ -1,6 +1,11 @@
 package com.suehay.audscifx.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.suehay.audscifx.model.EvaluatedComponentEntity;
+import com.suehay.audscifx.model.EvaluatorComponentEntity;
+import com.suehay.audscifx.model.TestEntity;
+import com.suehay.audscifx.model.common.Result;
+import com.suehay.audscifx.model.common.TestResultData;
 import com.suehay.audscifx.model.templates.*;
 
 import java.io.File;
@@ -38,7 +43,7 @@ public class GuideConfig {
 
     // method to set the isUpdated property of the sonfig.json file to true
     public void updateGuidesTemplates() throws IOException, URISyntaxException {
-        Config config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
         saveConfig(config, true, logsCount);
     }
 
@@ -49,7 +54,7 @@ public class GuideConfig {
      * @throws IOException
      */
     public void saveTestTemplates() throws URISyntaxException, IOException {
-        Config config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
         logsCount = config.getLogsCount();
         try {
             processConfig();
@@ -66,7 +71,7 @@ public class GuideConfig {
      * @throws IOException
      */
     public void chargeTestTemplates() throws URISyntaxException, IOException {
-        Config config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
         logsCount = config.getLogsCount();
         try {
             if (objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class).getIsUpdated()) processTemplatesCharge();
@@ -97,7 +102,7 @@ public class GuideConfig {
      * @throws IOException
      */
     public void chargeTestResults() throws URISyntaxException, IOException {
-        Config config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
         logsCount = config.getLogsCount();
         try {
             if (objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class).getIsUpdated()) processResultsCharge();
@@ -141,11 +146,11 @@ public class GuideConfig {
     }
 
     public void processConfig() throws IOException, URISyntaxException {
-        Config config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
 
         if (!config.getIsUpdated()) {
             testTemplateResults = createTestResults();
-            Path guideTemplatesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
+            var guideTemplatesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
 
             deleteFilesInDirectory(guideTemplatesPath);
             writeTestResultsToFile(testTemplateResults, guideTemplatesPath, objectMapper);
@@ -167,7 +172,7 @@ public class GuideConfig {
 
     private void writeTestResultsToFile(List<TestResult> testResults, Path directoryPath, ObjectMapper objectMapper) {
         testResults.forEach(testResult -> {
-            Path filePath = directoryPath.resolve(valueOf(testResult.getTest().getGuideVersion()));
+            var filePath = directoryPath.resolve(valueOf(testResult.getTest().getGuideVersion()));
             try {
                 new File(filePath + ".json").createNewFile();
                 Files.writeString(Path.of(filePath + ".json"), objectMapper.writeValueAsString(testResult));
@@ -197,7 +202,7 @@ public class GuideConfig {
                 throw new RuntimeException(e);
             }
         }).collect(Collectors.toCollection(ArrayList::new));
-        String substring = guideVersion.substring(guideVersion.lastIndexOf(File.separator) + 1);
+        var substring = guideVersion.substring(guideVersion.lastIndexOf(File.separator) + 1);
         return TestTemplate.builder().guideVersion(substring).componentTemplates(componentTemplates).build();
     }
 
@@ -207,11 +212,11 @@ public class GuideConfig {
                         componentPath.lastIndexOf(File.separator) + 1,
                         componentPath.lastIndexOf("."))).build();
         var componentContent = loadFileAsStringArr(componentPath);
-        Stack<RegulationTemplate> lastRegulation = new Stack<>();
-        Stack<QuestionTemplate> lastQuestion = new Stack<>();
-        Stack<QuestionTemplate> lastSubQuestion = new Stack<>();
+        var lastRegulation = new Stack<RegulationTemplate>();
+        var lastQuestion = new Stack<QuestionTemplate>();
+        var lastSubQuestion = new Stack<QuestionTemplate>();
 
-        for (String line : componentContent) {
+        for (var line : componentContent) {
             if (Objects.isNull(line) || line.isEmpty() || line.isBlank()) continue;
             if (Character.isUpperCase(line.charAt(0))) {
                 if (!lastQuestion.isEmpty() && !lastRegulation.isEmpty()) lastRegulation.peek().getQuestionTemplates().add(lastQuestion.pop());
@@ -234,6 +239,11 @@ public class GuideConfig {
         if (!lastRegulation.isEmpty())
             componentTemplate.getRegulationTemplates().add(lastRegulation.pop());
         return componentTemplate;
+    }
+
+    public void setTestResults() {
+        // map the tests to test results
+
     }
 
 /*    public static void main(String[] args) throws IOException, URISyntaxException {
