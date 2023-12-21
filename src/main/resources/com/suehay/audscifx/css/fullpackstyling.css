@@ -1,12 +1,18 @@
+.color1 { one: #f2f2f2 }
+.color2 { two: #348e91 }
+.color3 { three: #1c5052 }
+.color4 { four: #213635 }
+.color5 { five: #0a0c0d }
+
 .button-plus {
-    -fx-background-color: rgba(55, 252, 211, 0.50);
+    -fx-background-color: rgba(55, 252, 211, 0.60);
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
 }
 
 .button-plus:hover {
-    -fx-background-color: rgba(55, 252, 211, 0.70);
+    -fx-background-color: rgba(55, 252, 211, 0.80);
 }
 .button-remove {
     -fx-background-color: rgba(204, 40, 70, 0.60);
@@ -185,19 +191,19 @@
 }
 
 .card {
-    -fx-background-color: #343C4A;
+    -fx-background-color: #0a0c0d;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: #343C4A;
+    -fx-border-color: #0a0c0d;
     -fx-border-width: 1px;
     -fx-border-style: solid;
 
 }
 .card2 {
-    -fx-background-color: #161B25;
+    -fx-background-color: #0a0c0d;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: #161B25;
+    -fx-border-color: #0a0c0d;
     -fx-border-width: 1px;
     -fx-border-style: solid;
 
@@ -231,9 +237,9 @@
 
 .stack-pane {
     -fx-background-radius: 5px;
-    -fx-background-color: #343C4A;
+    -fx-background-color: #0a0c0d;
     -fx-border-radius: 5px;
-    -fx-border-color: #343C4A;
+    -fx-border-color: #0a0c0d;
     -fx-border-width: 1px;
     -fx-border-style: solid;
 }

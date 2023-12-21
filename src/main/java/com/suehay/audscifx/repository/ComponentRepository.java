@@ -4,6 +4,7 @@ import com.suehay.audscifx.model.ComponentEntity;
 import jakarta.persistence.EntityManager;
 
 import java.util.Collection;
+import java.util.List;
 
 import static com.suehay.audscifx.config.EntityManagerProvider.getEntityManager;
 
@@ -22,7 +23,7 @@ public class ComponentRepository {
         entityManager.getTransaction().commit();
     }
 
-    public ComponentEntity findById(int id) {
+    public ComponentEntity findById(Integer id) {
         return entityManager.find(ComponentEntity.class, id);
     }
 
@@ -48,4 +49,7 @@ public class ComponentRepository {
         entityManager.getTransaction().commit();
     }
 
+    public List<ComponentEntity> findAllByTestCode(String code) {
+        return entityManager.createQuery("SELECT c FROM ComponentEntity c WHERE c.testCode = :testCode", ComponentEntity.class).setParameter("testCode", code).getResultList();
+    }
 }

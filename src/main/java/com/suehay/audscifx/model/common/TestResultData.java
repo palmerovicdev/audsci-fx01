@@ -16,14 +16,3 @@ public class TestResultData {
     Map<String, Result> componentsRessults = new HashMap<>();
     Map<String, Result> regulationsResult = new HashMap<>();
 }
-
-@Getter
-@Setter
-@ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-class Result {
-    Integer yesCount;
-    Integer noCount;
-}

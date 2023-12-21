@@ -10,6 +10,7 @@ import com.suehay.audscifx.model.common.Properties;
 import com.suehay.audscifx.model.templates.ComponentTemplate;
 import com.suehay.audscifx.model.templates.QuestionTemplate;
 import com.suehay.audscifx.model.templates.RegulationTemplate;
+import com.suehay.audscifx.model.templates.TestResult;
 import com.suehay.audscifx.services.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -22,6 +23,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +33,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import lombok.Data;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -252,6 +256,25 @@ public class HomeController {
         });
     }
 
+    void initTestResultChart() {
+        // with GuideConfig.testResults init testresultchart with the testresults by component
+        var series = new XYChart.Series<String, Integer>();
+        series.setName("Resultados de las pruebas");
+        try {
+            guideConfig.chargeTestResults();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        int i = 0;
+        for (TestResult testResult : GuideConfig.testResults) {
+            series.getData().add(new XYChart.Data<>(
+                    testResult.getTest().getComponentTemplates().get(i).getLabel(),
+                    testResult.getTestResultData().getComponentsRessults().get(testResult.getTest().getComponentTemplates().get(i++).getLabel()).getYesCount()
+            ));
+        }
+        testResultChart.getData().add(series);
+    }
+
     @FXML
     public void onTestCreationButtonClicked(MouseEvent mouseEvent) {
         initTestCreationView();
@@ -316,47 +339,58 @@ public class HomeController {
 
     @FXML
     public void onTestEvaluateButtonClicked(MouseEvent mouseEvent) {
-        initTestEvaluationViewRegulationListView(1,
-                                                 ambCntrlRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(2,
-                                                 gestPrevRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(3,
-                                                 actvCntrlRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(4,
-                                                 infMonRegulationEntityListView);
-        initTestEvaluationViewRegulationListView(5,
-                                                 supMonRegulationEntityListView);
+        // todo init guide config test results list and change the results when the user click on save button
+        initTestEvaluationViewRegulationListView(
+                1,
+                ambCntrlRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(
+                2,
+                gestPrevRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(
+                3,
+                actvCntrlRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(
+                4,
+                infMonRegulationEntityListView);
+        initTestEvaluationViewRegulationListView(
+                5,
+                supMonRegulationEntityListView);
 
-        setRegulationEntityListViewSelectionModel(ambCntrlQuestionEntityTreeView,
-                                                  ambCntrlRegulationEntityListView,
-                                                  ambContTextLabel,
-                                                  ambContTextArea,
-                                                  ambContYesCheckBox,
-                                                  ambContNoCheckBox);
-        setRegulationEntityListViewSelectionModel(gestPrevQuestionEntityTreeView,
-                                                  gestPrevRegulationEntityListView,
-                                                  gestPrevTextLabel1,
-                                                  gestPrevTextArea1,
-                                                  gestPrevYesCheckBox1,
-                                                  gestPrevNoCheckBox1);
-        setRegulationEntityListViewSelectionModel(actvCntrlQuestionEntityTreeView,
-                                                  actvCntrlRegulationEntityListView,
-                                                  actContTextLabel11,
-                                                  actContTextArea11,
-                                                  actContYesCheckBox11,
-                                                  actContNoCheckBox11);
-        setRegulationEntityListViewSelectionModel(infMonQuestionEntityTreeView,
-                                                  infMonRegulationEntityListView,
-                                                  infMonTextLabel,
-                                                  infMonTextArea,
-                                                  infMonYesCheckBox,
-                                                  infMonNoCheckBox);
-        setRegulationEntityListViewSelectionModel(supMonQuestionEntityTreeView,
-                                                  supMonRegulationEntityListView,
-                                                  supMonTextLabel,
-                                                  supMonTextArea,
-                                                  supMonYesCheckBox,
-                                                  supMonNoCheckBox);
+        setRegulationEntityListViewSelectionModel(
+                ambCntrlQuestionEntityTreeView,
+                ambCntrlRegulationEntityListView,
+                ambContTextLabel,
+                ambContTextArea,
+                ambContYesCheckBox,
+                ambContNoCheckBox);
+        setRegulationEntityListViewSelectionModel(
+                gestPrevQuestionEntityTreeView,
+                gestPrevRegulationEntityListView,
+                gestPrevTextLabel1,
+                gestPrevTextArea1,
+                gestPrevYesCheckBox1,
+                gestPrevNoCheckBox1);
+        setRegulationEntityListViewSelectionModel(
+                actvCntrlQuestionEntityTreeView,
+                actvCntrlRegulationEntityListView,
+                actContTextLabel11,
+                actContTextArea11,
+                actContYesCheckBox11,
+                actContNoCheckBox11);
+        setRegulationEntityListViewSelectionModel(
+                infMonQuestionEntityTreeView,
+                infMonRegulationEntityListView,
+                infMonTextLabel,
+                infMonTextArea,
+                infMonYesCheckBox,
+                infMonNoCheckBox);
+        setRegulationEntityListViewSelectionModel(
+                supMonQuestionEntityTreeView,
+                supMonRegulationEntityListView,
+                supMonTextLabel,
+                supMonTextArea,
+                supMonYesCheckBox,
+                supMonNoCheckBox);
 
         visibilityChange(false, false, false, true, false, false, false);
     }
@@ -386,12 +420,13 @@ public class HomeController {
             }
         });
         regulationEntityListView.getSelectionModel().selectedItemProperty().addListener((observableValue, regulationEntity, t1) -> {
-            if (t1 != null) Platform.runLater(() -> rechargeTreeView(t1,
-                                                                     questionEntityTreeView,
-                                                                     label,
-                                                                     jfxTextArea,
-                                                                     checkBox,
-                                                                     checkBox1));
+            if (t1 != null) Platform.runLater(() -> rechargeTreeView(
+                    t1,
+                    questionEntityTreeView,
+                    label,
+                    jfxTextArea,
+                    checkBox,
+                    checkBox1));
 
         });
         questionEntityTreeView.setShowRoot(false);
@@ -574,10 +609,11 @@ public class HomeController {
         employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
         var area = latestArea;
         employee.setAreaId(area.getId());
-        EmployeeService.saveEmployee(employee.getId(),
-                                     employee.getEmployeeName(),
-                                     employee.getPosition(),
-                                     employee.getAreaId());
+        EmployeeService.saveEmployee(
+                employee.getId(),
+                employee.getEmployeeName(),
+                employee.getPosition(),
+                employee.getAreaId());
         System.out.println(employee);
         // set employeeNameTextField and employeePositionTextField border color to black with transparency 0.5
         employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
@@ -605,10 +641,11 @@ public class HomeController {
         testResultDB.getTest().setFinishDate(endTestDate.toString());
         testResultDB.getTest().setGuideVersion(guideVersion);
 
-        TestService.saveTest(new TestEntity(testCode,
-                                            startTestDate,
-                                            endTestDate,
-                                            LocalDate.parse(guideVersion)));
+        TestService.saveTest(new TestEntity(
+                testCode,
+                startTestDate,
+                endTestDate,
+                LocalDate.parse(guideVersion)));
         AtomicInteger i = new AtomicInteger(1);
         AtomicInteger j = new AtomicInteger(1);
         AtomicInteger k = new AtomicInteger(1);
@@ -804,24 +841,42 @@ public class HomeController {
 
     @FXML
     public void onAmbContSaveButtonClicked(MouseEvent mouseEvent) {
-
-
+        try {
+            guideConfig.saveTestResultList();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     public void onGestPrevSaveButtonClicked(MouseEvent mouseEvent) {
-
+        try {
+            guideConfig.saveTestResultList();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     public void onActContSaveButtonClicked(MouseEvent mouseEvent) {
-
+        try {
+            guideConfig.saveTestResultList();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     public void onAmbContCheckBoxClicked(MouseEvent mouseEvent) {
         // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
         checkBoxChanged(ambCntrlQuestionEntityTreeView, true, ambContNoCheckBox);
+    }
+
+    private void checkBoxChanged(TreeView<QuestionEntity> treeView, boolean result, CheckBox checkBox) {
+        var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
+        questionEntity.setResult(result);
+        QuestionService.saveQuestion(questionEntity);
+        checkBox.setSelected(false);
     }
 
     @FXML
@@ -837,7 +892,7 @@ public class HomeController {
     }
 
     private void textAreaChanged(TreeView<QuestionEntity> treeView, JFXTextArea jfxTextArea, KeyEvent inputMethodEvent) {
-        if (inputMethodEvent.getCode() == KeyCode.ENTER){
+        if (inputMethodEvent.getCode() == KeyCode.ENTER) {
             var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
             questionEntity.setDescription(jfxTextArea.getText());
             QuestionService.saveQuestion(questionEntity);
@@ -845,7 +900,11 @@ public class HomeController {
     }
 
     @FXML
-    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {}
+    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {try {
+        guideConfig.saveTestResultList();
+    } catch (URISyntaxException | IOException e) {
+        throw new RuntimeException(e);
+    }}
 
     @FXML
     public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
@@ -866,7 +925,13 @@ public class HomeController {
     }
 
     @FXML
-    public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {}
+    public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {
+        try {
+            guideConfig.saveTestResultList();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     public void onSupMonCheckBoxClicked(MouseEvent mouseEvent) {
@@ -878,13 +943,6 @@ public class HomeController {
     public void onSupMonNoCheckBoxClicked(MouseEvent mouseEvent) {
         // set the result of the question that match with the selected in the tree view to false
         checkBoxChanged(supMonQuestionEntityTreeView, false, supMonYesCheckBox);
-    }
-
-    private void checkBoxChanged(TreeView<QuestionEntity> treeView, boolean result, CheckBox checkBox) {
-        var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
-        questionEntity.setResult(result);
-        QuestionService.saveQuestion(questionEntity);
-        checkBox.setSelected(false);
     }
 
     @FXML

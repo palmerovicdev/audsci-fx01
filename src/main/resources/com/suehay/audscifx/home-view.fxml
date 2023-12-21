@@ -30,7 +30,7 @@
 
 <BorderPane fx:id="homePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.suehay.audscifx.controller.HomeController">
     <left>
-        <VBox fx:id="leftOptionsPane" prefHeight="560.0" prefWidth="40.0" style="-fx-background-color: #161B25;" BorderPane.alignment="CENTER">
+        <VBox fx:id="leftOptionsPane" prefHeight="560.0" prefWidth="40.0" style="-fx-background-color: #0a0c0d;" BorderPane.alignment="CENTER">
             <JFXButton fx:id="enterpriseButton" focusTraversable="false" onMouseClicked="#onEnterpriseButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
                 <VBox.margin>
                     <Insets top="10.0" />
@@ -136,8 +136,8 @@
     <center>
         <StackPane BorderPane.alignment="CENTER">
             <AnchorPane fx:id="homeView" prefHeight="200.0" prefWidth="200.0" visible="false">
-            <AnchorPane prefHeight="271.0" prefWidth="1040.0" style="-fx-background-color: #254173;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane layoutX="21.0" layoutY="11.0" prefHeight="112.0" prefWidth="584.0" style="-fx-background-radius: 8px; -fx-background-color: #FFFFFF;" />
+            <AnchorPane prefHeight="271.0" prefWidth="1040.0" style="-fx-background-color: #1c5052;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <AnchorPane layoutX="21.0" layoutY="11.0" prefHeight="112.0" prefWidth="584.0" style="-fx-background-radius: 8px; -fx-background-color: #f2f2f2;" />
                 <JFXListView fx:id="componentsListView" layoutX="435.0" layoutY="393.0" prefHeight="142.0" prefWidth="398.0" styleClass="table-view" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="395.0" />
                 <Label layoutX="437.0" layoutY="368.0" text="Componentes" AnchorPane.rightAnchor="328.0" AnchorPane.topAnchor="368.0">
                     <font>
@@ -538,10 +538,13 @@
                             <Label prefHeight="25.0" prefWidth="495.0" text="- Selecciona los evaluadores y evaluados en cada componente" textFill="WHITE" wrapText="true" />
                         </VBox>
                         <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
-                            <JFXButton onMouseClicked="#onIFinishedButtonClicked" prefHeight="63.0" prefWidth="151.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text="I finished!!">
+                            <JFXButton onMouseClicked="#onIFinishedButtonClicked" prefHeight="63.0" prefWidth="151.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text="I finished!!" textFill="WHITE">
                                 <VBox.margin>
                                     <Insets right="50.0" />
                                 </VBox.margin>
+                        <font>
+                           <Font name="System Bold" size="16.0" />
+                        </font>
                             </JFXButton>
                         </VBox>
                     </StackPane>
@@ -610,7 +613,7 @@
                 </GridPane>
                 <ChoiceBox fx:id="guideVersionChoiceBox" layoutX="266.0" layoutY="162.0" prefHeight="28.0" prefWidth="189.0" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
             </AnchorPane>
-            <AnchorPane fx:id="componentEvaluationView" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="componentEvaluationView" prefHeight="200.0" prefWidth="200.0" visible="false">
                 <TabPane layoutX="-1.0" prefHeight="700.0" prefWidth="1041.0" stylesheets="@css/fullpackstyling.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <Tab closable="false" text="Ambiente de control">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -806,7 +809,7 @@
             </AnchorPane>
             <AnchorPane fx:id="printReportView" prefHeight="200.0" prefWidth="200.0" visible="false" />
             <AnchorPane fx:id="helpView" prefHeight="200.0" prefWidth="200.0" visible="false" />
-            <AnchorPane fx:id="configurationView" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="configurationView" prefHeight="200.0" prefWidth="200.0">
                 <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="215.0" prefWidth="308.0" styleClass="card2" stylesheets="@css/fullpackstyling.css">
                     <FontAwesomeIconView fill="WHITE" glyphName="DATABASE" layoutX="14.0" layoutY="35.0" size="24" />
                     <Label layoutX="53.0" layoutY="17.0" text="Propiedades de la base de datos:" textFill="WHITE">
