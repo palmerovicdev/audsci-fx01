@@ -7,6 +7,8 @@ import com.suehay.audscifx.config.EntityManagerProvider;
 import com.suehay.audscifx.config.GuideConfig;
 import com.suehay.audscifx.model.*;
 import com.suehay.audscifx.model.common.Properties;
+import com.suehay.audscifx.model.common.Result;
+import com.suehay.audscifx.model.common.TestResultData;
 import com.suehay.audscifx.model.templates.*;
 import com.suehay.audscifx.services.*;
 import javafx.animation.KeyFrame;
@@ -33,6 +35,7 @@ import lombok.Data;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -845,7 +848,7 @@ public class HomeController {
         try {
             var tests = TestService.findAll();
             //set tests to test results in guideConfig
-            guideConfig.setTestResults();
+            chargeTestResultsFromDB();
             guideConfig.saveTestResultList();
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
@@ -857,46 +860,67 @@ public class HomeController {
         var testList = TestService.findAll();
         //map the testList to testTemplateList using builder
         var testTemplate = testList.stream().map(testEntity -> TestTemplate.builder()
-                                                                             .code(testEntity.getCode())
-                                                                             .startDate(testEntity.getStartDate().toString())
-                                                                             .finishDate(testEntity.getFinishDate().toString())
-                                                                             .guideVersion(testEntity.getGuideVersion().toString())
-                                                                             .build()).toList().get(0);
+                                                                           .code(testEntity.getCode())
+                                                                           .startDate(testEntity.getStartDate().toString())
+                                                                           .finishDate(testEntity.getFinishDate().toString())
+                                                                           .guideVersion(testEntity.getGuideVersion().toString())
+                                                                           .build()).toList().get(0);
         var componentList = ComponentService.findAllByTestCode(testList.get(0).getCode());
         //map the componentList to componentTemplateList using builder and add it to the testTemplateList
         var componentTemplates = componentList.stream().map(componentEntity -> ComponentTemplate.builder()
-                                                                                                   .label(componentEntity.getLabel())
-                                                                                                   .build()).toList();
+                                                                                                .id(componentEntity.getId())
+                                                                                                .label(componentEntity.getLabel())
+                                                                                                .testCode(componentEntity.getTestCode())
+                                                                                                .build()).toList();
         testTemplate.setComponentTemplates(componentTemplates);
+        var evaluatedComponentList = new ArrayList<EvaluatedComponentEntity>();
+        var evaluatorComponentList = new ArrayList<EvaluatorComponentEntity>();
+        var testResultData = new TestResultData();
         componentTemplates.forEach(componentTemplate -> {
             var regulationList = RegulationService.getRegulationsByComponentId(componentTemplate.getId());
             //map the regulationList to regulationTemplateList using builder and add it to the componentTemplateList
             var regulationTemplates = regulationList.stream().map(regulationEntity -> RegulationTemplate.builder()
-                                                                                                           .label(regulationEntity.getLabel())
-                                                                                                           .build()).toList();
+                                                                                                        .id(regulationEntity.getId())
+                                                                                                        .componentId(regulationEntity.getComponentId())
+                                                                                                        .label(regulationEntity.getLabel())
+                                                                                                        .build()).toList();
+            evaluatedComponentList.addAll(EvaluatedComponentService.findAllByComponentId(componentTemplate.getId()));
+            evaluatorComponentList.addAll(EvaluatorComponentService.findAllByComponentId(componentTemplate.getId()));
+            testResultData.getComponentsRessults().put(componentTemplate.getLabel(), new Result());
             componentTemplate.setRegulationTemplates(regulationTemplates);
             regulationTemplates.forEach(regulationTemplate -> {
                 var questionList = QuestionService.getQuestionsByRegulationId(regulationTemplate.getId());
                 //map the questionList to questionTemplateList using builder and add it to the regulationTemplateList
-                var questionTemplates = questionList.stream().map(questionEntity -> QuestionTemplate.builder()
-                                                                                                      .label(questionEntity.getLabel())
-                                                                                                      .description(questionEntity.getDescription())
-                                                                                                      .result(questionEntity.getResult())
-                                                                                                      .build()).toList();
+                var questionTemplates = fillTestResultData(componentTemplate, questionList, testResultData);
                 regulationTemplate.setQuestionTemplates(questionTemplates);
                 questionTemplates.forEach(questionTemplate -> {
                     var subQuestionList = QuestionService.getQuestionsBySuperQuestionId(questionTemplate.getId());
                     //map the subQuestionList to subQuestionTemplateList using builder and add it to the questionTemplateList
-                    var subQuestionTemplates = subQuestionList.stream().map(subQuestionEntity -> QuestionTemplate.builder()
-                                                                                                                  .label(subQuestionEntity.getLabel())
-                                                                                                                  .description(subQuestionEntity.getDescription())
-                                                                                                                  .result(subQuestionEntity.getResult())
-                                                                                                                  .build()).toList();
+                    var subQuestionTemplates = fillTestResultData(componentTemplate, subQuestionList, testResultData);
                     questionTemplate.setSubQuestions(subQuestionTemplates);
                 });
             });
         });
+        GuideConfig.testResults.add(new TestResult(testResultData, evaluatedComponentList, evaluatorComponentList, testTemplate));
+    }
 
+    private static List<QuestionTemplate> fillTestResultData(ComponentTemplate componentTemplate, List<QuestionEntity> subQuestionList, TestResultData testResultData) {
+        return subQuestionList.stream().map(subQuestionEntity -> {
+            if (subQuestionEntity.getResult() != null) {
+                if (subQuestionEntity.getResult())
+                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount() + 1);
+                else
+                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setNoCount(testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount() + 1);
+            }
+            return QuestionTemplate.builder()
+                                   .id(subQuestionEntity.getId())
+                                   .regulationId(subQuestionEntity.getRegulationId())
+                                   .code(subQuestionEntity.getCode())
+                                   .label(subQuestionEntity.getLabel())
+                                   .description(subQuestionEntity.getDescription())
+                                   .result(subQuestionEntity.getResult())
+                                   .build();
+        }).toList();
     }
 
     @FXML

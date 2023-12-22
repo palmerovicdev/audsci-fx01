@@ -42,4 +42,7 @@ public class EvaluatedComponentRepository {
         return entityManager.createQuery("SELECT c FROM ComponentEntity c WHERE c.id IN (SELECT ec.componentId FROM EvaluatedComponentEntity ec WHERE ec.employeeId = :employeeId)", ComponentEntity.class).setParameter("employeeId", employeeId).getSingleResult();
     }
 
+    public Collection<? extends EvaluatedComponentEntity> findAllByComponentId(Integer id) {
+        return entityManager.createQuery("SELECT ec FROM EvaluatedComponentEntity ec WHERE ec.componentId = :id", EvaluatedComponentEntity.class).setParameter("id", id).getResultList();
+    }
 }

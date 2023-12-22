@@ -3,6 +3,7 @@ package com.suehay.audscifx.services;
 import com.suehay.audscifx.model.EvaluatorComponentEntity;
 import com.suehay.audscifx.repository.EvaluatorComponentRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 public class EvaluatorComponentService {
@@ -10,5 +11,9 @@ public class EvaluatorComponentService {
 
     public static void saveEvaluatorComponents(List<EvaluatorComponentEntity> evaluatorComponents) {
         evaluatorComponents.forEach(evaluatorComponentRepository::save);
+    }
+
+    public static Collection<? extends EvaluatorComponentEntity> findAllByComponentId(Integer id) {
+        return evaluatorComponentRepository.findAllByComponentId(id);
     }
 }

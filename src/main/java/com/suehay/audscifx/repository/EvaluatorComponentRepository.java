@@ -44,4 +44,7 @@ public class EvaluatorComponentRepository {
                                                  "WHERE ec.employeeId = :employeeId)", ComponentEntity.class).setParameter("employeeId", employeeId).getSingleResult();
     }
 
+    public Collection<? extends EvaluatorComponentEntity> findAllByComponentId(Integer id) {
+        return entityManager.createQuery("SELECT ec FROM EvaluatorComponentEntity ec WHERE ec.componentId = :id", EvaluatorComponentEntity.class).setParameter("id", id).getResultList();
+    }
 }
