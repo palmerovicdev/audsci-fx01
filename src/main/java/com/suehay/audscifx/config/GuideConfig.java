@@ -236,16 +236,4 @@ public class GuideConfig {
         return componentTemplate;
     }
 
-    public void setTestResults() {
-        // map the tests to test results
-
-    }
-
-
-
-/*    public static void main(String[] args) throws IOException, URISyntaxException {
-        GuideConfig guideConfig = new GuideConfig();
-        //guideConfig.updateGuidesTemplates();
-        guideConfig.chargeTestResultList();
-    }*/
 }

@@ -5,24 +5,46 @@
 .color5 { five: #0a0c0d }
 
 .button-plus {
-    -fx-background-color: rgba(55, 252, 211, 0.60);
+    -fx-background-color: #a6ed6e;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
 }
 
+.text-field {
+    -fx-background-color: #1e232c;
+    -fx-background-radius: 4px;
+    -fx-color-label-visible: #b9b9b9;
+    -fx-fill: #b9b9b9;
+    -fx-border-radius: 4px;
+    -fx-text-fill: #b9b9b9;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.choice-box {
+    -fx-background-color: #959fcc;
+    -fx-background-radius: 4px;
+    -fx-color-label-visible: #b9b9b9;
+    -fx-fill: #b9b9b9;
+    -fx-border-radius: 4px;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
 .button-plus:hover {
-    -fx-background-color: rgba(55, 252, 211, 0.80);
+    -fx-background-color: #b4f67c;
 }
 .button-remove {
-    -fx-background-color: rgba(204, 40, 70, 0.60);
+    -fx-background-color: #EE6E6E;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 
 }
 
 .button-remove:hover {
-    -fx-background-color: rgba(204, 40, 70, 0.80);
+    -fx-background-color: #f18383;
 }
 
 .date-picker {
@@ -191,22 +213,32 @@
 }
 
 .card {
-    -fx-background-color: #0a0c0d;
+    -fx-background-color: #161616;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: #0a0c0d;
+    -fx-border-color: #161616;
     -fx-border-width: 1px;
     -fx-border-style: solid;
 
 }
 .card2 {
-    -fx-background-color: #0a0c0d;
+    -fx-background-color: #161616;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: #0a0c0d;
+    -fx-border-color: #161616;
     -fx-border-width: 1px;
     -fx-border-style: solid;
 
+}
+
+.card3 {
+    -fx-background-color: #f2f2f2;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #f2f2f2;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0.0, 0, 2);
 }
 
 /* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */

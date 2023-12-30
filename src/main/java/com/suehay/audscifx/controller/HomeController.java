@@ -3,6 +3,7 @@ package com.suehay.audscifx.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTreeView;
 import com.suehay.audscifx.config.EntityManagerProvider;
 import com.suehay.audscifx.config.GuideConfig;
 import com.suehay.audscifx.model.*;
@@ -21,12 +22,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -44,7 +42,7 @@ import java.util.stream.Stream;
 public class HomeController {
     private final GuideConfig guideConfig = new GuideConfig();
     @FXML
-    public ChoiceBox<String> guideVersionChoiceBox;
+    public ChoiceBox<String> guideVersionChoiceBox = new ChoiceBox<>();
     @FXML
     public JFXListView<CheckBoxModel> gestionYPrevencionListView = new JFXListView<>();
     @FXML
@@ -56,19 +54,19 @@ public class HomeController {
     @FXML
     public JFXListView<CheckBoxModel> supervicionYMonitoreoListView = new JFXListView<>();
     @FXML
-    public JFXListView<CheckBoxModel> ambienteDeControlListViewEvated;
+    public JFXListView<CheckBoxModel> ambienteDeControlListViewEvated = new JFXListView<>();
     @FXML
-    public JFXListView<CheckBoxModel> gestionYPrevencionListViewEvated;
+    public JFXListView<CheckBoxModel> gestionYPrevencionListViewEvated = new JFXListView<>();
     @FXML
-    public JFXListView<CheckBoxModel> actividadesDeControlListViewEvated;
+    public JFXListView<CheckBoxModel> actividadesDeControlListViewEvated = new JFXListView<>();
     @FXML
-    public JFXListView<CheckBoxModel> informacionYComunicacionListViewEvated;
+    public JFXListView<CheckBoxModel> informacionYComunicacionListViewEvated = new JFXListView<>();
     @FXML
-    public JFXListView<CheckBoxModel> supervicionYMonitoreoListViewEvated;
+    public JFXListView<CheckBoxModel> supervicionYMonitoreoListViewEvated = new JFXListView<>();
     @FXML
-    public ListView<AreaEntity> areasListView;
+    public ListView<AreaEntity> areasListView = new ListView<>();
     @FXML
-    public ListView<EmployeeEntity> employeeListView;
+    public ListView<EmployeeEntity> employeeListView = new ListView<>();
     @FXML
     public BorderPane homePane;
     @FXML
@@ -90,9 +88,7 @@ public class HomeController {
     @FXML
     public AnchorPane homeView;
     @FXML
-    public JFXListView<ComponentEntity> componentsListView;
-    @FXML
-    public BarChart<String, Integer> testResultChart;
+    public JFXListView<ComponentEntity> componentsListView = new JFXListView<>();
     @FXML
     public AnchorPane enterpriseCreationView;
     @FXML
@@ -136,19 +132,25 @@ public class HomeController {
     @FXML
     public TextField passwordConfigTextField;
     @FXML
-    public ListView<RegulationEntity> ambCntrlRegulationEntityListView;
+    public ListView<RegulationEntity> ambCntrlRegulationEntityListView = new ListView<>();
     @FXML
-    public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView;
+    public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
-    public ListView<RegulationEntity> gestPrevRegulationEntityListView;
+    public ListView<RegulationEntity> gestPrevRegulationEntityListView = new ListView<>();
     @FXML
-    public TreeView<QuestionEntity> gestPrevQuestionEntityTreeView;
-    public ListView<RegulationEntity> actvCntrlRegulationEntityListView;
-    public TreeView<QuestionEntity> actvCntrlQuestionEntityTreeView;
-    public ListView<RegulationEntity> infMonRegulationEntityListView;
-    public TreeView<QuestionEntity> infMonQuestionEntityTreeView;
-    public ListView<RegulationEntity> supMonRegulationEntityListView;
-    public TreeView<QuestionEntity> supMonQuestionEntityTreeView;
+    public TreeView<QuestionEntity> gestPrevQuestionEntityTreeView = new JFXTreeView<>();
+    @FXML
+    public ListView<RegulationEntity> actvCntrlRegulationEntityListView = new ListView<>();
+    @FXML
+    public TreeView<QuestionEntity> actvCntrlQuestionEntityTreeView = new JFXTreeView<>();
+    @FXML
+    public ListView<RegulationEntity> infMonRegulationEntityListView = new ListView<>();
+    @FXML
+    public TreeView<QuestionEntity> infMonQuestionEntityTreeView = new JFXTreeView<>();
+    @FXML
+    public ListView<RegulationEntity> supMonRegulationEntityListView = new ListView<>();
+    @FXML
+    public TreeView<QuestionEntity> supMonQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
     public JFXButton ambContSaveButton;
     @FXML
@@ -202,10 +204,25 @@ public class HomeController {
     @FXML
     private AreaEntity latestArea;
 
-    @FXML
-    public void onEnterpriseButtonClicked(MouseEvent mouseEvent) {
-        visibilityChange(false, true, false, false, false, false, false);
-        initEnterpriseCreationView();
+    public void initKeyCombinations(Scene scene) {
+        // key combination to show all the views
+        var kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY);
+        var kc2 = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.ALT_ANY);
+        var kc3 = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.ALT_ANY);
+        var kc4 = new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.ALT_ANY);
+        var kc5 = new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.ALT_ANY);
+        var kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY);
+        var kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
+
+        scene.setOnKeyPressed(event -> {
+            if (kc.match(event)) onHomeButtonClicked(null);
+            if (kc2.match(event)) onEnterpriseButtonClicked(null);
+            if (kc3.match(event)) onTestCreationButtonClicked(null);
+            if (kc4.match(event)) onTestEvaluateButtonClicked(null);
+            if (kc5.match(event)) onReportGenerationButtonClicked(null);
+            if (kc6.match(event)) onHelpButtonClicked(null);
+            if (kc7.match(event)) onConfigButtonClicked(null);
+        });
     }
 
     void visibilityChange(boolean home, boolean enterpriseCreation, boolean testCreation, boolean testEvaluate, boolean reportGeneration, boolean help, boolean config) {
@@ -216,6 +233,12 @@ public class HomeController {
         printReportView.setVisible(reportGeneration);
         helpView.setVisible(help);
         configurationView.setVisible(config);
+    }
+
+    @FXML
+    public void onEnterpriseButtonClicked(MouseEvent mouseEvent) {
+        visibilityChange(false, true, false, false, false, false, false);
+        initEnterpriseCreationView();
     }
 
     private void initEnterpriseCreationView() {
@@ -247,32 +270,9 @@ public class HomeController {
                     System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
                     employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
                     employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-                    /*if (employeeListView.getItems().isEmpty()) {
-                        employeeListView.setPlaceholder(new Label());
-                    }
-                    employeeListView.refresh();*/
                 });
             }
         });
-    }
-
-    void initTestResultChart() {
-        // with GuideConfig.testResults init testresultchart with the testresults by component
-        var series = new XYChart.Series<String, Integer>();
-        series.setName("Resultados de las pruebas");
-        try {
-            guideConfig.chargeTestResults();
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
-        int i = 0;
-        for (TestResult testResult : GuideConfig.testResults) {
-            series.getData().add(new XYChart.Data<>(
-                    testResult.getTest().getComponentTemplates().get(i).getLabel(),
-                    testResult.getTestResultData().getComponentsRessults().get(testResult.getTest().getComponentTemplates().get(i++).getLabel()).getYesCount()
-            ));
-        }
-        testResultChart.getData().add(series);
     }
 
     @FXML
@@ -907,10 +907,12 @@ public class HomeController {
     private static List<QuestionTemplate> fillTestResultData(ComponentTemplate componentTemplate, List<QuestionEntity> subQuestionList, TestResultData testResultData) {
         return subQuestionList.stream().map(subQuestionEntity -> {
             if (subQuestionEntity.getResult() != null) {
+                Integer yesCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount();
+                Integer noCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount();
                 if (subQuestionEntity.getResult())
-                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount() + 1);
+                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(yesCount != null ? yesCount + 1 : 0);
                 else
-                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setNoCount(testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount() + 1);
+                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setNoCount(noCount != null ? noCount + 1 : 0);
             }
             return QuestionTemplate.builder()
                                    .id(subQuestionEntity.getId())
