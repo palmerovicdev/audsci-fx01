@@ -343,7 +343,7 @@
                </font>
             </Label>
             </AnchorPane>
-            <AnchorPane fx:id="enterpriseCreationView" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="enterpriseCreationView" prefHeight="200.0" prefWidth="200.0">
                 <GridPane layoutX="82.0" layoutY="258.0" prefHeight="437.0" prefWidth="895.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="258.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="275.0" />
@@ -515,7 +515,7 @@
                     </VBox>
                 </AnchorPane>
             </AnchorPane>
-            <AnchorPane fx:id="testCreationView" prefHeight="766.0" prefWidth="1024.0">
+            <AnchorPane fx:id="testCreationView" prefHeight="766.0" prefWidth="1024.0" visible="false">
             <AnchorPane layoutX="37.0" layoutY="21.0" prefHeight="186.0" prefWidth="445.0" styleClass="card2" stylesheets="@css/fullpackstyling.css" />
                 <GridPane layoutX="25.0" layoutY="244.0" prefHeight="190.0" prefWidth="990.0" AnchorPane.bottomAnchor="266.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
                     <columnConstraints>
