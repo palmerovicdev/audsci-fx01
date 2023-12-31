@@ -122,6 +122,18 @@ public class HomeController {
             infMonTextArea,
             supMonTextArea;
     @FXML
+    public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView = new JFXTreeView<>(),
+            gestPrevQuestionEntityTreeView = new JFXTreeView<>(),
+            actvCntrlQuestionEntityTreeView = new JFXTreeView<>(),
+            infMonQuestionEntityTreeView = new JFXTreeView<>(),
+            supMonQuestionEntityTreeView = new JFXTreeView<>();
+    @FXML
+    public ListView<RegulationEntity> infMonRegulationEntityListView = new ListView<>(),
+            gestPrevRegulationEntityListView = new ListView<>(),
+            ambCntrlRegulationEntityListView = new ListView<>(),
+            actvCntrlRegulationEntityListView = new ListView<>(),
+            supMonRegulationEntityListView = new ListView<>();
+    @FXML
     public ChoiceBox<String> guideVersionChoiceBox = new ChoiceBox<>();
     @FXML
     public BorderPane homePane;
@@ -130,29 +142,9 @@ public class HomeController {
     @FXML
     public JFXListView<ComponentEntity> componentsListView = new JFXListView<>();
     @FXML
-    public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public TreeView<QuestionEntity> gestPrevQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public TreeView<QuestionEntity> actvCntrlQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public TreeView<QuestionEntity> infMonQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public TreeView<QuestionEntity> supMonQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public ListView<RegulationEntity> supMonRegulationEntityListView = new ListView<>();
-    @FXML
     public ListView<AreaEntity> areasListView = new ListView<>();
     @FXML
-    public ListView<RegulationEntity> infMonRegulationEntityListView = new ListView<>();
-    @FXML
     public ListView<EmployeeEntity> employeeListView = new ListView<>();
-    @FXML
-    public ListView<RegulationEntity> gestPrevRegulationEntityListView = new ListView<>();
-    @FXML
-    public ListView<RegulationEntity> ambCntrlRegulationEntityListView = new ListView<>();
-    @FXML
-    public ListView<RegulationEntity> actvCntrlRegulationEntityListView = new ListView<>();
     private AreaEntity latestArea;
 
     public static void setAlert(Alert alert) {
@@ -307,19 +299,6 @@ public class HomeController {
 
     }
 
-    private void setCellsFactories() {
-        setCellFactory(ambienteDeControlListView);
-        setCellFactory(actividadesDeControlListView);
-        setCellFactory(informacionYComunicacionListView);
-        setCellFactory(supervicionYMonitoreoListView);
-        setCellFactory(gestionYPrevencionListView);
-        setCellFactory(ambienteDeControlListViewEvated);
-        setCellFactory(actividadesDeControlListViewEvated);
-        setCellFactory(informacionYComunicacionListViewEvated);
-        setCellFactory(supervicionYMonitoreoListViewEvated);
-        setCellFactory(gestionYPrevencionListViewEvated);
-    }
-
     private void initTestEvaluationViewRegulationListView(Integer componentId, ListView<RegulationEntity> regulationEntityListViews) {
         var regulations = RegulationService.getRegulationsByComponentId(componentId);
         regulationEntityListViews.getItems().clear();
@@ -378,24 +357,17 @@ public class HomeController {
         });
     }
 
-    private void setCellFactory(ListView<CheckBoxModel> listView) {
-        listView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(CheckBoxModel item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    var checkBox = new CheckBox();
-                    checkBox.setSelected(item.getChecked().getValue());
-                    checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> item.setChecked(new SimpleBooleanProperty(isSelected)));
-
-                    setText(item.getEmployee().getValue().getEmployeeName());
-                    setGraphic(checkBox);
-                }
-            }
-        });
+    private void setCellsFactories() {
+        setCellFactory(ambienteDeControlListView);
+        setCellFactory(actividadesDeControlListView);
+        setCellFactory(informacionYComunicacionListView);
+        setCellFactory(supervicionYMonitoreoListView);
+        setCellFactory(gestionYPrevencionListView);
+        setCellFactory(ambienteDeControlListViewEvated);
+        setCellFactory(actividadesDeControlListViewEvated);
+        setCellFactory(informacionYComunicacionListViewEvated);
+        setCellFactory(supervicionYMonitoreoListViewEvated);
+        setCellFactory(gestionYPrevencionListViewEvated);
     }
 
     private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
@@ -444,6 +416,26 @@ public class HomeController {
         });
         questionEntityTreeView.setPrefHeight(questionEntityTreeView.getChildrenUnmodifiable().size() * 25);
         questionEntityTreeView.refresh();
+    }
+
+    private void setCellFactory(ListView<CheckBoxModel> listView) {
+        listView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(CheckBoxModel item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    var checkBox = new CheckBox();
+                    checkBox.setSelected(item.getChecked().getValue());
+                    checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> item.setChecked(new SimpleBooleanProperty(isSelected)));
+
+                    setText(item.getEmployee().getValue().getEmployeeName());
+                    setGraphic(checkBox);
+                }
+            }
+        });
     }
 
     @FXML
