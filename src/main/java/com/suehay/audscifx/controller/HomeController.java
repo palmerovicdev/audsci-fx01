@@ -40,199 +40,145 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HomeController {
+    private static final KeyCodeCombination kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY),
+            kc2 = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.ALT_ANY),
+            kc3 = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.ALT_ANY),
+            kc4 = new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.ALT_ANY),
+            kc5 = new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.ALT_ANY),
+            kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY),
+            kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
+    private static Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private final GuideConfig guideConfig = new GuideConfig();
     @FXML
+    public JFXListView<CheckBoxModel> gestionYPrevencionListView = new JFXListView<>(),
+            ambienteDeControlListView = new JFXListView<>(),
+            actividadesDeControlListView = new JFXListView<>(),
+            informacionYComunicacionListView = new JFXListView<>(),
+            supervicionYMonitoreoListView = new JFXListView<>(),
+            ambienteDeControlListViewEvated = new JFXListView<>(),
+            gestionYPrevencionListViewEvated = new JFXListView<>(),
+            actividadesDeControlListViewEvated = new JFXListView<>(),
+            informacionYComunicacionListViewEvated = new JFXListView<>(),
+            supervicionYMonitoreoListViewEvated = new JFXListView<>();
+    @FXML
+    public JFXButton enterpriseButton,
+            testCreationButton,
+            testEvaluateButton,
+            reportGenerationButton,
+            helpButton,
+            configButton,
+            homeButton,
+            areaAddButton,
+            employeeAddButton,
+            employeeRemoveButton,
+            updateDatabaseProperties,
+            areaRemoveButton,
+            guideRechargeButton,
+            ambContSaveButton,
+            gestPrevSaveButton1,
+            actContSaveButton11,
+            infMonSaveButton,
+            supMonSaveButton;
+    @FXML
+    public TextField areaNameTextField,
+            employeeNameTextField,
+            employeePositionTextField,
+            testCodeTextField,
+            databaseConfigTextField,
+            userConfigTextField,
+            passwordConfigTextField;
+    @FXML
+    public AnchorPane homeView,
+            enterpriseCreationView,
+            testCreationView,
+            componentEvaluationView,
+            printReportView,
+            helpView,
+            configurationView;
+    @FXML
+    public DatePicker startTestDatePicker,
+            endTestDatePicker;
+    @FXML
+    public CheckBox ambContYesCheckBox,
+            ambContNoCheckBox,
+            gestPrevNoCheckBox1,
+            gestPrevYesCheckBox1,
+            actContNoCheckBox11,
+            actContYesCheckBox11,
+            infMonYesCheckBox,
+            infMonNoCheckBox,
+            supMonYesCheckBox,
+            supMonNoCheckBox;
+    @FXML
+    public Label actContTextLabel11,
+            supMonTextLabel,
+            infMonTextLabel,
+            gestPrevTextLabel1,
+            ambContTextLabel;
+    @FXML
+    public JFXTextArea ambContTextArea,
+            gestPrevTextArea1,
+            actContTextArea11,
+            infMonTextArea,
+            supMonTextArea;
+    @FXML
     public ChoiceBox<String> guideVersionChoiceBox = new ChoiceBox<>();
-    @FXML
-    public JFXListView<CheckBoxModel> gestionYPrevencionListView = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> ambienteDeControlListView = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> actividadesDeControlListView = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> informacionYComunicacionListView = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> supervicionYMonitoreoListView = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> ambienteDeControlListViewEvated = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> gestionYPrevencionListViewEvated = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> actividadesDeControlListViewEvated = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> informacionYComunicacionListViewEvated = new JFXListView<>();
-    @FXML
-    public JFXListView<CheckBoxModel> supervicionYMonitoreoListViewEvated = new JFXListView<>();
-    @FXML
-    public ListView<AreaEntity> areasListView = new ListView<>();
-    @FXML
-    public ListView<EmployeeEntity> employeeListView = new ListView<>();
     @FXML
     public BorderPane homePane;
     @FXML
     public VBox leftOptionsPane;
     @FXML
-    public JFXButton enterpriseButton;
-    @FXML
-    public JFXButton testCreationButton;
-    @FXML
-    public JFXButton testEvaluateButton;
-    @FXML
-    public JFXButton reportGenerationButton;
-    @FXML
-    public JFXButton helpButton;
-    @FXML
-    public JFXButton configButton;
-    @FXML
-    public JFXButton homeButton;
-    @FXML
-    public AnchorPane homeView;
-    @FXML
     public JFXListView<ComponentEntity> componentsListView = new JFXListView<>();
-    @FXML
-    public AnchorPane enterpriseCreationView;
-    @FXML
-    public TextField areaNameTextField;
-    @FXML
-    public JFXButton areaAddButton;
-    @FXML
-    public JFXButton areaRemoveButton;
-    @FXML
-    public TextField employeeNameTextField;
-    @FXML
-    public TextField employeePositionTextField;
-    @FXML
-    public JFXButton employeeAddButton;
-    @FXML
-    public JFXButton employeeRemoveButton;
-    @FXML
-    public AnchorPane testCreationView;
-    @FXML
-    public TextField testCodeTextField;
-    @FXML
-    public DatePicker startTestDatePicker;
-    @FXML
-    public DatePicker endTestDatePicker;
-    @FXML
-    public AnchorPane componentEvaluationView;
-    @FXML
-    public AnchorPane printReportView;
-    @FXML
-    public AnchorPane helpView;
-    @FXML
-    public AnchorPane configurationView;
-    @FXML
-    public JFXButton updateDatabaseProperties;
-    @FXML
-    public JFXButton guideRechargeButton;
-    @FXML
-    public TextField databaseConfigTextField;
-    @FXML
-    public TextField userConfigTextField;
-    @FXML
-    public TextField passwordConfigTextField;
-    @FXML
-    public ListView<RegulationEntity> ambCntrlRegulationEntityListView = new ListView<>();
     @FXML
     public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
-    public ListView<RegulationEntity> gestPrevRegulationEntityListView = new ListView<>();
-    @FXML
     public TreeView<QuestionEntity> gestPrevQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public ListView<RegulationEntity> actvCntrlRegulationEntityListView = new ListView<>();
     @FXML
     public TreeView<QuestionEntity> actvCntrlQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
-    public ListView<RegulationEntity> infMonRegulationEntityListView = new ListView<>();
-    @FXML
     public TreeView<QuestionEntity> infMonQuestionEntityTreeView = new JFXTreeView<>();
-    @FXML
-    public ListView<RegulationEntity> supMonRegulationEntityListView = new ListView<>();
     @FXML
     public TreeView<QuestionEntity> supMonQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
-    public JFXButton ambContSaveButton;
+    public ListView<RegulationEntity> supMonRegulationEntityListView = new ListView<>();
     @FXML
-    public CheckBox ambContYesCheckBox;
+    public ListView<AreaEntity> areasListView = new ListView<>();
     @FXML
-    public CheckBox ambContNoCheckBox;
+    public ListView<RegulationEntity> infMonRegulationEntityListView = new ListView<>();
     @FXML
-    public Label ambContTextLabel;
+    public ListView<EmployeeEntity> employeeListView = new ListView<>();
     @FXML
-    public JFXTextArea ambContTextArea;
+    public ListView<RegulationEntity> gestPrevRegulationEntityListView = new ListView<>();
     @FXML
-    public Label gestPrevTextLabel1;
+    public ListView<RegulationEntity> ambCntrlRegulationEntityListView = new ListView<>();
     @FXML
-    public JFXTextArea gestPrevTextArea1;
-    @FXML
-    public CheckBox gestPrevNoCheckBox1;
-    @FXML
-    public JFXButton gestPrevSaveButton1;
-    @FXML
-    public CheckBox gestPrevYesCheckBox1;
-    @FXML
-    public Label actContTextLabel11;
-    @FXML
-    public JFXTextArea actContTextArea11;
-    @FXML
-    public CheckBox actContNoCheckBox11;
-    @FXML
-    public JFXButton actContSaveButton11;
-    @FXML
-    public CheckBox actContYesCheckBox11;
-    @FXML
-    public JFXButton infMonSaveButton;
-    @FXML
-    public CheckBox infMonYesCheckBox;
-    @FXML
-    public CheckBox infMonNoCheckBox;
-    @FXML
-    public Label infMonTextLabel;
-    @FXML
-    public JFXTextArea infMonTextArea;
-    @FXML
-    public JFXButton supMonSaveButton;
-    @FXML
-    public CheckBox supMonYesCheckBox;
-    @FXML
-    public CheckBox supMonNoCheckBox;
-    @FXML
-    public Label supMonTextLabel;
-    @FXML
-    public JFXTextArea supMonTextArea;
-    @FXML
+    public ListView<RegulationEntity> actvCntrlRegulationEntityListView = new ListView<>();
     private AreaEntity latestArea;
 
-    public void initKeyCombinations(Scene scene) {
-        // key combination to show all the views
-        var kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY);
-        var kc2 = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.ALT_ANY);
-        var kc3 = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.ALT_ANY);
-        var kc4 = new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.ALT_ANY);
-        var kc5 = new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.ALT_ANY);
-        var kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY);
-        var kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
+    public static void setAlert(Alert alert) {
+        HomeController.alert = alert;
+    }
 
+    /**
+     * This method is called when the application is started
+     *
+     * @param scene
+     */
+    public void initKeyCombinations(Scene scene) {
         scene.setOnKeyPressed(event -> {
             if (kc.match(event)) onHomeButtonClicked(null);
-            if (kc2.match(event)) onEnterpriseButtonClicked(null);
-            if (kc3.match(event)) onTestCreationButtonClicked(null);
-            if (kc4.match(event)) onTestEvaluateButtonClicked(null);
-            if (kc5.match(event)) onReportGenerationButtonClicked(null);
-            if (kc6.match(event)) onHelpButtonClicked(null);
-            if (kc7.match(event)) onConfigButtonClicked(null);
+            else if (kc2.match(event)) onEnterpriseButtonClicked(null);
+            else if (kc3.match(event)) onTestCreationButtonClicked(null);
+            else if (kc4.match(event)) onTestEvaluateButtonClicked(null);
+            else if (kc5.match(event)) onReportGenerationButtonClicked(null);
+            else if (kc6.match(event)) onHelpButtonClicked(null);
+            else if (kc7.match(event)) onConfigButtonClicked(null);
         });
     }
 
-    void visibilityChange(boolean home, boolean enterpriseCreation, boolean testCreation, boolean testEvaluate, boolean reportGeneration, boolean help, boolean config) {
-        homeView.setVisible(home);
-        enterpriseCreationView.setVisible(enterpriseCreation);
-        testCreationView.setVisible(testCreation);
-        componentEvaluationView.setVisible(testEvaluate);
-        printReportView.setVisible(reportGeneration);
-        helpView.setVisible(help);
-        configurationView.setVisible(config);
+    @FXML
+    public void onHomeButtonClicked(MouseEvent mouseEvent) {
+        visibilityChange(true, false, false, false, false, false, false);
     }
 
     @FXML
@@ -241,105 +187,14 @@ public class HomeController {
         initEnterpriseCreationView();
     }
 
-    private void initEnterpriseCreationView() {
-        areasListView.getItems().setAll(FXCollections.observableList(AreaService.findAll()));
-        if (areasListView.getItems().isEmpty()) {
-            areasListView.setPrefHeight(0);
-            employeeListView.setPrefHeight(0);
-            return;
-        }
-
-        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
-        areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        setAreasListViewSelectionModel();
-        areasListView.getSelectionModel().select(0);
-        latestArea = areasListView.getSelectionModel().getSelectedItem();
-        employeeListView.getItems().clear();
-        employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(areasListView.getSelectionModel().getSelectedItem().getId())));
-        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
-    }
-
-    private void setAreasListViewSelectionModel() {
-        areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
-            if (t1 != null) {
-                Platform.runLater(() -> {
-                    latestArea = areasListView.getSelectionModel().getSelectedItem();
-                    employeeListView.getItems().clear();
-                    System.out.println(latestArea.getId());
-                    System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
-                    employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
-                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-                });
-            }
-        });
-    }
-
     @FXML
     public void onTestCreationButtonClicked(MouseEvent mouseEvent) {
         initTestCreationView();
         visibilityChange(false, false, true, false, false, false, false);
     }
 
-    void initTestCreationView() {
-        guideVersionChoiceBox.getItems().setAll(GuideConfig.testTemplates.stream().map(testResult -> testResult.getTest().getGuideVersion()).collect(Collectors.toList()));
-        guideVersionChoiceBox.getSelectionModel().selectFirst();
-        var employees = EmployeeService.findAll();
-
-        // setCellFactory into the listviews
-        setCellFactory(ambienteDeControlListView);
-        setCellFactory(actividadesDeControlListView);
-        setCellFactory(informacionYComunicacionListView);
-        setCellFactory(supervicionYMonitoreoListView);
-        setCellFactory(gestionYPrevencionListView);
-
-        // set the items into the evated listviews
-        setCellFactory(ambienteDeControlListViewEvated);
-        setCellFactory(actividadesDeControlListViewEvated);
-        setCellFactory(informacionYComunicacionListViewEvated);
-        setCellFactory(supervicionYMonitoreoListViewEvated);
-        setCellFactory(gestionYPrevencionListViewEvated);
-
-        // set the items into the listviews
-        setItems(employees, ambienteDeControlListView, actividadesDeControlListView, informacionYComunicacionListView, supervicionYMonitoreoListView, gestionYPrevencionListView);
-
-        // set the items into the evaluated listviews
-        setItems(employees, ambienteDeControlListViewEvated, actividadesDeControlListViewEvated, informacionYComunicacionListViewEvated, supervicionYMonitoreoListViewEvated, gestionYPrevencionListViewEvated);
-
-    }
-
-    private void setCellFactory(ListView<CheckBoxModel> listView) {
-        listView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(CheckBoxModel item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    var checkBox = new CheckBox();
-                    checkBox.setSelected(item.getChecked().getValue());
-                    checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> item.setChecked(new SimpleBooleanProperty(isSelected)));
-
-                    setText(item.getEmployee().getValue().getEmployeeName());
-                    setGraphic(checkBox);
-                }
-            }
-        });
-    }
-
-    private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
-        ambienteDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        actividadesDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        informacionYComunicacionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        supervicionYMonitoreoListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        gestionYPrevencionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-    }
-
     @FXML
     public void onTestEvaluateButtonClicked(MouseEvent mouseEvent) {
-        // todo init guide config test results list and change the results when the user click on save button
         initTestEvaluationViewRegulationListView(
                 1,
                 ambCntrlRegulationEntityListView);
@@ -395,6 +250,76 @@ public class HomeController {
         visibilityChange(false, false, false, true, false, false, false);
     }
 
+    @FXML
+    public void onReportGenerationButtonClicked(MouseEvent mouseEvent) {
+        visibilityChange(false, false, false, false, true, false, false);
+    }
+
+    @FXML
+    public void onHelpButtonClicked(MouseEvent mouseEvent) {
+        visibilityChange(false, false, false, false, false, true, false);
+    }
+
+    @FXML
+    public void onConfigButtonClicked(MouseEvent mouseEvent) {
+        initConfigurationView();
+        visibilityChange(false, false, false, false, false, false, true);
+    }
+
+    void visibilityChange(boolean home, boolean enterpriseCreation, boolean testCreation, boolean testEvaluate, boolean reportGeneration, boolean help, boolean config) {
+        homeView.setVisible(home);
+        enterpriseCreationView.setVisible(enterpriseCreation);
+        testCreationView.setVisible(testCreation);
+        componentEvaluationView.setVisible(testEvaluate);
+        printReportView.setVisible(reportGeneration);
+        helpView.setVisible(help);
+        configurationView.setVisible(config);
+    }
+
+    private void initEnterpriseCreationView() {
+        areasListView.getItems().setAll(FXCollections.observableList(AreaService.findAll()));
+        if (areasListView.getItems().isEmpty()) {
+            areasListView.setPrefHeight(0);
+            employeeListView.setPrefHeight(0);
+            return;
+        }
+
+        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
+        areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        setAreasListViewSelectionModel();
+        areasListView.getSelectionModel().select(0);
+        latestArea = areasListView.getSelectionModel().getSelectedItem();
+        employeeListView.getItems().clear();
+        employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(areasListView.getSelectionModel().getSelectedItem().getId())));
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+    }
+
+    void initTestCreationView() {
+        guideVersionChoiceBox.getItems().setAll(GuideConfig.testTemplates.stream().map(testResult -> testResult.getTest().getGuideVersion()).collect(Collectors.toList()));
+        guideVersionChoiceBox.getSelectionModel().selectFirst();
+        var employees = EmployeeService.findAll();
+        setCellsFactories();
+        // set the items into the listviews
+        setItems(employees, ambienteDeControlListView, actividadesDeControlListView, informacionYComunicacionListView, supervicionYMonitoreoListView, gestionYPrevencionListView);
+        // set the items into the evaluated listviews
+        setItems(employees, ambienteDeControlListViewEvated, actividadesDeControlListViewEvated, informacionYComunicacionListViewEvated, supervicionYMonitoreoListViewEvated, gestionYPrevencionListViewEvated);
+
+    }
+
+    private void setCellsFactories() {
+        setCellFactory(ambienteDeControlListView);
+        setCellFactory(actividadesDeControlListView);
+        setCellFactory(informacionYComunicacionListView);
+        setCellFactory(supervicionYMonitoreoListView);
+        setCellFactory(gestionYPrevencionListView);
+        setCellFactory(ambienteDeControlListViewEvated);
+        setCellFactory(actividadesDeControlListViewEvated);
+        setCellFactory(informacionYComunicacionListViewEvated);
+        setCellFactory(supervicionYMonitoreoListViewEvated);
+        setCellFactory(gestionYPrevencionListViewEvated);
+    }
+
     private void initTestEvaluationViewRegulationListView(Integer componentId, ListView<RegulationEntity> regulationEntityListViews) {
         var regulations = RegulationService.getRegulationsByComponentId(componentId);
         regulationEntityListViews.getItems().clear();
@@ -430,6 +355,55 @@ public class HomeController {
 
         });
         questionEntityTreeView.setShowRoot(false);
+    }
+
+    private void initConfigurationView() {
+        databaseConfigTextField.setText(EntityManagerProvider.DATABASE);
+        userConfigTextField.setText(EntityManagerProvider.USER);
+        passwordConfigTextField.setText(EntityManagerProvider.PASSWORD);
+    }
+
+    private void setAreasListViewSelectionModel() {
+        areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
+            if (t1 != null) {
+                Platform.runLater(() -> {
+                    latestArea = areasListView.getSelectionModel().getSelectedItem();
+                    employeeListView.getItems().clear();
+                    System.out.println(latestArea.getId());
+                    System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
+                    employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
+                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+                });
+            }
+        });
+    }
+
+    private void setCellFactory(ListView<CheckBoxModel> listView) {
+        listView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(CheckBoxModel item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    var checkBox = new CheckBox();
+                    checkBox.setSelected(item.getChecked().getValue());
+                    checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> item.setChecked(new SimpleBooleanProperty(isSelected)));
+
+                    setText(item.getEmployee().getValue().getEmployeeName());
+                    setGraphic(checkBox);
+                }
+            }
+        });
+    }
+
+    private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
+        ambienteDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        actividadesDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        informacionYComunicacionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        supervicionYMonitoreoListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        gestionYPrevencionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
     }
 
     private void rechargeTreeView(
@@ -473,56 +447,17 @@ public class HomeController {
     }
 
     @FXML
-    public void onReportGenerationButtonClicked(MouseEvent mouseEvent) {
-        visibilityChange(false, false, false, false, true, false, false);
-    }
-
-    @FXML
-    public void onHelpButtonClicked(MouseEvent mouseEvent) {
-        visibilityChange(false, false, false, false, false, true, false);
-    }
-
-    @FXML
-    public void onConfigButtonClicked(MouseEvent mouseEvent) {
-        initConfigurationView();
-        visibilityChange(false, false, false, false, false, false, true);
-    }
-
-    private void initConfigurationView() {
-        // set the textfields with the properties values
-        databaseConfigTextField.setText(EntityManagerProvider.DATABASE);
-        userConfigTextField.setText(EntityManagerProvider.USER);
-        passwordConfigTextField.setText(EntityManagerProvider.PASSWORD);
-    }
-
-    @FXML
-    public void onHomeButtonClicked(MouseEvent mouseEvent) {
-        visibilityChange(true, false, false, false, false, false, false);
-    }
-
-    @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
-        // if the database
         var areaId = AreaService.getLatestAreaId();
         if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("El nombre del area ya existe!!!");
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area ya existe!!!", null);
             areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            alert.showAndWait();
             return;
         }
         var areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
         if (areaNameTextField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("El nombre del area esta vacio!!!");
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area esta vacio!!!", null);
             areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            alert.showAndWait();
             return;
         }
         areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
@@ -532,9 +467,16 @@ public class HomeController {
             latestArea = areasListView.getItems().get(Math.max((areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
         AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
         areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
-        // set areaNameTextField border color to black with transparency 0.5
         areaNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
         setAreasListViewSelectionModel();
+    }
+
+    private static void showAlert(Alert.AlertType error, String title, String headerText, String contentText) {
+        alert.setAlertType(error);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        if (contentText != null) alert.setContentText(contentText);
+        alert.showAndWait();
     }
 
     @FXML
@@ -553,50 +495,25 @@ public class HomeController {
     @FXML
     public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
         if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
-
-            var alert = new Alert(Alert.AlertType.ERROR);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("El nombre del empleado o el cargo esta vacio!!!");
-            // set border color red with transparency
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado o el cargo esta vacio!!!", null);
             employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
             employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            alert.showAndWait();
             return;
         }
         if (employeePositionTextField.getText().length() > 50) {
-            var alert = new Alert(Alert.AlertType.ERROR);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("El cargo del empleado no puede tener mas de 50 caracteres!!!");
-            // set border color red with transparency
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El cargo del empleado no puede tener mas de 50 caracteres!!!", null);
             employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            alert.showAndWait();
             return;
         }
         if (employeeNameTextField.getText().length() > 50) {
-            var alert = new Alert(Alert.AlertType.ERROR);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("El nombre del empleado no puede tener mas de 50 caracteres!!!");
-            // set border color red with transparency
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado no puede tener mas de 50 caracteres!!!", null);
             employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            alert.showAndWait();
             return;
         }
         var employees = EmployeeService.findAllByAreaId(latestArea.getId());
         if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
-            var alert = new Alert(Alert.AlertType.ERROR);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("El nombre del empleado ya existe!!!");
-            // set border color red with transparency
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado ya existe!!!", null);
             employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            alert.showAndWait();
             return;
         }
         var latestId = EmployeeService.getLatestId();
@@ -615,7 +532,6 @@ public class HomeController {
                 employee.getPosition(),
                 employee.getAreaId());
         System.out.println(employee);
-        // set employeeNameTextField and employeePositionTextField border color to black with transparency 0.5
         employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
         employeePositionTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
     }
@@ -635,7 +551,8 @@ public class HomeController {
         var endTestDate = endTestDatePicker.getValue();
         var guideVersion = guideVersionChoiceBox.getValue();
 
-        assert testResultDB != null;
+        if (testResultDB == null) return;
+
         testResultDB.getTest().setCode(testCode);
         testResultDB.getTest().setStartDate(startTestDate.toString());
         testResultDB.getTest().setFinishDate(endTestDate.toString());
@@ -646,9 +563,9 @@ public class HomeController {
                 startTestDate,
                 endTestDate,
                 LocalDate.parse(guideVersion)));
-        AtomicInteger i = new AtomicInteger(1);
-        AtomicInteger j = new AtomicInteger(1);
-        AtomicInteger k = new AtomicInteger(1);
+        var i = new AtomicInteger(1);
+        var j = new AtomicInteger(1);
+        var k = new AtomicInteger(1);
         for (ComponentTemplate componentTemplate : testResultDB.getTest().getComponentTemplates()) {
             componentTemplate.setId(i.getAndIncrement());
             componentTemplate.setTestCode(testCode);
@@ -683,28 +600,16 @@ public class HomeController {
                 }
             }
         }
-        var ambienteDeControlId =
-                getIds(ambienteDeControlListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var actividadesDeControlId =
-                getIds(actividadesDeControlListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var informacionYComunicacionId =
-                getIds(informacionYComunicacionListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var supervicionYMonitoreoId =
-                getIds(supervicionYMonitoreoListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var gestionYPrevencionId =
-                getIds(gestionYPrevencionListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-
-        var ambienteDeControlIdEvated =
-                getIds(ambienteDeControlListViewEvated.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var actividadesDeControlIdEvated =
-                getIds(actividadesDeControlListViewEvated.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var informacionYComunicacionIdEvated =
-                getIds(informacionYComunicacionListViewEvated.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var supervicionYMonitoreoIdEvated =
-                getIds(supervicionYMonitoreoListViewEvated.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-        var gestionYPrevencionIdEvated =
-                getIds(gestionYPrevencionListViewEvated.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-
+        List<Integer> ambienteDeControlId = getIdsList(ambienteDeControlListView),
+                actividadesDeControlId = getIdsList(actividadesDeControlListView),
+                informacionYComunicacionId = getIdsList(informacionYComunicacionListView),
+                supervicionYMonitoreoId = getIdsList(supervicionYMonitoreoListView),
+                gestionYPrevencionId = getIdsList(gestionYPrevencionListView),
+                ambienteDeControlIdEvated = getIdsList(ambienteDeControlListViewEvated),
+                actividadesDeControlIdEvated = getIdsList(actividadesDeControlListViewEvated),
+                informacionYComunicacionIdEvated = getIdsList(informacionYComunicacionListViewEvated),
+                supervicionYMonitoreoIdEvated = getIdsList(supervicionYMonitoreoListViewEvated),
+                gestionYPrevencionIdEvated = getIdsList(gestionYPrevencionListViewEvated);
         testResultDB.setEvaluatorComponents(Stream.of( // add all the evaluator components
                                                        ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
                                                        gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
@@ -721,13 +626,12 @@ public class HomeController {
                                                      ).flatMap(List::stream).toList());
         EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
         EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
-        var alert = new Alert(Alert.AlertType.INFORMATION);
-        // customize the alert
-        alert.setAlertType(Alert.AlertType.INFORMATION);
-        alert.setTitle("Perfecto!!!");
-        alert.setHeaderText("Evaluacion creada correctamente!!!");
-        alert.showAndWait();
+        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Evaluacion creada correctamente!!!", null);
 
+    }
+
+    private List<Integer> getIdsList(JFXListView<CheckBoxModel> ambienteDeControlListView) {
+        return getIds(ambienteDeControlListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
     }
 
 
@@ -737,38 +641,20 @@ public class HomeController {
 
     @FXML
     public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
-        // show an alert to confirm the update
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        // customize the alert
-        alert.setAlertType(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmacion!!!");
-        alert.setHeaderText("Estas seguro que quieres actualizar las propiedades??");
-        alert.setContentText("Si atualizas las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
-        alert.showAndWait();
+        showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??", "Si atualizas " +
+                "las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
         if (alert.getResult() != ButtonType.OK) return;
         // update the properties
         EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
                                                             databaseConfigTextField.getText(), "audsci"));
-        // show an alert to get a success message
-        var alert1 = new Alert(Alert.AlertType.INFORMATION);
-        // customize the alert
-        alert1.setAlertType(Alert.AlertType.INFORMATION);
-        alert1.setTitle("Perfecto!!!");
-        alert1.setHeaderText("Propiedades actualizadas correctamente!!!");
-        alert1.setContentText("Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
-        alert1.showAndWait();
+        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!", "Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
     }
 
     @FXML
     public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
         try {
             // show an alert to confirm the recharge
-            var alert = new Alert(Alert.AlertType.CONFIRMATION);
-            // customize the alert
-            alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmacion!!!");
-            alert.setHeaderText("Estas seguro que quieres recargar las guias??");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??", null);
             if (alert.getResult() != ButtonType.OK) return;
             // recharge the guides
             guideConfig.updateGuidesTemplates();
@@ -783,12 +669,11 @@ public class HomeController {
 
     @FXML
     public void onAmbCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
-        // set the width of te listview plus one waiting 50 millis beteewn plus
         animateListView(ambCntrlRegulationEntityListView);
     }
 
     private void animateListView(ListView<RegulationEntity> regulationEntityListView) {
-        Timeline timeline = new Timeline();
+        var timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(100), new KeyValue(regulationEntityListView.prefWidthProperty(), 400)));
         timeline.play();
     }
@@ -800,7 +685,6 @@ public class HomeController {
 
     @FXML
     public void onGestPrevListViewTestMouseEntered(MouseEvent mouseEvent) {
-        // set the width of te listview plus one waiting 50 millis beteewn plus
         animateListView(gestPrevRegulationEntityListView);
     }
 
@@ -847,7 +731,6 @@ public class HomeController {
     private void saveButtonClickedLogic() {
         try {
             var tests = TestService.findAll();
-            //set tests to test results in guideConfig
             chargeTestResultsFromDB();
             guideConfig.saveTestResultList();
         } catch (URISyntaxException | IOException e) {
@@ -856,9 +739,7 @@ public class HomeController {
     }
 
     private void chargeTestResultsFromDB() {
-        // charge the test results from the database
         var testList = TestService.findAll();
-        //map the testList to testTemplateList using builder
         var testTemplate = testList.stream().map(testEntity -> TestTemplate.builder()
                                                                            .code(testEntity.getCode())
                                                                            .startDate(testEntity.getStartDate().toString())
@@ -866,7 +747,6 @@ public class HomeController {
                                                                            .guideVersion(testEntity.getGuideVersion().toString())
                                                                            .build()).toList().get(0);
         var componentList = ComponentService.findAllByTestCode(testList.get(0).getCode());
-        //map the componentList to componentTemplateList using builder and add it to the testTemplateList
         var componentTemplates = componentList.stream().map(componentEntity -> ComponentTemplate.builder()
                                                                                                 .id(componentEntity.getId())
                                                                                                 .label(componentEntity.getLabel())
@@ -878,7 +758,6 @@ public class HomeController {
         var testResultData = new TestResultData();
         componentTemplates.forEach(componentTemplate -> {
             var regulationList = RegulationService.getRegulationsByComponentId(componentTemplate.getId());
-            //map the regulationList to regulationTemplateList using builder and add it to the componentTemplateList
             var regulationTemplates = regulationList.stream().map(regulationEntity -> RegulationTemplate.builder()
                                                                                                         .id(regulationEntity.getId())
                                                                                                         .componentId(regulationEntity.getComponentId())
@@ -890,12 +769,10 @@ public class HomeController {
             componentTemplate.setRegulationTemplates(regulationTemplates);
             regulationTemplates.forEach(regulationTemplate -> {
                 var questionList = QuestionService.getQuestionsByRegulationId(regulationTemplate.getId());
-                //map the questionList to questionTemplateList using builder and add it to the regulationTemplateList
                 var questionTemplates = fillTestResultData(componentTemplate, questionList, testResultData);
                 regulationTemplate.setQuestionTemplates(questionTemplates);
                 questionTemplates.forEach(questionTemplate -> {
                     var subQuestionList = QuestionService.getQuestionsBySuperQuestionId(questionTemplate.getId());
-                    //map the subQuestionList to subQuestionTemplateList using builder and add it to the questionTemplateList
                     var subQuestionTemplates = fillTestResultData(componentTemplate, subQuestionList, testResultData);
                     questionTemplate.setSubQuestions(subQuestionTemplates);
                 });
@@ -907,8 +784,8 @@ public class HomeController {
     private static List<QuestionTemplate> fillTestResultData(ComponentTemplate componentTemplate, List<QuestionEntity> subQuestionList, TestResultData testResultData) {
         return subQuestionList.stream().map(subQuestionEntity -> {
             if (subQuestionEntity.getResult() != null) {
-                Integer yesCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount();
-                Integer noCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount();
+                var yesCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount();
+                var noCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount();
                 if (subQuestionEntity.getResult())
                     testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(yesCount != null ? yesCount + 1 : 0);
                 else
@@ -937,7 +814,6 @@ public class HomeController {
 
     @FXML
     public void onAmbContCheckBoxClicked(MouseEvent mouseEvent) {
-        // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
         checkBoxChanged(ambCntrlQuestionEntityTreeView, true, ambContNoCheckBox);
     }
 
@@ -950,13 +826,11 @@ public class HomeController {
 
     @FXML
     public void onAmbContNoCheckBoxClicked(MouseEvent mouseEvent) {
-        // set the result of the question that match with the selected in the tree view to false
         checkBoxChanged(ambCntrlQuestionEntityTreeView, false, ambContYesCheckBox);
     }
 
     @FXML
     public void onAmbContTextAreaChanged(KeyEvent inputMethodEvent) {
-        // set the description of the question that match with the selected in the tree view to the text area text
         textAreaChanged(ambCntrlQuestionEntityTreeView, ambContTextArea, inputMethodEvent);
     }
 
@@ -973,19 +847,16 @@ public class HomeController {
 
     @FXML
     public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
-        // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
         checkBoxChanged(infMonQuestionEntityTreeView, true, infMonNoCheckBox);
     }
 
     @FXML
     public void onInfMonNoCheckBoxClicked(MouseEvent mouseEvent) {
-        // set the result of the question that match with the selected in the tree view to false
         checkBoxChanged(infMonQuestionEntityTreeView, false, infMonYesCheckBox);
     }
 
     @FXML
     public void onInfMonTextAreaChanged(KeyEvent inputMethodEvent) {
-        // set the description of the question that match with the selected in the tree view to the text area text
         textAreaChanged(infMonQuestionEntityTreeView, infMonTextArea, inputMethodEvent);
     }
 
@@ -996,19 +867,16 @@ public class HomeController {
 
     @FXML
     public void onSupMonCheckBoxClicked(MouseEvent mouseEvent) {
-        // set the result of the question that match with the selected in the tree view to true, and set the no check box to false
         checkBoxChanged(supMonQuestionEntityTreeView, true, supMonNoCheckBox);
     }
 
     @FXML
     public void onSupMonNoCheckBoxClicked(MouseEvent mouseEvent) {
-        // set the result of the question that match with the selected in the tree view to false
         checkBoxChanged(supMonQuestionEntityTreeView, false, supMonYesCheckBox);
     }
 
     @FXML
     public void onSupMonTextAreaChanged(KeyEvent inputMethodEvent) {
-        // set the description of the question that match with the selected in the tree view to the text area text
         textAreaChanged(supMonQuestionEntityTreeView, supMonTextArea, inputMethodEvent);
     }
 
