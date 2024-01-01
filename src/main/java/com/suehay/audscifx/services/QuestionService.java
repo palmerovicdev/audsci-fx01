@@ -21,4 +21,8 @@ public class QuestionService {
     public static List<QuestionEntity> getQuestionsBySuperQuestionId(Integer id) {
         return questionRepository.findAllBySuperQuestionId(id).stream().toList();
     }
+
+    public static String getTestCodeByQuestionId(Integer id) {
+        return questionRepository.findTestCodeByQuestionId(id);
+    }
 }

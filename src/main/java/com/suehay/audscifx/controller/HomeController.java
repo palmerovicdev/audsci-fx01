@@ -33,19 +33,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.suehay.audscifx.model.enums.Routes.TEST_RESULTS;
 
+@Slf4j
 public class HomeController {
+
     private static final KeyCodeCombination kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY),
             kc2 = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.ALT_ANY),
             kc3 = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.ALT_ANY),
@@ -54,6 +58,7 @@ public class HomeController {
             kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY),
             kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
     private static final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private final boolean isTesting = true;
     private final GuideConfig guideConfig = new GuideConfig();
     @FXML
     public JFXListView<CheckBoxModel> managementAndPreventionListView = new JFXListView<>(),
@@ -276,7 +281,6 @@ public class HomeController {
         showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??", "Si atualizas " +
                 "las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
         if (alert.getResult() != ButtonType.OK) return;
-        // update the properties
         EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
                                                             databaseConfigTextField.getText(), "audsci"));
         showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!", "Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
@@ -285,14 +289,11 @@ public class HomeController {
     @FXML
     public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
         try {
-            // show an alert to confirm the recharge
             showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??", null);
             if (alert.getResult() != ButtonType.OK) return;
-            // recharge the guides
             guideConfig.updateGuidesTemplates();
             guideConfig.saveTemplates();
             guideConfig.chargeTemplates(Routes.TEST_TEMPLATES);
-            // init cells factories
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -581,11 +582,12 @@ public class HomeController {
                 for (QuestionTemplate questionTemplate : regulationTemplate.getQuestionTemplates()) {
                     questionTemplate.setRegulationId(regulationTemplate.getId());
                     questionTemplate.setId(k.getAndIncrement());
+                    var randomResult = Math.random() < 0.5;
                     QuestionService.saveQuestion(new QuestionEntity(
                             questionTemplate.getId(),
                             questionTemplate.getLabel(),
                             questionTemplate.getDescription(),
-                            questionTemplate.getResult(),
+                            isTesting ? randomResult : questionTemplate.getResult(),
                             questionTemplate.getLabel().substring(0, 2),
                             regulationTemplate.getId(),
                             null));
@@ -596,7 +598,7 @@ public class HomeController {
                                 subQuestionTemplate.getId(),
                                 subQuestionTemplate.getLabel(),
                                 subQuestionTemplate.getDescription(),
-                                subQuestionTemplate.getResult(),
+                                isTesting ? randomResult : subQuestionTemplate.getResult(),
                                 subQuestionTemplate.getLabel().substring(0, 2),
                                 regulationTemplate.getId(),
                                 subQuestionTemplate.getSuperquestionId()));
@@ -730,17 +732,7 @@ public class HomeController {
 
     @FXML
     public void onReportGenerationButtonClicked(MouseEvent mouseEvent) {
-        if (GuideConfig.testResults.isEmpty()) {
-            try {
-                guideConfig.chargeTemplates(TEST_RESULTS);
-            } catch (URISyntaxException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if (GuideConfig.testResults.get(0).getTest().getCode().equals(TestService.firstCode())) {
-            initPrintViewYesNoUndefChart();
-            initPrintViewComponentsYesNoChart();
-        }
+        reportGenerationViewInit();
         visibilityChange(false, false, false, false, true, false, false);
     }
 
@@ -833,30 +825,17 @@ public class HomeController {
         questionEntityTreeView.setShowRoot(false);
     }
 
-    private void initPrintViewYesNoUndefChart() {
-        try {
-            var testResultEntity = TestResultService.findById(TestService.firstCode());
-            var series = new XYChart.Series<String, Integer>();
-            series.getData().add(new XYChart.Data<>("Si", testResultEntity.getYes()));
-            series.getData().add(new XYChart.Data<>("No", testResultEntity.getNo()));
-            series.getData().add(new XYChart.Data<>("No definida", testResultEntity.getUndef()));
-            printViewYesNoUndefChart.getData().add(series);
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico!!!", null);
+    private void reportGenerationViewInit() {
+        if (GuideConfig.testResults.isEmpty()) {
+            try {
+                guideConfig.chargeTemplates(TEST_RESULTS);
+            } catch (URISyntaxException | IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-
-    private void initPrintViewComponentsYesNoChart() {
-        try {
-            var series = new ArrayList<XYChart.Series<String, List<Integer>>>();
-            GuideConfig.testResults.get(0).getTestResultData().getComponentsRessults().forEach((component, result) -> {
-                var series1 = new XYChart.Series<String, List<Integer>>();
-                series1.getData().add(new XYChart.Data<>(component, List.of(result.getYesCount(), result.getNoCount(), result.getUndefinedCount())));
-                series.add(series1);
-            });
-            printViewComponentsYesNoChart.getData().addAll(series);
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico!!!", null);
+        if (GuideConfig.testResults.stream().anyMatch(testResult -> testResult.getTest().getCode().equals(TestService.firstCode()))) {
+            initPrintViewYesNoUndefChart();
+            initPrintViewComponentsYesNoChart();
         }
     }
 
@@ -925,6 +904,39 @@ public class HomeController {
         });
         questionEntityTreeView.setPrefHeight(questionEntityTreeView.getChildrenUnmodifiable().size() * 25);
         questionEntityTreeView.refresh();
+    }
+
+    private void initPrintViewYesNoUndefChart() {
+        try {
+            var testResultEntity = TestResultService.findById(TestService.firstCode());
+            var series = new XYChart.Series<String, Integer>();
+            series.getData().add(new XYChart.Data<>("Si", testResultEntity.getYes()));
+            series.getData().add(new XYChart.Data<>("No", testResultEntity.getNo()));
+            series.getData().add(new XYChart.Data<>("No definida", testResultEntity.getUndef()));
+            printViewYesNoUndefChart.getData().add(series);
+        } catch (Exception e) {
+            log.error("Error al cargar el grafico general", e);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico general!!!", null);
+        }
+    }
+
+    private void initPrintViewComponentsYesNoChart() {
+        try {
+            var series = new ArrayList<XYChart.Series<String, List<Integer>>>();
+            GuideConfig.testResults.forEach(testResult -> {
+                if (Objects.equals(testResult.getTest().getCode(), TestService.firstCode())) {
+                    testResult.getTestResultData().getComponentsRessults().forEach((component, result) -> {
+                        var series1 = new XYChart.Series<String, List<Integer>>();
+                        series1.getData().add(new XYChart.Data<>(component, List.of(result.getYesCount(), result.getNoCount(), result.getUndefinedCount())));
+                        series.add(series1);
+                    });
+                }
+            });
+            printViewComponentsYesNoChart.getData().addAll(series);
+        } catch (Exception e) {
+            log.error("Error al cargar el grafico por componentes", e);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico por componentes!!!", null);
+        }
     }
 
     private void setCellFactory(ListView<CheckBoxModel> listView) {

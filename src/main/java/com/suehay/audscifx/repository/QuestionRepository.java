@@ -71,4 +71,11 @@ public class QuestionRepository {
                             .setParameter("superquestionId", id)
                             .getResultList();
     }
+
+    public String findTestCodeByQuestionId(Integer id) {
+        return entityManager.createNativeQuery("select test_code from component where id = " +
+                                                       "(select component_id from regulation where id = " +
+                                                       "(select regulation_id from question  where id = :id limit 1) limit 1) limit 1;", String.class)
+                                     .setParameter("id", id).getResultList().get(0).toString();
+    }
 }

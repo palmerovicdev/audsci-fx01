@@ -6,6 +6,7 @@ import com.suehay.audscifx.utils.FileExtractor;
 import com.suehay.audscifx.utils.FileLocator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.FlushModeType;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
 import java.io.File;
@@ -37,7 +38,11 @@ public class EntityManagerProvider {
                 put("hibernate.dialect.storage_engine", "innodb");
             }
         }));
-        return Objects.requireNonNullElseGet(entityManager, () -> entityManagerFactory.createEntityManager());
+        return Objects.requireNonNullElseGet(entityManager, () -> {
+            EntityManagerProvider.entityManager = entityManagerFactory.createEntityManager();
+            EntityManagerProvider.entityManager.setFlushMode(FlushModeType.AUTO);
+            return entityManager;
+        });
     }
 
     private static void chargeProperties() {

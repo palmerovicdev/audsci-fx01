@@ -2,27 +2,23 @@ package com.suehay.audscifx.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @Table(name = "test_results", schema = "audsci")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestResultEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
     @Column(name = "test_code", nullable = false, length = 10)
     private String testCode;
-
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "test_code", nullable = false)
-    @ToString.Exclude
-    private TestEntity test;
 
     @Column(name = "yes", nullable = false)
     private Integer yes;
