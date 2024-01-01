@@ -154,7 +154,7 @@ public class HomeController {
     @FXML
     public BarChart<String, Integer> printViewYesNoUndefChart;
     @FXML
-    public StackedBarChart<String, Integer> printViewComponentsYesNoChart;
+    public StackedBarChart<String, List<Integer>> printViewComponentsYesNoChart;
 
     private AreaEntity latestArea;
 
@@ -425,6 +425,9 @@ public class HomeController {
                     testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(yesCount != null ? yesCount + 1 : 0);
                 else
                     testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setNoCount(noCount != null ? noCount + 1 : 0);
+            } else {
+                var undefinedCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getUndefinedCount();
+                testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setUndefinedCount(undefinedCount != null ? undefinedCount + 1 : 0);
             }
             return QuestionTemplate.builder()
                                    .id(subQuestionEntity.getId())
@@ -736,17 +739,9 @@ public class HomeController {
         }
         if (GuideConfig.testResults.get(0).getTest().getCode().equals(TestService.firstCode())) {
             initPrintViewYesNoUndefChart();
+            initPrintViewComponentsYesNoChart();
         }
         visibilityChange(false, false, false, false, true, false, false);
-    }
-
-    private void initPrintViewYesNoUndefChart() {
-        var testResultEntity= TestResultService.findById(TestService.firstCode());
-        var series = new XYChart.Series<String, Integer>();
-        series.getData().add(new XYChart.Data<>("Si", testResultEntity.getYes()));
-        series.getData().add(new XYChart.Data<>("No", testResultEntity.getNo()));
-        series.getData().add(new XYChart.Data<>("No definida", testResultEntity.getUndef()));
-        printViewYesNoUndefChart.getData().add(series);
     }
 
     @FXML
@@ -838,6 +833,33 @@ public class HomeController {
         questionEntityTreeView.setShowRoot(false);
     }
 
+    private void initPrintViewYesNoUndefChart() {
+        try {
+            var testResultEntity = TestResultService.findById(TestService.firstCode());
+            var series = new XYChart.Series<String, Integer>();
+            series.getData().add(new XYChart.Data<>("Si", testResultEntity.getYes()));
+            series.getData().add(new XYChart.Data<>("No", testResultEntity.getNo()));
+            series.getData().add(new XYChart.Data<>("No definida", testResultEntity.getUndef()));
+            printViewYesNoUndefChart.getData().add(series);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico!!!", null);
+        }
+    }
+
+    private void initPrintViewComponentsYesNoChart() {
+        try {
+            var series = new ArrayList<XYChart.Series<String, List<Integer>>>();
+            GuideConfig.testResults.get(0).getTestResultData().getComponentsRessults().forEach((component, result) -> {
+                var series1 = new XYChart.Series<String, List<Integer>>();
+                series1.getData().add(new XYChart.Data<>(component, List.of(result.getYesCount(), result.getNoCount(), result.getUndefinedCount())));
+                series.add(series1);
+            });
+            printViewComponentsYesNoChart.getData().addAll(series);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico!!!", null);
+        }
+    }
+
     private void initConfigurationView() {
         databaseConfigTextField.setText(EntityManagerProvider.DATABASE);
         userConfigTextField.setText(EntityManagerProvider.USER);
@@ -924,6 +946,7 @@ public class HomeController {
             }
         });
     }
+
     @FXML
     public void onPrintViewGenerateReportButtonClicked(MouseEvent mouseEvent) {
 

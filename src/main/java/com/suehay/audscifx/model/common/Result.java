@@ -11,4 +11,5 @@ import lombok.*;
 public class Result {
     Integer yesCount;
     Integer noCount;
+    Integer undefinedCount;
 }
