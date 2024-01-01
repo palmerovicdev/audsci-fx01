@@ -70,7 +70,7 @@ public class ReportService {
         document.newPage();
     }
 
-    private static void addSummary(Document document, Paragraph page) throws DocumentException {
+    private static void addSummary( Paragraph page) {
         addEmptyLine(page, 1);
         addText(page, "\tObjetivo de control: ", SUB_FONT.getFont(), 5);
         addText(page, "\tCriterios revisados: ", SUB_FONT.getFont(), 5);
@@ -122,7 +122,7 @@ public class ReportService {
         addEmptyLine(paragraph, lines);
     }
 
-    private static Chapter createEmployeesTable(int component, int employeeType) throws BadElementException {
+    private static Chapter createEmployeesTable(int component, int employeeType) {
         var catPart = new Chapter(new Paragraph(new Anchor("Evaluators", CAT_FONT.getFont())), 1);
         var subCatPart = catPart.addSection(new Paragraph("Evaluators", SUB_FONT.getFont()));
         String[] headers = {"Evaluador", "Cargo", "Firma"};
@@ -164,13 +164,5 @@ public class ReportService {
             for (int col = 0; col < cols; col++)
                 table.addCell(data[row][col]);
         subCatPart.add(table);
-    }
-
-    private static void createList(Section subCatPart) {
-        var list = new List(true, false, 10);
-        list.add(new ListItem("First point"));
-        list.add(new ListItem("Second point"));
-        list.add(new ListItem("Third point"));
-        subCatPart.add(list);
     }
 }

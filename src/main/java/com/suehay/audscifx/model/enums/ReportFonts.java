@@ -3,7 +3,9 @@ package com.suehay.audscifx.model.enums;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
+import lombok.Getter;
 
+@Getter
 public enum ReportFonts {
     CAT_FONT(new Font(
             com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 18,
@@ -20,8 +22,5 @@ public enum ReportFonts {
     private final Font font;
     ReportFonts(Font font) {
         this.font = font;
-    }
-    public Font getFont() {
-        return font;
     }
 }
