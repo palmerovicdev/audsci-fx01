@@ -5,6 +5,7 @@ import com.suehay.audscifx.controller.HomeController;
 import com.suehay.audscifx.model.AreaEntity;
 import com.suehay.audscifx.model.ComponentEntity;
 import com.suehay.audscifx.model.EmployeeEntity;
+import com.suehay.audscifx.model.enums.Routes;
 import com.suehay.audscifx.services.EmployeeService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,11 +25,10 @@ public class HomeInitializer {
     }
 
     public static void init() {
-        GuideConfig guideConfig = new GuideConfig();
+        var guideConfig = new GuideConfig();
         try {
-            guideConfig.saveTestTemplates();
-            guideConfig.chargeTestTemplates();
-            // init cells factories
+            guideConfig.saveTemplates();
+            guideConfig.chargeTemplates(Routes.TEST_TEMPLATES);
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }

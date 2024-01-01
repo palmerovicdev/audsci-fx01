@@ -8,11 +8,9 @@ import java.util.List;
 
 public class EvaluatorComponentService {
     private static final EvaluatorComponentRepository evaluatorComponentRepository = new EvaluatorComponentRepository();
-
     public static void saveEvaluatorComponents(List<EvaluatorComponentEntity> evaluatorComponents) {
         evaluatorComponents.forEach(evaluatorComponentRepository::save);
     }
-
     public static Collection<? extends EvaluatorComponentEntity> findAllByComponentId(Integer id) {
         return evaluatorComponentRepository.findAllByComponentId(id);
     }

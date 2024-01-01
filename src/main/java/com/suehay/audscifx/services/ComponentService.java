@@ -14,15 +14,6 @@ public class ComponentService {
         componentRepository.save(componentEntity);
     }
 
-    public static void deleteComponent(ComponentEntity componentEntity) {
-        componentRepository.delete(componentEntity);
-    }
-
-    public static void deleteComponentByTestCode(String testCode) {
-        componentRepository.deleteByTestCode(testCode);
-    }
-
-
     public static List<ComponentEntity> findAllByTestCode(String code) {
         return componentRepository.findAllByTestCode(code);
     }

@@ -14,18 +14,7 @@ public class RegulationService {
         regulationRepository.save(regulationEntity);
     }
 
-    public static void deleteRegulation(RegulationEntity regulationEntity) {
-        regulationRepository.delete(regulationEntity);
-    }
-
-    public static void deleteRegulationByTestCode(Integer id) {
-        regulationRepository.deleteById(id);
-    }
-    public static List<RegulationEntity> getAllRegulations() {
-        return regulationRepository.findAll().stream().toList();
-    }
     public static List<RegulationEntity> getRegulationsByComponentId(Integer id) {
         return regulationRepository.findAllByComponentId(id).stream().toList();
     }
-
 }

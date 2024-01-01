@@ -14,10 +14,6 @@ public class QuestionService {
         questionRepository.save(questionEntity);
     }
 
-    public static void deleteQuestion(QuestionEntity questionEntity) {
-        questionRepository.delete(questionEntity);
-    }
-
     public static List<QuestionEntity> getQuestionsByRegulationId(Integer id) {
         return questionRepository.findAllByRegulationId(id).stream().toList();
     }

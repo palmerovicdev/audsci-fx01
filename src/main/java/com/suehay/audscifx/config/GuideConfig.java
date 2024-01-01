@@ -1,6 +1,7 @@
 package com.suehay.audscifx.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.suehay.audscifx.model.enums.Routes;
 import com.suehay.audscifx.model.templates.*;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.suehay.audscifx.model.enums.Routes.*;
 import static com.suehay.audscifx.utils.FileExtractor.*;
 import static com.suehay.audscifx.utils.FileLocator.getPath;
 import static java.lang.String.valueOf;
@@ -25,115 +27,79 @@ import static java.nio.file.Files.list;
 
 public class GuideConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final String CONFIG_PATH = "resources" + File.separator + "config.json";
-    private final String GUIDE_TEMPLATES_PATH = "resources" + File.separator + "test-templates";
-    private final String LOGS_PATH = "resources" + File.separator + "logs";
-    private final String TEST_RESULTS_PATH = "resources" + File.separator + "test-results";
-    // results for test, this list is used to save the test results in the json files in the resources/test-results directory
     public static List<TestResult> testResults = new ArrayList<>();
-    // templates for tests
     public static List<TestResult> testTemplates = new ArrayList<>();
-
     private long logsCount;
 
-    // method to set the isUpdated property of the sonfig.json file to true
     public void updateGuidesTemplates() throws IOException, URISyntaxException {
-        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
-        saveConfig(config, true, logsCount);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH.getPath())), Config.class);
+        saveConfig(config, logsCount);
     }
 
     /**
      * This method is used to save the test templates in the json files in the resources/test-templates directory
      *
-     * @throws URISyntaxException
-     * @throws IOException
      */
-    public void saveTestTemplates() throws URISyntaxException, IOException {
-        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+    public void saveTemplates() throws URISyntaxException, IOException {
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH.getPath())), Config.class);
         logsCount = config.getLogsCount();
         try {
             processConfig();
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH) + (logsCount++) + ".json")));
-            saveConfig(config, true, logsCount);
+            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH.getPath()) + (logsCount++) + ".json")));
+            saveConfig(config, logsCount);
         }
     }
 
     /**
      * This method is used to save the test templates in the json files in the resources/test-templates directory
      *
-     * @throws URISyntaxException
-     * @throws IOException
      */
-    public void chargeTestTemplates() throws URISyntaxException, IOException {
-        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+    public void chargeTemplates(Routes type) throws URISyntaxException, IOException {
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH.getPath())), Config.class);
         logsCount = config.getLogsCount();
         try {
-            if (objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class).getIsUpdated()) processTemplatesCharge();
+            if (objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH.getPath())), Config.class).getIsUpdated()) {
+                processCharge(type);
+            }
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH) + (logsCount++) + ".json")));
-            saveConfig(config, true, logsCount);
+            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH.getPath()) + (logsCount++) + ".json")));
+            saveConfig(config, logsCount);
         }
     }
 
     /**
      * This method is used to save the test results in the json files in the resources/test-results directory
      *
-     * @throws URISyntaxException
-     * @throws IOException
      */
     public void saveTestResultList() throws URISyntaxException, IOException {
         try {
-            writeTestResultsToFile(testResults, Path.of(getPath(TEST_RESULTS_PATH)), objectMapper);
+            writeTestResultsToFile(testResults, Path.of(getPath(TEST_RESULTS.getPath())), objectMapper);
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH) + (logsCount++) + ".json")));
+            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH.getPath()) + (logsCount++) + ".json")));
         }
     }
 
-    /**
-     * This method is used to charge the test results from the json files in the resources/test-results directory
-     *
-     * @throws URISyntaxException
-     * @throws IOException
-     */
-    public void chargeTestResults() throws URISyntaxException, IOException {
-        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
-        logsCount = config.getLogsCount();
-        try {
-            if (objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class).getIsUpdated()) processResultsCharge();
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace(new PrintWriter(new FileWriter(getPath(LOGS_PATH) + (logsCount++) + ".json")));
-            saveConfig(config, true, logsCount);
-        }
-    }
-
-    private void saveConfig(Config config, boolean isUpdated, long logsCount) throws IOException, URISyntaxException {
+    private void saveConfig(Config config, long logsCount) throws IOException, URISyntaxException {
         config.setLogsCount(logsCount);
-        config.setIsUpdated(isUpdated);
-        Files.writeString(Path.of(getPath(CONFIG_PATH)), objectMapper.writeValueAsString(config));
+        config.setIsUpdated(true);
+        Files.writeString(Path.of(getPath(CONFIG_PATH.getPath())), objectMapper.writeValueAsString(config));
     }
 
 
-    private void processTemplatesCharge() throws URISyntaxException, IOException {
-        var resourcesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
-        testTemplates.clear();
-
+    private void processCharge(Routes pathTo) throws URISyntaxException, IOException {
+        var resourcesPath = Path.of(getPath(pathTo.getPath()));
+        var isTestResult= TEST_RESULTS.equals(pathTo);
+        if (isTestResult){
+            testResults.clear();
+        }else {
+            testTemplates.clear();
+        }
+        testResults.clear();
         list(resourcesPath).forEach(path -> {
             try {
-                testTemplates.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    private void processResultsCharge() throws URISyntaxException, IOException {
-        var resourcesPath = Path.of(getPath(TEST_RESULTS_PATH));
-        testTemplates.clear();
-        list(resourcesPath).forEach(path -> {
-            try {
-                testResults.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
+                if(isTestResult) testResults.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
+                else testTemplates.add(objectMapper.readValue(loadFileAsAString(path.toString()), TestResult.class));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -141,16 +107,16 @@ public class GuideConfig {
     }
 
     public void processConfig() throws IOException, URISyntaxException {
-        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH)), Config.class);
+        var config = objectMapper.readValue(loadFileAsAString(getPath(CONFIG_PATH.getPath())), Config.class);
 
         if (!config.getIsUpdated()) {
             testTemplates = createTestResults();
-            var guideTemplatesPath = Path.of(getPath(GUIDE_TEMPLATES_PATH));
+            var guideTemplatesPath = Path.of(getPath(TEST_TEMPLATES.getPath()));
 
             deleteFilesInDirectory(guideTemplatesPath);
             writeTestResultsToFile(testTemplates, guideTemplatesPath, objectMapper);
         }
-        saveConfig(config, true, logsCount);
+        saveConfig(config, logsCount);
     }
 
     private void deleteFilesInDirectory(Path directoryPath) throws IOException {

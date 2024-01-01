@@ -26,10 +26,6 @@ public class EmployeeService {
         employeeRepository.delete(employeeEntity);
     }
 
-    public static void deleteEmployee(Integer integer) {
-        employeeRepository.deleteById(integer);
-    }
-
     public static List<EmployeeEntity> findAll() {
         return employeeRepository.findAll().stream().toList();
     }

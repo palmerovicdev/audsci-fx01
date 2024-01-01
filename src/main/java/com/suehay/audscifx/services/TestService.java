@@ -14,10 +14,6 @@ public class TestService {
         testRepository.save(testEntity);
     }
 
-    public static void deleteTest(TestEntity testEntity) {
-        testRepository.delete(testEntity);
-    }
-
     public static void deleteTest(String code) {
         testRepository.deleteByCode(code);
     }

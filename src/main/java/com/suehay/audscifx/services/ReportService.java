@@ -60,7 +60,7 @@ public class ReportService {
         page.add(createEmployeesTable(component, 0));
         addText(page, "\tPersonal evaluado: ", SMALL_BOLD.getFont(), 1);
         page.add(createEmployeesTable(component,1));
-        addSummary(document, page);
+        addSummary( page);
         document.add(page);
         if (component==5) {
             addText(page, "\t__________________________________________", SUB_FONT.getFont(), 1);

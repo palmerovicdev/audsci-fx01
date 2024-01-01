@@ -10,6 +10,7 @@ import com.suehay.audscifx.model.*;
 import com.suehay.audscifx.model.common.Properties;
 import com.suehay.audscifx.model.common.Result;
 import com.suehay.audscifx.model.common.TestResultData;
+import com.suehay.audscifx.model.enums.Routes;
 import com.suehay.audscifx.model.templates.*;
 import com.suehay.audscifx.services.*;
 import javafx.animation.KeyFrame;
@@ -279,8 +280,8 @@ public class HomeController {
             if (alert.getResult() != ButtonType.OK) return;
             // recharge the guides
             guideConfig.updateGuidesTemplates();
-            guideConfig.saveTestTemplates();
-            guideConfig.chargeTestTemplates();
+            guideConfig.saveTemplates();
+            guideConfig.chargeTemplates(Routes.TEST_TEMPLATES);
             // init cells factories
         } catch (Exception e) {
             throw new RuntimeException(e);

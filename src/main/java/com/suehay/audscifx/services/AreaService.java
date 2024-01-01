@@ -18,10 +18,6 @@ public class AreaService {
         areaRepository.save(new AreaEntity(integer, areaName));
     }
 
-    public static void deleteArea(AreaEntity areaEntity) {
-        areaRepository.delete(areaEntity);
-    }
-
     public static void deleteArea(Integer integer) {
         areaRepository.deleteById(integer);
     }
