@@ -56,11 +56,11 @@ public class HomeController {
             controlActivitiesListView = new JFXListView<>(),
             informationAndCommunicationListView = new JFXListView<>(),
             supervisionAndMonitoringListView = new JFXListView<>(),
-            controlEnvironmentListViewEvated = new JFXListView<>(),
-            managementAndPreventionListViewEvated = new JFXListView<>(),
-            controlActivitiesListViewEvated = new JFXListView<>(),
-            informationAndCommunicationListViewEvated = new JFXListView<>(),
-            supervisionAndMonitoringListViewEvated = new JFXListView<>();
+            controlEnvironmentListViewEvaluated = new JFXListView<>(),
+            managementAndPreventionListViewEvaluated = new JFXListView<>(),
+            controlActivitiesListViewEvaluated = new JFXListView<>(),
+            informationAndCommunicationListViewEvaluated = new JFXListView<>(),
+            supervisionAndMonitoringListViewEvaluated = new JFXListView<>();
     @FXML
     public JFXButton enterpriseButton,
             testCreationButton,
@@ -75,11 +75,11 @@ public class HomeController {
             updateDatabaseProperties,
             areaRemoveButton,
             guideRechargeButton,
-            ambContSaveButton,
-            gestPrevSaveButton1,
-            actContSaveButton11,
-            infMonSaveButton,
-            supMonSaveButton;
+            controlEnvironmentSaveButton,
+            managementAndPreventionSaveButton1,
+            controlActivitiesSaveButton11,
+            informationAndCommunicationSaveButton,
+            supervisionAndMonitoringSaveButton;
     @FXML
     public TextField areaNameTextField,
             employeeNameTextField,
@@ -102,10 +102,10 @@ public class HomeController {
     @FXML
     public CheckBox controlEnvironmentYesCheckBox,
             controlEnvironmentNoCheckBox,
-            managementAndPreventionNoCheckBox1,
-            managementAndPreventionYesCheckBox1,
-            controlActivitiesNoCheckBox11,
-            controlActivitiesYesCheckBox11,
+            managementAndPreventionNoCheckBox,
+            managementAndPreventionYesCheckBox,
+            controlActivitiesNoCheckBox,
+            controlActivitiesYesCheckBox,
             informationAndCommunicationYesCheckBox,
             informationAndCommunicationNoCheckBox,
             supervisionAndMonitoringYesCheckBox,
@@ -141,7 +141,7 @@ public class HomeController {
     @FXML
     public VBox leftOptionsPane;
     @FXML
-    public JFXListView<ComponentEntity> componentsListView = new JFXListView<>();
+    public JFXListView<ComponentEntity> componentListView = new JFXListView<>();
     @FXML
     public ListView<AreaEntity> areasListView = new ListView<>();
     @FXML
@@ -507,12 +507,12 @@ public class HomeController {
 
     @FXML
     public void onControlActivitiesYesCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(controlActivitiesQuestionEntityTreeView, true, controlActivitiesNoCheckBox11);
+        checkBoxChanged(controlActivitiesQuestionEntityTreeView, true, controlActivitiesNoCheckBox);
     }
 
     @FXML
     public void onControlActivitiesNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(controlActivitiesQuestionEntityTreeView, false, controlActivitiesYesCheckBox11);
+        checkBoxChanged(controlActivitiesQuestionEntityTreeView, false, controlActivitiesYesCheckBox);
     }
 
     @FXML
@@ -522,12 +522,12 @@ public class HomeController {
 
     @FXML
     public void onManagementAndPreventionYesCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(managementAndPreventionQuestionEntityTreeView, true, managementAndPreventionNoCheckBox1);
+        checkBoxChanged(managementAndPreventionQuestionEntityTreeView, true, managementAndPreventionNoCheckBox);
     }
 
     @FXML
     public void onManagementAndPreventionNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(managementAndPreventionQuestionEntityTreeView, false, managementAndPreventionYesCheckBox1);
+        checkBoxChanged(managementAndPreventionQuestionEntityTreeView, false, managementAndPreventionYesCheckBox);
     }
 
     @FXML
@@ -591,29 +591,29 @@ public class HomeController {
                 }
             }
         }
-        List<Integer> ambienteDeControlId = getIdsList(controlEnvironmentListView),
-                actividadesDeControlId = getIdsList(controlActivitiesListView),
-                informacionYComunicacionId = getIdsList(informationAndCommunicationListView),
-                supervicionYMonitoreoId = getIdsList(supervisionAndMonitoringListView),
-                gestionYPrevencionId = getIdsList(managementAndPreventionListView),
-                ambienteDeControlIdEvated = getIdsList(controlEnvironmentListViewEvated),
-                actividadesDeControlIdEvated = getIdsList(controlActivitiesListViewEvated),
-                informacionYComunicacionIdEvated = getIdsList(informationAndCommunicationListViewEvated),
-                supervicionYMonitoreoIdEvated = getIdsList(supervisionAndMonitoringListViewEvated),
-                gestionYPrevencionIdEvated = getIdsList(managementAndPreventionListViewEvated);
+        List<Integer> controlEnvironmentId = getIdsList(controlEnvironmentListView),
+                controlActivitiesId = getIdsList(controlActivitiesListView),
+                informationAndCommunicationId = getIdsList(informationAndCommunicationListView),
+                supervisionAndMonitoringId = getIdsList(supervisionAndMonitoringListView),
+                managementAndPreventionId = getIdsList(managementAndPreventionListView),
+                controlEnvironmentIdEvaluated = getIdsList(controlEnvironmentListViewEvaluated),
+                controlActivitiesIdEvaluated = getIdsList(controlActivitiesListViewEvaluated),
+                informationAndCommunicationIdEvaluated = getIdsList(informationAndCommunicationListViewEvaluated),
+                supervisionAndMonitoringIdEvaluated = getIdsList(supervisionAndMonitoringListViewEvaluated),
+                managementAndPreventionIdEvaluated = getIdsList(managementAndPreventionListViewEvaluated);
         testResultDB.setEvaluatorComponents(Stream.of( // add all the evaluator components
-                                                       ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
-                                                       gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
-                                                       actividadesDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 3)).toList(),
-                                                       informacionYComunicacionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 4)).toList(),
-                                                       supervicionYMonitoreoId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
+                                                       controlEnvironmentId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
+                                                       managementAndPreventionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
+                                                       controlActivitiesId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 3)).toList(),
+                                                       informationAndCommunicationId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 4)).toList(),
+                                                       supervisionAndMonitoringId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
                                                      ).flatMap(List::stream).toList());
         testResultDB.setEvaluatedComponents(Stream.of(
-                ambienteDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 1)).toList(),
-                gestionYPrevencionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 2)).toList(),
-                actividadesDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 3)).toList(),
-                informacionYComunicacionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 4)).toList(),
-                supervicionYMonitoreoIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 5)).toList()
+                controlEnvironmentIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 1)).toList(),
+                managementAndPreventionIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 2)).toList(),
+                controlActivitiesIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 3)).toList(),
+                informationAndCommunicationIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 4)).toList(),
+                supervisionAndMonitoringIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 5)).toList()
                                                      ).flatMap(List::stream).toList());
         EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
         EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
@@ -688,15 +688,15 @@ public class HomeController {
                 managementAndPreventionRegulationEntityListView,
                 managementAndPreventionTextLabel,
                 managementAndPreventionTextArea,
-                managementAndPreventionYesCheckBox1,
-                managementAndPreventionNoCheckBox1);
+                managementAndPreventionYesCheckBox,
+                managementAndPreventionNoCheckBox);
         setRegulationEntityListViewSelectionModel(
                 controlActivitiesQuestionEntityTreeView,
                 controlActivitiesRegulationEntityListView,
                 controlActivitiesTextLabel,
                 controlActivitiesTextArea,
-                controlActivitiesYesCheckBox11,
-                controlActivitiesNoCheckBox11);
+                controlActivitiesYesCheckBox,
+                controlActivitiesNoCheckBox);
         setRegulationEntityListViewSelectionModel(
                 informationAndCommunicationQuestionEntityTreeView,
                 informationAndCommunicationRegulationEntityListView,
@@ -768,7 +768,7 @@ public class HomeController {
         // set the items into the listviews
         setItems(employees, controlEnvironmentListView, controlActivitiesListView, informationAndCommunicationListView, supervisionAndMonitoringListView, managementAndPreventionListView);
         // set the items into the evaluated listviews
-        setItems(employees, controlEnvironmentListViewEvated, controlActivitiesListViewEvated, informationAndCommunicationListViewEvated, supervisionAndMonitoringListViewEvated, managementAndPreventionListViewEvated);
+        setItems(employees, controlEnvironmentListViewEvaluated, controlActivitiesListViewEvaluated, informationAndCommunicationListViewEvaluated, supervisionAndMonitoringListViewEvaluated, managementAndPreventionListViewEvaluated);
 
     }
 
@@ -821,19 +821,19 @@ public class HomeController {
         setCellFactory(informationAndCommunicationListView);
         setCellFactory(supervisionAndMonitoringListView);
         setCellFactory(managementAndPreventionListView);
-        setCellFactory(controlEnvironmentListViewEvated);
-        setCellFactory(controlActivitiesListViewEvated);
-        setCellFactory(informationAndCommunicationListViewEvated);
-        setCellFactory(supervisionAndMonitoringListViewEvated);
-        setCellFactory(managementAndPreventionListViewEvated);
+        setCellFactory(controlEnvironmentListViewEvaluated);
+        setCellFactory(controlActivitiesListViewEvaluated);
+        setCellFactory(informationAndCommunicationListViewEvaluated);
+        setCellFactory(supervisionAndMonitoringListViewEvaluated);
+        setCellFactory(managementAndPreventionListViewEvaluated);
     }
 
-    private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
-        ambienteDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        actividadesDeControlListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        informacionYComunicacionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        supervicionYMonitoreoListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
-        gestionYPrevencionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+    private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> controlEnvironmentListView, JFXListView<CheckBoxModel> controlActivitiesListView, JFXListView<CheckBoxModel> informationAndCommunicationListView, JFXListView<CheckBoxModel> supervisionAndMonitoringListView, JFXListView<CheckBoxModel> managementAndPreventionListView) {
+        controlEnvironmentListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        controlActivitiesListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        informationAndCommunicationListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        supervisionAndMonitoringListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
+        managementAndPreventionListView.getItems().setAll(employees.stream().map(employeeEntity -> new CheckBoxModel(employeeEntity, false)).toList());
     }
 
     private void rechargeTreeView(

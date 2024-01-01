@@ -657,7 +657,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <JFXListView fx:id="controlEnvironmentListViewEvated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                        <JFXListView fx:id="controlEnvironmentListViewEvaluated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                     <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="194.0" text="Gestion y prevencion de riesgos">
@@ -665,7 +665,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <JFXListView fx:id="managementAndPreventionListViewEvated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                        <JFXListView fx:id="managementAndPreventionListViewEvaluated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                     <VBox alignment="TOP_CENTER" GridPane.columnIndex="2">
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="134.0" text="Actividades de control">
@@ -673,7 +673,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <JFXListView fx:id="controlActivitiesListViewEvated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                        <JFXListView fx:id="controlActivitiesListViewEvaluated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                     <VBox alignment="TOP_CENTER" GridPane.columnIndex="3">
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="172.0" text="Informacion y comunicacion">
@@ -681,7 +681,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <JFXListView fx:id="informationAndCommunicationListViewEvated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                        <JFXListView fx:id="informationAndCommunicationListViewEvaluated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                     <VBox alignment="TOP_CENTER" GridPane.columnIndex="4">
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="149.0" text="Supervicion y monitoreo">
@@ -689,7 +689,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <JFXListView fx:id="supervisionAndMonitoringListViewEvated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
+                        <JFXListView fx:id="supervisionAndMonitoringListViewEvaluated" styleClass="table-view" stylesheets="@css/fullpackstyling.css" />
                     </VBox>
                 </GridPane>
                 <ChoiceBox fx:id="guideVersionChoiceBox" cacheShape="false" centerShape="false" layoutX="266.0" layoutY="162.0" prefHeight="25.0" prefWidth="185.0" scaleShape="false" stylesheets="@css/fullpackstyling.css">
@@ -711,7 +711,7 @@
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
-                     <JFXButton fx:id="ambContSaveButton" layoutX="826.0" layoutY="612.0" onMouseClicked="#onControlEnvironmentSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <JFXButton fx:id="controlEnvironmentSaveButton" layoutX="826.0" layoutY="612.0" onMouseClicked="#onControlEnvironmentSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                         <graphic>
                            <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
                         </graphic>
@@ -755,12 +755,12 @@
                         </font>
                      </Label>
                      <JFXTextArea fx:id="managementAndPreventionTextArea" layoutX="826.0" layoutY="257.0" onKeyPressed="#onManagementAndPreventionTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
-                     <CheckBox fx:id="managementAndPreventionNoCheckBox1" layoutX="958.0" layoutY="532.0" mnemonicParsing="false" onMouseClicked="#onManagementAndPreventionNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                     <CheckBox fx:id="managementAndPreventionNoCheckBox" layoutX="958.0" layoutY="532.0" mnemonicParsing="false" onMouseClicked="#onManagementAndPreventionNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
                         <font>
                            <Font name="System Bold" size="14.0" />
                         </font>
                      </CheckBox>
-                     <JFXButton fx:id="gestPrevSaveButton1" layoutX="862.0" layoutY="589.0" onMouseClicked="#onManagementAndPreventionSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <JFXButton fx:id="managementAndPreventionSaveButton1" layoutX="862.0" layoutY="589.0" onMouseClicked="#onManagementAndPreventionSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                         <graphic>
                            <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
                         </graphic>
@@ -768,7 +768,7 @@
                            <Insets left="8.0" />
                         </padding>
                      </JFXButton>
-                     <CheckBox fx:id="managementAndPreventionYesCheckBox1" layoutX="869.0" layoutY="541.0" mnemonicParsing="false" onMouseClicked="#onManagementAndPreventionYesCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                     <CheckBox fx:id="managementAndPreventionYesCheckBox" layoutX="869.0" layoutY="541.0" mnemonicParsing="false" onMouseClicked="#onManagementAndPreventionYesCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
                         <font>
                            <Font name="System Bold" size="14.0" />
                         </font>
@@ -793,12 +793,12 @@
                         </font>
                      </Label>
                      <JFXTextArea fx:id="controlActivitiesTextArea" onKeyPressed="#onControlActivitiesTextAreaChanged" prefHeight="163.0" prefWidth="191.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="25.0" />
-                     <CheckBox fx:id="controlActivitiesNoCheckBox11" mnemonicParsing="false" onMouseClicked="#onControlActivitiesNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+                     <CheckBox fx:id="controlActivitiesNoCheckBox" mnemonicParsing="false" onMouseClicked="#onControlActivitiesNoCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="No" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
                         <font>
                            <Font name="System Bold" size="14.0" />
                         </font>
                      </CheckBox>
-                     <JFXButton fx:id="actContSaveButton11" onMouseClicked="#onControlActivitiesSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <JFXButton fx:id="controlActivitiesSaveButton11" onMouseClicked="#onControlActivitiesSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                         <padding>
                            <Insets left="8.0" />
                         </padding>
@@ -806,7 +806,7 @@
                            <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
                         </graphic>
                      </JFXButton>
-                     <CheckBox fx:id="controlActivitiesYesCheckBox11" mnemonicParsing="false" onMouseClicked="#onControlActivitiesYesCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
+                     <CheckBox fx:id="controlActivitiesYesCheckBox" mnemonicParsing="false" onMouseClicked="#onControlActivitiesYesCheckBoxClicked" styleClass="check-box-list-view" stylesheets="@css/fullpackstyling.css" text="Si" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="170.0">
                         <font>
                            <Font name="System Bold" size="14.0" />
                         </font>
@@ -825,7 +825,7 @@
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
-                     <JFXButton fx:id="infMonSaveButton" onMouseClicked="#onInformationAndCommunicationSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <JFXButton fx:id="informationAndCommunicationSaveButton" onMouseClicked="#onInformationAndCommunicationSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                         <graphic>
                            <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
                         </graphic>
@@ -863,7 +863,7 @@
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
-                     <JFXButton fx:id="supMonSaveButton" onMouseClicked="#onSupervisionAndMonitoringSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <JFXButton fx:id="supervisionAndMonitoringSaveButton" onMouseClicked="#onSupervisionAndMonitoringSaveButtonClicked" prefHeight="42.0" prefWidth="194.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                         <graphic>
                            <FontAwesomeIconView glyphName="DOWNLOAD" size="24" />
                         </graphic>

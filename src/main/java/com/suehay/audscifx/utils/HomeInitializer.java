@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 public class HomeInitializer {
     public static void initCellsFactories(FXMLLoader fxmlLoader) {
         var controller = ((HomeController) fxmlLoader.getController());
-        controller.componentsListView.cellFactoryProperty().set(new ComponentEntityCellFactory());
+        controller.componentListView.cellFactoryProperty().set(new ComponentEntityCellFactory());
         controller.areasListView.setCellFactory(new AreaEntityCellFactory());
         controller.employeeListView.setCellFactory(new EmployeeEntityCellFactory());
         controller.employeeListView.getItems().addAll(EmployeeService.findAll());
