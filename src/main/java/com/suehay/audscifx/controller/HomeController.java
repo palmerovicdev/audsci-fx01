@@ -47,7 +47,7 @@ public class HomeController {
             kc5 = new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.ALT_ANY),
             kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY),
             kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
-    private static Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private static final Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private final GuideConfig guideConfig = new GuideConfig();
     @FXML
     public JFXListView<CheckBoxModel> gestionYPrevencionListView = new JFXListView<>(),
@@ -147,15 +147,484 @@ public class HomeController {
     public ListView<EmployeeEntity> employeeListView = new ListView<>();
     private AreaEntity latestArea;
 
-    public static void setAlert(Alert alert) {
-        HomeController.alert = alert;
+    @FXML
+    public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
+        var areaId = AreaService.getLatestAreaId();
+        if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area ya existe!!!", null);
+            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            return;
+        }
+        var areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
+        if (areaNameTextField.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area esta vacio!!!", null);
+            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            return;
+        }
+        areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
+                areaId == null ? 1 : areaId + 1,
+                areaNameTextField.getText()))));
+        if (areasListView.getSelectionModel().getSelectedItem() != null)
+            latestArea = areasListView.getItems().get(Math.max((areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
+        AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+        areaNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+        setAreasListViewSelectionModel();
     }
 
-    /**
-     * This method is called when the application is started
-     *
-     * @param scene
-     */
+    private static void showAlert(Alert.AlertType error, String title, String headerText, String contentText) {
+        alert.setAlertType(error);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        if (contentText != null) alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    private void setAreasListViewSelectionModel() {
+        areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
+            if (t1 != null) {
+                Platform.runLater(() -> {
+                    latestArea = areasListView.getSelectionModel().getSelectedItem();
+                    employeeListView.getItems().clear();
+                    System.out.println(latestArea.getId());
+                    System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
+                    employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
+                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+                });
+            }
+        });
+    }
+
+    @FXML
+    public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {
+        if (areasListView.getSelectionModel().getSelectedItem() == null) return;
+        AreaService.deleteArea(areasListView.getSelectionModel().getSelectedItem().getId());
+        areasListView.getItems().remove(areasListView.getSelectionModel().getSelectedItem());
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+        if (areasListView.getItems().isEmpty()) {
+            return;
+        }
+        areasListView.getSelectionModel().select(areasListView.getItems().get(areasListView.getItems().size() - 1));
+        latestArea = areasListView.getItems().get((areasListView.getItems().size() - 1));
+    }
+
+    @FXML
+    public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
+        if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado o el cargo esta vacio!!!", null);
+            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            return;
+        }
+        if (employeePositionTextField.getText().length() > 50) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El cargo del empleado no puede tener mas de 50 caracteres!!!", null);
+            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            return;
+        }
+        if (employeeNameTextField.getText().length() > 50) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado no puede tener mas de 50 caracteres!!!", null);
+            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            return;
+        }
+        var employees = EmployeeService.findAllByAreaId(latestArea.getId());
+        if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado ya existe!!!", null);
+            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            return;
+        }
+        var latestId = EmployeeService.getLatestId();
+        var employee = EmployeeEntity.builder()
+                                     .id(latestId == null ? 1 : latestId + 1)
+                                     .employeeName(employeeNameTextField.getText())
+                                     .position(employeePositionTextField.getText())
+                                     .build();
+        employeeListView.getItems().add(employee);
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+        var area = latestArea;
+        employee.setAreaId(area.getId());
+        EmployeeService.saveEmployee(
+                employee.getId(),
+                employee.getEmployeeName(),
+                employee.getPosition(),
+                employee.getAreaId());
+        System.out.println(employee);
+        employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+        employeePositionTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+    }
+
+    @FXML
+    public void onEmployeeRemoveButtonClicked(MouseEvent mouseEvent) {
+        if (employeeListView.getSelectionModel().getSelectedItem() == null) return;
+        EmployeeService.deleteEmployee(employeeListView.getSelectionModel().getSelectedItem());
+        employeeListView.getItems().remove(employeeListView.getSelectionModel().getSelectedItem());
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+    }
+
+    @FXML
+    public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
+        showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??", "Si atualizas " +
+                "las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
+        if (alert.getResult() != ButtonType.OK) return;
+        // update the properties
+        EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
+                                                            databaseConfigTextField.getText(), "audsci"));
+        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!", "Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
+    }
+
+    @FXML
+    public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
+        try {
+            // show an alert to confirm the recharge
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??", null);
+            if (alert.getResult() != ButtonType.OK) return;
+            // recharge the guides
+            guideConfig.updateGuidesTemplates();
+            guideConfig.saveTestTemplates();
+            guideConfig.chargeTestTemplates();
+            // init cells factories
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
+    public void onAmbCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(ambCntrlRegulationEntityListView);
+    }
+
+    private void animateListView(ListView<RegulationEntity> regulationEntityListView) {
+        var timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(100), new KeyValue(regulationEntityListView.prefWidthProperty(), 400)));
+        timeline.play();
+    }
+
+    @FXML
+    public void onAmbCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
+        ambCntrlRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onGestPrevListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(gestPrevRegulationEntityListView);
+    }
+
+    @FXML
+    public void onGestPrevListViewTestMouseExited(MouseEvent mouseEvent) {
+        gestPrevRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onActvCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(actvCntrlRegulationEntityListView);
+    }
+
+    @FXML
+    public void onActvCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
+        actvCntrlRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onInfMonListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(infMonRegulationEntityListView);
+    }
+
+    @FXML
+    public void onInfMonListViewTestMouseExited(MouseEvent mouseEvent) {
+        infMonRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onSupMonListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(supMonRegulationEntityListView);
+    }
+
+    @FXML
+    public void onSupMonListViewTestMouseExited(MouseEvent mouseEvent) {
+        supMonRegulationEntityListView.setPrefWidth(30);
+    }
+
+    @FXML
+    public void onAmbContSaveButtonClicked(MouseEvent mouseEvent) {
+        saveButtonClickedLogic();
+    }
+
+    private void saveButtonClickedLogic() {
+        try {
+            var tests = TestService.findAll();
+            chargeTestResultsFromDB();
+            guideConfig.saveTestResultList();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void chargeTestResultsFromDB() {
+        var testList = TestService.findAll();
+        var testTemplate = testList.stream().map(testEntity -> TestTemplate.builder()
+                                                                           .code(testEntity.getCode())
+                                                                           .startDate(testEntity.getStartDate().toString())
+                                                                           .finishDate(testEntity.getFinishDate().toString())
+                                                                           .guideVersion(testEntity.getGuideVersion().toString())
+                                                                           .build()).toList().get(0);
+        var componentList = ComponentService.findAllByTestCode(testList.get(0).getCode());
+        var componentTemplates = componentList.stream().map(componentEntity -> ComponentTemplate.builder()
+                                                                                                .id(componentEntity.getId())
+                                                                                                .label(componentEntity.getLabel())
+                                                                                                .testCode(componentEntity.getTestCode())
+                                                                                                .build()).toList();
+        testTemplate.setComponentTemplates(componentTemplates);
+        var evaluatedComponentList = new ArrayList<EvaluatedComponentEntity>();
+        var evaluatorComponentList = new ArrayList<EvaluatorComponentEntity>();
+        var testResultData = new TestResultData();
+        componentTemplates.forEach(componentTemplate -> {
+            var regulationList = RegulationService.getRegulationsByComponentId(componentTemplate.getId());
+            var regulationTemplates = regulationList.stream().map(regulationEntity -> RegulationTemplate.builder()
+                                                                                                        .id(regulationEntity.getId())
+                                                                                                        .componentId(regulationEntity.getComponentId())
+                                                                                                        .label(regulationEntity.getLabel())
+                                                                                                        .build()).toList();
+            evaluatedComponentList.addAll(EvaluatedComponentService.findAllByComponentId(componentTemplate.getId()));
+            evaluatorComponentList.addAll(EvaluatorComponentService.findAllByComponentId(componentTemplate.getId()));
+            testResultData.getComponentsRessults().put(componentTemplate.getLabel(), new Result());
+            componentTemplate.setRegulationTemplates(regulationTemplates);
+            regulationTemplates.forEach(regulationTemplate -> {
+                var questionList = QuestionService.getQuestionsByRegulationId(regulationTemplate.getId());
+                var questionTemplates = fillTestResultData(componentTemplate, questionList, testResultData);
+                regulationTemplate.setQuestionTemplates(questionTemplates);
+                questionTemplates.forEach(questionTemplate -> {
+                    var subQuestionList = QuestionService.getQuestionsBySuperQuestionId(questionTemplate.getId());
+                    var subQuestionTemplates = fillTestResultData(componentTemplate, subQuestionList, testResultData);
+                    questionTemplate.setSubQuestions(subQuestionTemplates);
+                });
+            });
+        });
+        GuideConfig.testResults.add(new TestResult(testResultData, evaluatedComponentList, evaluatorComponentList, testTemplate));
+    }
+
+    private static List<QuestionTemplate> fillTestResultData(ComponentTemplate componentTemplate, List<QuestionEntity> subQuestionList, TestResultData testResultData) {
+        return subQuestionList.stream().map(subQuestionEntity -> {
+            if (subQuestionEntity.getResult() != null) {
+                var yesCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount();
+                var noCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount();
+                if (subQuestionEntity.getResult())
+                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(yesCount != null ? yesCount + 1 : 0);
+                else
+                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setNoCount(noCount != null ? noCount + 1 : 0);
+            }
+            return QuestionTemplate.builder()
+                                   .id(subQuestionEntity.getId())
+                                   .regulationId(subQuestionEntity.getRegulationId())
+                                   .code(subQuestionEntity.getCode())
+                                   .label(subQuestionEntity.getLabel())
+                                   .description(subQuestionEntity.getDescription())
+                                   .result(subQuestionEntity.getResult())
+                                   .build();
+        }).toList();
+    }
+
+    @FXML
+    public void onAmbContTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(ambCntrlQuestionEntityTreeView, ambContTextArea, inputMethodEvent);
+    }
+
+    private void textAreaChanged(TreeView<QuestionEntity> treeView, JFXTextArea jfxTextArea, KeyEvent inputMethodEvent) {
+        if (inputMethodEvent.getCode() == KeyCode.ENTER) {
+            var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
+            questionEntity.setDescription(jfxTextArea.getText());
+            QuestionService.saveQuestion(questionEntity);
+        }
+    }
+
+    @FXML
+    public void onGestPrevSaveButtonClicked(MouseEvent mouseEvent) {
+        saveButtonClickedLogic();
+    }
+
+    @FXML
+    public void onActContSaveButtonClicked(MouseEvent mouseEvent) {
+        saveButtonClickedLogic();
+    }
+
+    @FXML
+    public void onAmbContCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(ambCntrlQuestionEntityTreeView, true, ambContNoCheckBox);
+    }
+
+    private void checkBoxChanged(TreeView<QuestionEntity> treeView, boolean result, CheckBox checkBox) {
+        var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
+        questionEntity.setResult(result);
+        QuestionService.saveQuestion(questionEntity);
+        checkBox.setSelected(false);
+    }
+
+    @FXML
+    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {saveButtonClickedLogic();}
+
+    @FXML
+    public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(infMonQuestionEntityTreeView, true, infMonNoCheckBox);
+    }
+
+    @FXML
+    public void onAmbContNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(ambCntrlQuestionEntityTreeView, false, ambContYesCheckBox);
+    }
+
+    @FXML
+    public void onInfMonNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(infMonQuestionEntityTreeView, false, infMonYesCheckBox);
+    }
+
+    @FXML
+    public void onInfMonTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(infMonQuestionEntityTreeView, infMonTextArea, inputMethodEvent);
+    }
+
+    @FXML
+    public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {
+        saveButtonClickedLogic();
+    }
+
+    @FXML
+    public void onSupMonCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(supMonQuestionEntityTreeView, true, supMonNoCheckBox);
+    }
+
+    @FXML
+    public void onSupMonNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(supMonQuestionEntityTreeView, false, supMonYesCheckBox);
+    }
+
+    @FXML
+    public void onSupMonTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(supMonQuestionEntityTreeView, supMonTextArea, inputMethodEvent);
+    }
+
+    @FXML
+    public void onActConYesCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(actvCntrlQuestionEntityTreeView, true, actContNoCheckBox11);
+    }
+
+    @FXML
+    public void onActConNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(actvCntrlQuestionEntityTreeView, false, actContYesCheckBox11);
+    }
+
+    @FXML
+    public void onActContTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(actvCntrlQuestionEntityTreeView, actContTextArea11, inputMethodEvent);
+    }
+
+    @FXML
+    public void onGestPrevYesCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(gestPrevQuestionEntityTreeView, true, gestPrevNoCheckBox1);
+    }
+
+    @FXML
+    public void onGestPrevNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(gestPrevQuestionEntityTreeView, false, gestPrevYesCheckBox1);
+    }
+
+    @FXML
+    public void onGesPrevTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(gestPrevQuestionEntityTreeView, gestPrevTextArea1, inputMethodEvent);
+    }
+
+    public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
+        var testResultDB = GuideConfig.testTemplates.stream().filter(testResult -> testResult.getTest().getGuideVersion().equals(guideVersionChoiceBox.getSelectionModel().getSelectedItem())).findFirst().orElse(null);
+        var testCode = testCodeTextField.getText();
+        var startTestDate = startTestDatePicker.getValue();
+        var endTestDate = endTestDatePicker.getValue();
+        var guideVersion = guideVersionChoiceBox.getValue();
+
+        if (testResultDB == null) return;
+
+        testResultDB.getTest().setCode(testCode);
+        testResultDB.getTest().setStartDate(startTestDate.toString());
+        testResultDB.getTest().setFinishDate(endTestDate.toString());
+        testResultDB.getTest().setGuideVersion(guideVersion);
+
+        TestService.saveTest(new TestEntity(
+                testCode,
+                startTestDate,
+                endTestDate,
+                LocalDate.parse(guideVersion)));
+        var i = new AtomicInteger(1);
+        var j = new AtomicInteger(1);
+        var k = new AtomicInteger(1);
+        for (ComponentTemplate componentTemplate : testResultDB.getTest().getComponentTemplates()) {
+            componentTemplate.setId(i.getAndIncrement());
+            componentTemplate.setTestCode(testCode);
+            ComponentService.saveComponent(new ComponentEntity(componentTemplate.getId(), componentTemplate.getLabel(), componentTemplate.getTestCode()));
+            for (RegulationTemplate regulationTemplate : componentTemplate.getRegulationTemplates()) {
+                regulationTemplate.setId(j.getAndIncrement());
+                regulationTemplate.setComponentId(componentTemplate.getId());
+                RegulationService.saveRegulation(new RegulationEntity(regulationTemplate.getId(), regulationTemplate.getLabel(), regulationTemplate.getComponentId()));
+                for (QuestionTemplate questionTemplate : regulationTemplate.getQuestionTemplates()) {
+                    questionTemplate.setRegulationId(regulationTemplate.getId());
+                    questionTemplate.setId(k.getAndIncrement());
+                    QuestionService.saveQuestion(new QuestionEntity(
+                            questionTemplate.getId(),
+                            questionTemplate.getLabel(),
+                            questionTemplate.getDescription(),
+                            questionTemplate.getResult(),
+                            questionTemplate.getLabel().substring(0, 2),
+                            regulationTemplate.getId(),
+                            null));
+                    for (QuestionTemplate subQuestionTemplate : questionTemplate.getSubQuestions()) {
+                        subQuestionTemplate.setId(k.getAndIncrement());
+                        subQuestionTemplate.setSuperquestionId(questionTemplate.getId());
+                        QuestionService.saveQuestion(new QuestionEntity(
+                                subQuestionTemplate.getId(),
+                                subQuestionTemplate.getLabel(),
+                                subQuestionTemplate.getDescription(),
+                                subQuestionTemplate.getResult(),
+                                subQuestionTemplate.getLabel().substring(0, 2),
+                                regulationTemplate.getId(),
+                                subQuestionTemplate.getSuperquestionId()));
+                    }
+                }
+            }
+        }
+        List<Integer> ambienteDeControlId = getIdsList(ambienteDeControlListView),
+                actividadesDeControlId = getIdsList(actividadesDeControlListView),
+                informacionYComunicacionId = getIdsList(informacionYComunicacionListView),
+                supervicionYMonitoreoId = getIdsList(supervicionYMonitoreoListView),
+                gestionYPrevencionId = getIdsList(gestionYPrevencionListView),
+                ambienteDeControlIdEvated = getIdsList(ambienteDeControlListViewEvated),
+                actividadesDeControlIdEvated = getIdsList(actividadesDeControlListViewEvated),
+                informacionYComunicacionIdEvated = getIdsList(informacionYComunicacionListViewEvated),
+                supervicionYMonitoreoIdEvated = getIdsList(supervicionYMonitoreoListViewEvated),
+                gestionYPrevencionIdEvated = getIdsList(gestionYPrevencionListViewEvated);
+        testResultDB.setEvaluatorComponents(Stream.of( // add all the evaluator components
+                                                       ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
+                                                       gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
+                                                       actividadesDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 3)).toList(),
+                                                       informacionYComunicacionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 4)).toList(),
+                                                       supervicionYMonitoreoId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
+                                                     ).flatMap(List::stream).toList());
+        testResultDB.setEvaluatedComponents(Stream.of(
+                ambienteDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 1)).toList(),
+                gestionYPrevencionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 2)).toList(),
+                actividadesDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 3)).toList(),
+                informacionYComunicacionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 4)).toList(),
+                supervicionYMonitoreoIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 5)).toList()
+                                                     ).flatMap(List::stream).toList());
+        EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
+        EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
+        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Evaluacion creada correctamente!!!", null);
+
+    }
+
+    private List<Integer> getIdsList(JFXListView<CheckBoxModel> ambienteDeControlListView) {
+        return getIds(ambienteDeControlListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
+    }
+
+    public List<Integer> getIds(List<ObjectProperty<EmployeeEntity>> employees) {
+        return employees.stream().map(ObjectProperty::get).map(EmployeeEntity::getId).toList();
+    }
+
     public void initKeyCombinations(Scene scene) {
         scene.setOnKeyPressed(event -> {
             if (kc.match(event)) onHomeButtonClicked(null);
@@ -342,21 +811,6 @@ public class HomeController {
         passwordConfigTextField.setText(EntityManagerProvider.PASSWORD);
     }
 
-    private void setAreasListViewSelectionModel() {
-        areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
-            if (t1 != null) {
-                Platform.runLater(() -> {
-                    latestArea = areasListView.getSelectionModel().getSelectedItem();
-                    employeeListView.getItems().clear();
-                    System.out.println(latestArea.getId());
-                    System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
-                    employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
-                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-                });
-            }
-        });
-    }
-
     private void setCellsFactories() {
         setCellFactory(ambienteDeControlListView);
         setCellFactory(actividadesDeControlListView);
@@ -437,471 +891,6 @@ public class HomeController {
             }
         });
     }
-
-    @FXML
-    public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
-        var areaId = AreaService.getLatestAreaId();
-        if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area ya existe!!!", null);
-            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            return;
-        }
-        var areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
-        if (areaNameTextField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area esta vacio!!!", null);
-            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            return;
-        }
-        areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
-                areaId == null ? 1 : areaId + 1,
-                areaNameTextField.getText()))));
-        if (areasListView.getSelectionModel().getSelectedItem() != null)
-            latestArea = areasListView.getItems().get(Math.max((areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
-        AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
-        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
-        areaNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
-        setAreasListViewSelectionModel();
-    }
-
-    private static void showAlert(Alert.AlertType error, String title, String headerText, String contentText) {
-        alert.setAlertType(error);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        if (contentText != null) alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    @FXML
-    public void onAreaRemoveButtonClicked(MouseEvent mouseEvent) {
-        if (areasListView.getSelectionModel().getSelectedItem() == null) return;
-        AreaService.deleteArea(areasListView.getSelectionModel().getSelectedItem().getId());
-        areasListView.getItems().remove(areasListView.getSelectionModel().getSelectedItem());
-        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
-        if (areasListView.getItems().isEmpty()) {
-            return;
-        }
-        areasListView.getSelectionModel().select(areasListView.getItems().get(areasListView.getItems().size() - 1));
-        latestArea = areasListView.getItems().get((areasListView.getItems().size() - 1));
-    }
-
-    @FXML
-    public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
-        if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado o el cargo esta vacio!!!", null);
-            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            return;
-        }
-        if (employeePositionTextField.getText().length() > 50) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El cargo del empleado no puede tener mas de 50 caracteres!!!", null);
-            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            return;
-        }
-        if (employeeNameTextField.getText().length() > 50) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado no puede tener mas de 50 caracteres!!!", null);
-            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            return;
-        }
-        var employees = EmployeeService.findAllByAreaId(latestArea.getId());
-        if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado ya existe!!!", null);
-            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            return;
-        }
-        var latestId = EmployeeService.getLatestId();
-        var employee = EmployeeEntity.builder()
-                                     .id(latestId == null ? 1 : latestId + 1)
-                                     .employeeName(employeeNameTextField.getText())
-                                     .position(employeePositionTextField.getText())
-                                     .build();
-        employeeListView.getItems().add(employee);
-        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-        var area = latestArea;
-        employee.setAreaId(area.getId());
-        EmployeeService.saveEmployee(
-                employee.getId(),
-                employee.getEmployeeName(),
-                employee.getPosition(),
-                employee.getAreaId());
-        System.out.println(employee);
-        employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
-        employeePositionTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
-    }
-
-    @FXML
-    public void onEmployeeRemoveButtonClicked(MouseEvent mouseEvent) {
-        if (employeeListView.getSelectionModel().getSelectedItem() == null) return;
-        EmployeeService.deleteEmployee(employeeListView.getSelectionModel().getSelectedItem());
-        employeeListView.getItems().remove(employeeListView.getSelectionModel().getSelectedItem());
-        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-    }
-
-    public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
-        var testResultDB = GuideConfig.testTemplates.stream().filter(testResult -> testResult.getTest().getGuideVersion().equals(guideVersionChoiceBox.getSelectionModel().getSelectedItem())).findFirst().orElse(null);
-        var testCode = testCodeTextField.getText();
-        var startTestDate = startTestDatePicker.getValue();
-        var endTestDate = endTestDatePicker.getValue();
-        var guideVersion = guideVersionChoiceBox.getValue();
-
-        if (testResultDB == null) return;
-
-        testResultDB.getTest().setCode(testCode);
-        testResultDB.getTest().setStartDate(startTestDate.toString());
-        testResultDB.getTest().setFinishDate(endTestDate.toString());
-        testResultDB.getTest().setGuideVersion(guideVersion);
-
-        TestService.saveTest(new TestEntity(
-                testCode,
-                startTestDate,
-                endTestDate,
-                LocalDate.parse(guideVersion)));
-        var i = new AtomicInteger(1);
-        var j = new AtomicInteger(1);
-        var k = new AtomicInteger(1);
-        for (ComponentTemplate componentTemplate : testResultDB.getTest().getComponentTemplates()) {
-            componentTemplate.setId(i.getAndIncrement());
-            componentTemplate.setTestCode(testCode);
-            ComponentService.saveComponent(new ComponentEntity(componentTemplate.getId(), componentTemplate.getLabel(), componentTemplate.getTestCode()));
-            for (RegulationTemplate regulationTemplate : componentTemplate.getRegulationTemplates()) {
-                regulationTemplate.setId(j.getAndIncrement());
-                regulationTemplate.setComponentId(componentTemplate.getId());
-                RegulationService.saveRegulation(new RegulationEntity(regulationTemplate.getId(), regulationTemplate.getLabel(), regulationTemplate.getComponentId()));
-                for (QuestionTemplate questionTemplate : regulationTemplate.getQuestionTemplates()) {
-                    questionTemplate.setRegulationId(regulationTemplate.getId());
-                    questionTemplate.setId(k.getAndIncrement());
-                    QuestionService.saveQuestion(new QuestionEntity(
-                            questionTemplate.getId(),
-                            questionTemplate.getLabel(),
-                            questionTemplate.getDescription(),
-                            questionTemplate.getResult(),
-                            questionTemplate.getLabel().substring(0, 2),
-                            regulationTemplate.getId(),
-                            null));
-                    for (QuestionTemplate subQuestionTemplate : questionTemplate.getSubQuestions()) {
-                        subQuestionTemplate.setId(k.getAndIncrement());
-                        subQuestionTemplate.setSuperquestionId(questionTemplate.getId());
-                        QuestionService.saveQuestion(new QuestionEntity(
-                                subQuestionTemplate.getId(),
-                                subQuestionTemplate.getLabel(),
-                                subQuestionTemplate.getDescription(),
-                                subQuestionTemplate.getResult(),
-                                subQuestionTemplate.getLabel().substring(0, 2),
-                                regulationTemplate.getId(),
-                                subQuestionTemplate.getSuperquestionId()));
-                    }
-                }
-            }
-        }
-        List<Integer> ambienteDeControlId = getIdsList(ambienteDeControlListView),
-                actividadesDeControlId = getIdsList(actividadesDeControlListView),
-                informacionYComunicacionId = getIdsList(informacionYComunicacionListView),
-                supervicionYMonitoreoId = getIdsList(supervicionYMonitoreoListView),
-                gestionYPrevencionId = getIdsList(gestionYPrevencionListView),
-                ambienteDeControlIdEvated = getIdsList(ambienteDeControlListViewEvated),
-                actividadesDeControlIdEvated = getIdsList(actividadesDeControlListViewEvated),
-                informacionYComunicacionIdEvated = getIdsList(informacionYComunicacionListViewEvated),
-                supervicionYMonitoreoIdEvated = getIdsList(supervicionYMonitoreoListViewEvated),
-                gestionYPrevencionIdEvated = getIdsList(gestionYPrevencionListViewEvated);
-        testResultDB.setEvaluatorComponents(Stream.of( // add all the evaluator components
-                                                       ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
-                                                       gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
-                                                       actividadesDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 3)).toList(),
-                                                       informacionYComunicacionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 4)).toList(),
-                                                       supervicionYMonitoreoId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
-                                                     ).flatMap(List::stream).toList());
-        testResultDB.setEvaluatedComponents(Stream.of(
-                ambienteDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 1)).toList(),
-                gestionYPrevencionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 2)).toList(),
-                actividadesDeControlIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 3)).toList(),
-                informacionYComunicacionIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 4)).toList(),
-                supervicionYMonitoreoIdEvated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 5)).toList()
-                                                     ).flatMap(List::stream).toList());
-        EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
-        EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
-        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Evaluacion creada correctamente!!!", null);
-
-    }
-
-    private List<Integer> getIdsList(JFXListView<CheckBoxModel> ambienteDeControlListView) {
-        return getIds(ambienteDeControlListView.getItems().stream().filter(checkBoxModel -> checkBoxModel.getChecked().getValue()).map(CheckBoxModel::getEmployee).toList());
-    }
-
-
-    public List<Integer> getIds(List<ObjectProperty<EmployeeEntity>> employees) {
-        return employees.stream().map(ObjectProperty::get).map(EmployeeEntity::getId).toList();
-    }
-
-    @FXML
-    public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
-        showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??", "Si atualizas " +
-                "las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
-        if (alert.getResult() != ButtonType.OK) return;
-        // update the properties
-        EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
-                                                            databaseConfigTextField.getText(), "audsci"));
-        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!", "Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
-    }
-
-    @FXML
-    public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
-        try {
-            // show an alert to confirm the recharge
-            showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??", null);
-            if (alert.getResult() != ButtonType.OK) return;
-            // recharge the guides
-            guideConfig.updateGuidesTemplates();
-            guideConfig.saveTestTemplates();
-            guideConfig.chargeTestTemplates();
-            // init cells factories
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @FXML
-    public void onAmbCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(ambCntrlRegulationEntityListView);
-    }
-
-    private void animateListView(ListView<RegulationEntity> regulationEntityListView) {
-        var timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(100), new KeyValue(regulationEntityListView.prefWidthProperty(), 400)));
-        timeline.play();
-    }
-
-    @FXML
-    public void onAmbCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
-        ambCntrlRegulationEntityListView.setPrefWidth(30);
-    }
-
-    @FXML
-    public void onGestPrevListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(gestPrevRegulationEntityListView);
-    }
-
-    @FXML
-    public void onGestPrevListViewTestMouseExited(MouseEvent mouseEvent) {
-        gestPrevRegulationEntityListView.setPrefWidth(30);
-    }
-
-    @FXML
-    public void onActvCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(actvCntrlRegulationEntityListView);
-    }
-
-    @FXML
-    public void onActvCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
-        actvCntrlRegulationEntityListView.setPrefWidth(30);
-    }
-
-    @FXML
-    public void onInfMonListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(infMonRegulationEntityListView);
-    }
-
-    @FXML
-    public void onInfMonListViewTestMouseExited(MouseEvent mouseEvent) {
-        infMonRegulationEntityListView.setPrefWidth(30);
-    }
-
-    @FXML
-    public void onSupMonListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(supMonRegulationEntityListView);
-    }
-
-    @FXML
-    public void onSupMonListViewTestMouseExited(MouseEvent mouseEvent) {
-        supMonRegulationEntityListView.setPrefWidth(30);
-    }
-
-    @FXML
-    public void onAmbContSaveButtonClicked(MouseEvent mouseEvent) {
-        saveButtonClickedLogic();
-    }
-
-    private void saveButtonClickedLogic() {
-        try {
-            var tests = TestService.findAll();
-            chargeTestResultsFromDB();
-            guideConfig.saveTestResultList();
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void chargeTestResultsFromDB() {
-        var testList = TestService.findAll();
-        var testTemplate = testList.stream().map(testEntity -> TestTemplate.builder()
-                                                                           .code(testEntity.getCode())
-                                                                           .startDate(testEntity.getStartDate().toString())
-                                                                           .finishDate(testEntity.getFinishDate().toString())
-                                                                           .guideVersion(testEntity.getGuideVersion().toString())
-                                                                           .build()).toList().get(0);
-        var componentList = ComponentService.findAllByTestCode(testList.get(0).getCode());
-        var componentTemplates = componentList.stream().map(componentEntity -> ComponentTemplate.builder()
-                                                                                                .id(componentEntity.getId())
-                                                                                                .label(componentEntity.getLabel())
-                                                                                                .testCode(componentEntity.getTestCode())
-                                                                                                .build()).toList();
-        testTemplate.setComponentTemplates(componentTemplates);
-        var evaluatedComponentList = new ArrayList<EvaluatedComponentEntity>();
-        var evaluatorComponentList = new ArrayList<EvaluatorComponentEntity>();
-        var testResultData = new TestResultData();
-        componentTemplates.forEach(componentTemplate -> {
-            var regulationList = RegulationService.getRegulationsByComponentId(componentTemplate.getId());
-            var regulationTemplates = regulationList.stream().map(regulationEntity -> RegulationTemplate.builder()
-                                                                                                        .id(regulationEntity.getId())
-                                                                                                        .componentId(regulationEntity.getComponentId())
-                                                                                                        .label(regulationEntity.getLabel())
-                                                                                                        .build()).toList();
-            evaluatedComponentList.addAll(EvaluatedComponentService.findAllByComponentId(componentTemplate.getId()));
-            evaluatorComponentList.addAll(EvaluatorComponentService.findAllByComponentId(componentTemplate.getId()));
-            testResultData.getComponentsRessults().put(componentTemplate.getLabel(), new Result());
-            componentTemplate.setRegulationTemplates(regulationTemplates);
-            regulationTemplates.forEach(regulationTemplate -> {
-                var questionList = QuestionService.getQuestionsByRegulationId(regulationTemplate.getId());
-                var questionTemplates = fillTestResultData(componentTemplate, questionList, testResultData);
-                regulationTemplate.setQuestionTemplates(questionTemplates);
-                questionTemplates.forEach(questionTemplate -> {
-                    var subQuestionList = QuestionService.getQuestionsBySuperQuestionId(questionTemplate.getId());
-                    var subQuestionTemplates = fillTestResultData(componentTemplate, subQuestionList, testResultData);
-                    questionTemplate.setSubQuestions(subQuestionTemplates);
-                });
-            });
-        });
-        GuideConfig.testResults.add(new TestResult(testResultData, evaluatedComponentList, evaluatorComponentList, testTemplate));
-    }
-
-    private static List<QuestionTemplate> fillTestResultData(ComponentTemplate componentTemplate, List<QuestionEntity> subQuestionList, TestResultData testResultData) {
-        return subQuestionList.stream().map(subQuestionEntity -> {
-            if (subQuestionEntity.getResult() != null) {
-                var yesCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getYesCount();
-                var noCount = testResultData.getComponentsRessults().get(componentTemplate.getLabel()).getNoCount();
-                if (subQuestionEntity.getResult())
-                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setYesCount(yesCount != null ? yesCount + 1 : 0);
-                else
-                    testResultData.getComponentsRessults().get(componentTemplate.getLabel()).setNoCount(noCount != null ? noCount + 1 : 0);
-            }
-            return QuestionTemplate.builder()
-                                   .id(subQuestionEntity.getId())
-                                   .regulationId(subQuestionEntity.getRegulationId())
-                                   .code(subQuestionEntity.getCode())
-                                   .label(subQuestionEntity.getLabel())
-                                   .description(subQuestionEntity.getDescription())
-                                   .result(subQuestionEntity.getResult())
-                                   .build();
-        }).toList();
-    }
-
-    @FXML
-    public void onGestPrevSaveButtonClicked(MouseEvent mouseEvent) {
-        saveButtonClickedLogic();
-    }
-
-    @FXML
-    public void onActContSaveButtonClicked(MouseEvent mouseEvent) {
-        saveButtonClickedLogic();
-    }
-
-    @FXML
-    public void onAmbContCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(ambCntrlQuestionEntityTreeView, true, ambContNoCheckBox);
-    }
-
-    private void checkBoxChanged(TreeView<QuestionEntity> treeView, boolean result, CheckBox checkBox) {
-        var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
-        questionEntity.setResult(result);
-        QuestionService.saveQuestion(questionEntity);
-        checkBox.setSelected(false);
-    }
-
-    @FXML
-    public void onAmbContNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(ambCntrlQuestionEntityTreeView, false, ambContYesCheckBox);
-    }
-
-    @FXML
-    public void onAmbContTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(ambCntrlQuestionEntityTreeView, ambContTextArea, inputMethodEvent);
-    }
-
-    private void textAreaChanged(TreeView<QuestionEntity> treeView, JFXTextArea jfxTextArea, KeyEvent inputMethodEvent) {
-        if (inputMethodEvent.getCode() == KeyCode.ENTER) {
-            var questionEntity = treeView.getSelectionModel().getSelectedItem().getValue();
-            questionEntity.setDescription(jfxTextArea.getText());
-            QuestionService.saveQuestion(questionEntity);
-        }
-    }
-
-    @FXML
-    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {saveButtonClickedLogic();}
-
-    @FXML
-    public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(infMonQuestionEntityTreeView, true, infMonNoCheckBox);
-    }
-
-    @FXML
-    public void onInfMonNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(infMonQuestionEntityTreeView, false, infMonYesCheckBox);
-    }
-
-    @FXML
-    public void onInfMonTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(infMonQuestionEntityTreeView, infMonTextArea, inputMethodEvent);
-    }
-
-    @FXML
-    public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {
-        saveButtonClickedLogic();
-    }
-
-    @FXML
-    public void onSupMonCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(supMonQuestionEntityTreeView, true, supMonNoCheckBox);
-    }
-
-    @FXML
-    public void onSupMonNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(supMonQuestionEntityTreeView, false, supMonYesCheckBox);
-    }
-
-    @FXML
-    public void onSupMonTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(supMonQuestionEntityTreeView, supMonTextArea, inputMethodEvent);
-    }
-
-    @FXML
-    public void onActConYesCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(actvCntrlQuestionEntityTreeView, true, actContNoCheckBox11);
-    }
-
-    @FXML
-    public void onActConNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(actvCntrlQuestionEntityTreeView, false, actContYesCheckBox11);
-    }
-
-    @FXML
-    public void onActContTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(actvCntrlQuestionEntityTreeView, actContTextArea11, inputMethodEvent);
-    }
-
-    @FXML
-    public void onGestPrevYesCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(gestPrevQuestionEntityTreeView, true, gestPrevNoCheckBox1);
-    }
-
-    @FXML
-    public void onGestPrevNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(gestPrevQuestionEntityTreeView, false, gestPrevYesCheckBox1);
-    }
-
-    @FXML
-    public void onGesPrevTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(gestPrevQuestionEntityTreeView, gestPrevTextArea1, inputMethodEvent);
-    }
-
 
     @Data
     public static class CheckBoxModel {
