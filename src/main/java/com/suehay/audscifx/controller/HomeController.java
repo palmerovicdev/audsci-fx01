@@ -50,16 +50,16 @@ public class HomeController {
     private static final Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private final GuideConfig guideConfig = new GuideConfig();
     @FXML
-    public JFXListView<CheckBoxModel> gestionYPrevencionListView = new JFXListView<>(),
-            ambienteDeControlListView = new JFXListView<>(),
-            actividadesDeControlListView = new JFXListView<>(),
-            informacionYComunicacionListView = new JFXListView<>(),
-            supervicionYMonitoreoListView = new JFXListView<>(),
-            ambienteDeControlListViewEvated = new JFXListView<>(),
-            gestionYPrevencionListViewEvated = new JFXListView<>(),
-            actividadesDeControlListViewEvated = new JFXListView<>(),
-            informacionYComunicacionListViewEvated = new JFXListView<>(),
-            supervicionYMonitoreoListViewEvated = new JFXListView<>();
+    public JFXListView<CheckBoxModel> managementAndPreventionListView = new JFXListView<>(),
+            controlEnvironmentListView = new JFXListView<>(),
+            controlActivitiesListView = new JFXListView<>(),
+            informationAndCommunicationListView = new JFXListView<>(),
+            supervisionAndMonitoringListView = new JFXListView<>(),
+            controlEnvironmentListViewEvated = new JFXListView<>(),
+            managementAndPreventionListViewEvated = new JFXListView<>(),
+            controlActivitiesListViewEvated = new JFXListView<>(),
+            informationAndCommunicationListViewEvated = new JFXListView<>(),
+            supervisionAndMonitoringListViewEvated = new JFXListView<>();
     @FXML
     public JFXButton enterpriseButton,
             testCreationButton,
@@ -99,39 +99,39 @@ public class HomeController {
     public DatePicker startTestDatePicker,
             endTestDatePicker;
     @FXML
-    public CheckBox ambContYesCheckBox,
-            ambContNoCheckBox,
-            gestPrevNoCheckBox1,
-            gestPrevYesCheckBox1,
-            actContNoCheckBox11,
-            actContYesCheckBox11,
-            infMonYesCheckBox,
-            infMonNoCheckBox,
-            supMonYesCheckBox,
-            supMonNoCheckBox;
+    public CheckBox controlEnvironmentYesCheckBox,
+            controlEnvironmentNoCheckBox,
+            managementAndPreventionNoCheckBox1,
+            managementAndPreventionYesCheckBox1,
+            controlActivitiesNoCheckBox11,
+            controlActivitiesYesCheckBox11,
+            informationAndCommunicationYesCheckBox,
+            informationAndCommunicationNoCheckBox,
+            supervisionAndMonitoringYesCheckBox,
+            supervisionAndMonitoringNoCheckBox;
     @FXML
-    public Label actContTextLabel11,
-            supMonTextLabel,
-            infMonTextLabel,
-            gestPrevTextLabel1,
-            ambContTextLabel;
+    public Label controlActivitiesTextLabel,
+            supervisionAndMonitoringTextLabel,
+            informationAndCommunicationTextLabel,
+            managementAndPreventionTextLabel,
+            controlEnvironmentTextLabel;
     @FXML
-    public JFXTextArea ambContTextArea,
-            gestPrevTextArea1,
-            actContTextArea11,
-            infMonTextArea,
-            supMonTextArea;
+    public JFXTextArea controlEnvironmentTextArea,
+            managementAndPreventionTextArea,
+            controlActivitiesTextArea,
+            informationAndCommunicationTextArea,
+            supervisionAndMonitoringTextArea;
     @FXML
-    public TreeView<QuestionEntity> ambCntrlQuestionEntityTreeView = new JFXTreeView<>(),
-            gestPrevQuestionEntityTreeView = new JFXTreeView<>(),
-            actvCntrlQuestionEntityTreeView = new JFXTreeView<>(),
-            infMonQuestionEntityTreeView = new JFXTreeView<>(),
+    public TreeView<QuestionEntity> controlEnvironmentQuestionEntityTreeView = new JFXTreeView<>(),
+            managementAndPreventionQuestionEntityTreeView = new JFXTreeView<>(),
+            controlActivitiesQuestionEntityTreeView = new JFXTreeView<>(),
+            informationAndCommunicationQuestionEntityTreeView = new JFXTreeView<>(),
             supMonQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
-    public ListView<RegulationEntity> infMonRegulationEntityListView = new ListView<>(),
-            gestPrevRegulationEntityListView = new ListView<>(),
-            ambCntrlRegulationEntityListView = new ListView<>(),
-            actvCntrlRegulationEntityListView = new ListView<>(),
+    public ListView<RegulationEntity> informationAndCommunicationRegulationEntityListView = new ListView<>(),
+            managementAndPreventionRegulationEntityListView = new ListView<>(),
+            controlEnvironmentRegulationEntityListView = new ListView<>(),
+            controlActivitiesRegulationEntityListView = new ListView<>(),
             supMonRegulationEntityListView = new ListView<>();
     @FXML
     public ChoiceBox<String> guideVersionChoiceBox = new ChoiceBox<>();
@@ -289,8 +289,8 @@ public class HomeController {
     }
 
     @FXML
-    public void onAmbCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(ambCntrlRegulationEntityListView);
+    public void onControlEnvironmentListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(controlEnvironmentRegulationEntityListView);
     }
 
     private void animateListView(ListView<RegulationEntity> regulationEntityListView) {
@@ -300,58 +300,61 @@ public class HomeController {
     }
 
     @FXML
-    public void onAmbCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
-        ambCntrlRegulationEntityListView.setPrefWidth(30);
+    public void onControlEnvironmentListViewTestMouseExited(MouseEvent mouseEvent) {
+        exitedListView(controlEnvironmentRegulationEntityListView);
+    }
+
+    private void exitedListView(ListView<RegulationEntity> regulationEntityListView) {
+        regulationEntityListView.setPrefWidth(30);
     }
 
     @FXML
-    public void onGestPrevListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(gestPrevRegulationEntityListView);
+    public void onManagementAndPreventionListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(managementAndPreventionRegulationEntityListView);
     }
 
     @FXML
-    public void onGestPrevListViewTestMouseExited(MouseEvent mouseEvent) {
-        gestPrevRegulationEntityListView.setPrefWidth(30);
+    public void onManagementAndPreventionListViewTestMouseExited(MouseEvent mouseEvent) {
+        exitedListView(managementAndPreventionRegulationEntityListView);
     }
 
     @FXML
-    public void onActvCntrlListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(actvCntrlRegulationEntityListView);
+    public void onControlActivitiesListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(controlActivitiesRegulationEntityListView);
     }
 
     @FXML
-    public void onActvCntrlListViewTestMouseExited(MouseEvent mouseEvent) {
-        actvCntrlRegulationEntityListView.setPrefWidth(30);
+    public void onControlActivitiesListViewTestMouseExited(MouseEvent mouseEvent) {
+        exitedListView(controlActivitiesRegulationEntityListView);
     }
 
     @FXML
-    public void onInfMonListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(infMonRegulationEntityListView);
+    public void onInformationAndCommunicationListViewTestMouseEntered(MouseEvent mouseEvent) {
+        animateListView(informationAndCommunicationRegulationEntityListView);
     }
 
     @FXML
-    public void onInfMonListViewTestMouseExited(MouseEvent mouseEvent) {
-        infMonRegulationEntityListView.setPrefWidth(30);
+    public void onInformationAndCommunicationListViewTestMouseExited(MouseEvent mouseEvent) {
+        exitedListView(informationAndCommunicationRegulationEntityListView);
     }
 
     @FXML
-    public void onSupMonListViewTestMouseEntered(MouseEvent mouseEvent) {
+    public void onSupervisionAndMonitoringListViewTestMouseEntered(MouseEvent mouseEvent) {
         animateListView(supMonRegulationEntityListView);
     }
 
     @FXML
-    public void onSupMonListViewTestMouseExited(MouseEvent mouseEvent) {
-        supMonRegulationEntityListView.setPrefWidth(30);
+    public void onSupervisionAndMonitoringListViewTestMouseExited(MouseEvent mouseEvent) {
+        exitedListView(supMonRegulationEntityListView);
     }
 
     @FXML
-    public void onAmbContSaveButtonClicked(MouseEvent mouseEvent) {
+    public void onControlEnvironmentSaveButtonClicked(MouseEvent mouseEvent) {
         saveButtonClickedLogic();
     }
 
     private void saveButtonClickedLogic() {
         try {
-            var tests = TestService.findAll();
             chargeTestResultsFromDB();
             guideConfig.saveTestResultList();
         } catch (URISyntaxException | IOException e) {
@@ -424,8 +427,8 @@ public class HomeController {
     }
 
     @FXML
-    public void onAmbContTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(ambCntrlQuestionEntityTreeView, ambContTextArea, inputMethodEvent);
+    public void onControlEnvironmentTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(controlEnvironmentQuestionEntityTreeView, controlEnvironmentTextArea, inputMethodEvent);
     }
 
     private void textAreaChanged(TreeView<QuestionEntity> treeView, JFXTextArea jfxTextArea, KeyEvent inputMethodEvent) {
@@ -437,18 +440,18 @@ public class HomeController {
     }
 
     @FXML
-    public void onGestPrevSaveButtonClicked(MouseEvent mouseEvent) {
+    public void onManagementAndPreventionSaveButtonClicked(MouseEvent mouseEvent) {
         saveButtonClickedLogic();
     }
 
     @FXML
-    public void onActContSaveButtonClicked(MouseEvent mouseEvent) {
+    public void onControlActivitiesSaveButtonClicked(MouseEvent mouseEvent) {
         saveButtonClickedLogic();
     }
 
     @FXML
-    public void onAmbContCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(ambCntrlQuestionEntityTreeView, true, ambContNoCheckBox);
+    public void onControlEnvironmentCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(controlEnvironmentQuestionEntityTreeView, true, controlEnvironmentNoCheckBox);
     }
 
     private void checkBoxChanged(TreeView<QuestionEntity> treeView, boolean result, CheckBox checkBox) {
@@ -459,76 +462,76 @@ public class HomeController {
     }
 
     @FXML
-    public void onInfMonSaveButtonClicked(MouseEvent mouseEvent) {saveButtonClickedLogic();}
+    public void onInformationAndCommunicationSaveButtonClicked(MouseEvent mouseEvent) {saveButtonClickedLogic();}
 
     @FXML
-    public void onInfMonCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(infMonQuestionEntityTreeView, true, infMonNoCheckBox);
+    public void onInformationAndCommunicationCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(informationAndCommunicationQuestionEntityTreeView, true, informationAndCommunicationNoCheckBox);
     }
 
     @FXML
-    public void onAmbContNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(ambCntrlQuestionEntityTreeView, false, ambContYesCheckBox);
+    public void onControlEnvironmentNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(controlEnvironmentQuestionEntityTreeView, false, controlEnvironmentYesCheckBox);
     }
 
     @FXML
-    public void onInfMonNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(infMonQuestionEntityTreeView, false, infMonYesCheckBox);
+    public void onInformationAndCommunicationNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(informationAndCommunicationQuestionEntityTreeView, false, informationAndCommunicationYesCheckBox);
     }
 
     @FXML
-    public void onInfMonTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(infMonQuestionEntityTreeView, infMonTextArea, inputMethodEvent);
+    public void onInformationAndCommunicationTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(informationAndCommunicationQuestionEntityTreeView, informationAndCommunicationTextArea, inputMethodEvent);
     }
 
     @FXML
-    public void onSupMonSaveButtonClicked(MouseEvent mouseEvent) {
+    public void onSupervisionAndMonitoringSaveButtonClicked(MouseEvent mouseEvent) {
         saveButtonClickedLogic();
     }
 
     @FXML
-    public void onSupMonCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(supMonQuestionEntityTreeView, true, supMonNoCheckBox);
+    public void onSupervisionAndMonitoringCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(supMonQuestionEntityTreeView, true, supervisionAndMonitoringNoCheckBox);
     }
 
     @FXML
-    public void onSupMonNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(supMonQuestionEntityTreeView, false, supMonYesCheckBox);
+    public void onSupervisionAndMonitoringNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(supMonQuestionEntityTreeView, false, supervisionAndMonitoringYesCheckBox);
     }
 
     @FXML
-    public void onSupMonTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(supMonQuestionEntityTreeView, supMonTextArea, inputMethodEvent);
+    public void onSupervisionAndMonitoringTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(supMonQuestionEntityTreeView, supervisionAndMonitoringTextArea, inputMethodEvent);
     }
 
     @FXML
-    public void onActConYesCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(actvCntrlQuestionEntityTreeView, true, actContNoCheckBox11);
+    public void onControlActivitiesYesCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(controlActivitiesQuestionEntityTreeView, true, controlActivitiesNoCheckBox11);
     }
 
     @FXML
-    public void onActConNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(actvCntrlQuestionEntityTreeView, false, actContYesCheckBox11);
+    public void onControlActivitiesNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(controlActivitiesQuestionEntityTreeView, false, controlActivitiesYesCheckBox11);
     }
 
     @FXML
-    public void onActContTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(actvCntrlQuestionEntityTreeView, actContTextArea11, inputMethodEvent);
+    public void onControlActivitiesTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(controlActivitiesQuestionEntityTreeView, controlActivitiesTextArea, inputMethodEvent);
     }
 
     @FXML
-    public void onGestPrevYesCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(gestPrevQuestionEntityTreeView, true, gestPrevNoCheckBox1);
+    public void onManagementAndPreventionYesCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(managementAndPreventionQuestionEntityTreeView, true, managementAndPreventionNoCheckBox1);
     }
 
     @FXML
-    public void onGestPrevNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(gestPrevQuestionEntityTreeView, false, gestPrevYesCheckBox1);
+    public void onManagementAndPreventionNoCheckBoxClicked(MouseEvent mouseEvent) {
+        checkBoxChanged(managementAndPreventionQuestionEntityTreeView, false, managementAndPreventionYesCheckBox1);
     }
 
     @FXML
-    public void onGesPrevTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(gestPrevQuestionEntityTreeView, gestPrevTextArea1, inputMethodEvent);
+    public void onManagementAndPreventionTextAreaChanged(KeyEvent inputMethodEvent) {
+        textAreaChanged(managementAndPreventionQuestionEntityTreeView, managementAndPreventionTextArea, inputMethodEvent);
     }
 
     public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
@@ -587,16 +590,16 @@ public class HomeController {
                 }
             }
         }
-        List<Integer> ambienteDeControlId = getIdsList(ambienteDeControlListView),
-                actividadesDeControlId = getIdsList(actividadesDeControlListView),
-                informacionYComunicacionId = getIdsList(informacionYComunicacionListView),
-                supervicionYMonitoreoId = getIdsList(supervicionYMonitoreoListView),
-                gestionYPrevencionId = getIdsList(gestionYPrevencionListView),
-                ambienteDeControlIdEvated = getIdsList(ambienteDeControlListViewEvated),
-                actividadesDeControlIdEvated = getIdsList(actividadesDeControlListViewEvated),
-                informacionYComunicacionIdEvated = getIdsList(informacionYComunicacionListViewEvated),
-                supervicionYMonitoreoIdEvated = getIdsList(supervicionYMonitoreoListViewEvated),
-                gestionYPrevencionIdEvated = getIdsList(gestionYPrevencionListViewEvated);
+        List<Integer> ambienteDeControlId = getIdsList(controlEnvironmentListView),
+                actividadesDeControlId = getIdsList(controlActivitiesListView),
+                informacionYComunicacionId = getIdsList(informationAndCommunicationListView),
+                supervicionYMonitoreoId = getIdsList(supervisionAndMonitoringListView),
+                gestionYPrevencionId = getIdsList(managementAndPreventionListView),
+                ambienteDeControlIdEvated = getIdsList(controlEnvironmentListViewEvated),
+                actividadesDeControlIdEvated = getIdsList(controlActivitiesListViewEvated),
+                informacionYComunicacionIdEvated = getIdsList(informationAndCommunicationListViewEvated),
+                supervicionYMonitoreoIdEvated = getIdsList(supervisionAndMonitoringListViewEvated),
+                gestionYPrevencionIdEvated = getIdsList(managementAndPreventionListViewEvated);
         testResultDB.setEvaluatorComponents(Stream.of( // add all the evaluator components
                                                        ambienteDeControlId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 1)).toList(),
                                                        gestionYPrevencionId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 2)).toList(),
@@ -658,55 +661,55 @@ public class HomeController {
     public void onTestEvaluateButtonClicked(MouseEvent mouseEvent) {
         initTestEvaluationViewRegulationListView(
                 1,
-                ambCntrlRegulationEntityListView);
+                controlEnvironmentRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
                 2,
-                gestPrevRegulationEntityListView);
+                managementAndPreventionRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
                 3,
-                actvCntrlRegulationEntityListView);
+                controlActivitiesRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
                 4,
-                infMonRegulationEntityListView);
+                informationAndCommunicationRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
                 5,
                 supMonRegulationEntityListView);
 
         setRegulationEntityListViewSelectionModel(
-                ambCntrlQuestionEntityTreeView,
-                ambCntrlRegulationEntityListView,
-                ambContTextLabel,
-                ambContTextArea,
-                ambContYesCheckBox,
-                ambContNoCheckBox);
+                controlEnvironmentQuestionEntityTreeView,
+                controlEnvironmentRegulationEntityListView,
+                controlEnvironmentTextLabel,
+                controlEnvironmentTextArea,
+                controlEnvironmentYesCheckBox,
+                controlEnvironmentNoCheckBox);
         setRegulationEntityListViewSelectionModel(
-                gestPrevQuestionEntityTreeView,
-                gestPrevRegulationEntityListView,
-                gestPrevTextLabel1,
-                gestPrevTextArea1,
-                gestPrevYesCheckBox1,
-                gestPrevNoCheckBox1);
+                managementAndPreventionQuestionEntityTreeView,
+                managementAndPreventionRegulationEntityListView,
+                managementAndPreventionTextLabel,
+                managementAndPreventionTextArea,
+                managementAndPreventionYesCheckBox1,
+                managementAndPreventionNoCheckBox1);
         setRegulationEntityListViewSelectionModel(
-                actvCntrlQuestionEntityTreeView,
-                actvCntrlRegulationEntityListView,
-                actContTextLabel11,
-                actContTextArea11,
-                actContYesCheckBox11,
-                actContNoCheckBox11);
+                controlActivitiesQuestionEntityTreeView,
+                controlActivitiesRegulationEntityListView,
+                controlActivitiesTextLabel,
+                controlActivitiesTextArea,
+                controlActivitiesYesCheckBox11,
+                controlActivitiesNoCheckBox11);
         setRegulationEntityListViewSelectionModel(
-                infMonQuestionEntityTreeView,
-                infMonRegulationEntityListView,
-                infMonTextLabel,
-                infMonTextArea,
-                infMonYesCheckBox,
-                infMonNoCheckBox);
+                informationAndCommunicationQuestionEntityTreeView,
+                informationAndCommunicationRegulationEntityListView,
+                informationAndCommunicationTextLabel,
+                informationAndCommunicationTextArea,
+                informationAndCommunicationYesCheckBox,
+                informationAndCommunicationNoCheckBox);
         setRegulationEntityListViewSelectionModel(
                 supMonQuestionEntityTreeView,
                 supMonRegulationEntityListView,
-                supMonTextLabel,
-                supMonTextArea,
-                supMonYesCheckBox,
-                supMonNoCheckBox);
+                supervisionAndMonitoringTextLabel,
+                supervisionAndMonitoringTextArea,
+                supervisionAndMonitoringYesCheckBox,
+                supervisionAndMonitoringNoCheckBox);
 
         visibilityChange(false, false, false, true, false, false, false);
     }
@@ -762,9 +765,9 @@ public class HomeController {
         var employees = EmployeeService.findAll();
         setCellsFactories();
         // set the items into the listviews
-        setItems(employees, ambienteDeControlListView, actividadesDeControlListView, informacionYComunicacionListView, supervicionYMonitoreoListView, gestionYPrevencionListView);
+        setItems(employees, controlEnvironmentListView, controlActivitiesListView, informationAndCommunicationListView, supervisionAndMonitoringListView, managementAndPreventionListView);
         // set the items into the evaluated listviews
-        setItems(employees, ambienteDeControlListViewEvated, actividadesDeControlListViewEvated, informacionYComunicacionListViewEvated, supervicionYMonitoreoListViewEvated, gestionYPrevencionListViewEvated);
+        setItems(employees, controlEnvironmentListViewEvated, controlActivitiesListViewEvated, informationAndCommunicationListViewEvated, supervisionAndMonitoringListViewEvated, managementAndPreventionListViewEvated);
 
     }
 
@@ -812,16 +815,16 @@ public class HomeController {
     }
 
     private void setCellsFactories() {
-        setCellFactory(ambienteDeControlListView);
-        setCellFactory(actividadesDeControlListView);
-        setCellFactory(informacionYComunicacionListView);
-        setCellFactory(supervicionYMonitoreoListView);
-        setCellFactory(gestionYPrevencionListView);
-        setCellFactory(ambienteDeControlListViewEvated);
-        setCellFactory(actividadesDeControlListViewEvated);
-        setCellFactory(informacionYComunicacionListViewEvated);
-        setCellFactory(supervicionYMonitoreoListViewEvated);
-        setCellFactory(gestionYPrevencionListViewEvated);
+        setCellFactory(controlEnvironmentListView);
+        setCellFactory(controlActivitiesListView);
+        setCellFactory(informationAndCommunicationListView);
+        setCellFactory(supervisionAndMonitoringListView);
+        setCellFactory(managementAndPreventionListView);
+        setCellFactory(controlEnvironmentListViewEvated);
+        setCellFactory(controlActivitiesListViewEvated);
+        setCellFactory(informationAndCommunicationListViewEvated);
+        setCellFactory(supervisionAndMonitoringListViewEvated);
+        setCellFactory(managementAndPreventionListViewEvated);
     }
 
     private void setItems(List<EmployeeEntity> employees, JFXListView<CheckBoxModel> ambienteDeControlListView, JFXListView<CheckBoxModel> actividadesDeControlListView, JFXListView<CheckBoxModel> informacionYComunicacionListView, JFXListView<CheckBoxModel> supervicionYMonitoreoListView, JFXListView<CheckBoxModel> gestionYPrevencionListView) {
@@ -852,7 +855,7 @@ public class HomeController {
                 for (TreeItem<QuestionEntity> questionEntityTreeItem : root.getChildren()) {
                     if (questionEntityTreeItem.getValue().getId().equals(questionEntity.getSuperquestionId())) {
                         questionEntityTreeItem.getChildren().add(question);
-                        // when you select a item of the tree view the label of the question will be set into the label
+                        // when you select an item of the tree view, the label of the question will be set into the label
                         // and the description of the question will be set into the text area
 
                     }
