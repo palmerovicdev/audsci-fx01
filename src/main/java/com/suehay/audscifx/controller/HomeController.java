@@ -24,6 +24,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -39,6 +42,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.suehay.audscifx.model.enums.Routes.TEST_RESULTS;
 
 public class HomeController {
     private static final KeyCodeCombination kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY),
@@ -146,6 +151,11 @@ public class HomeController {
     public ListView<AreaEntity> areasListView = new ListView<>();
     @FXML
     public ListView<EmployeeEntity> employeeListView = new ListView<>();
+    @FXML
+    public BarChart<String, Integer> printViewYesNoUndefChart;
+    @FXML
+    public StackedBarChart<String, Integer> printViewComponentsYesNoChart;
+
     private AreaEntity latestArea;
 
     @FXML
@@ -717,7 +727,26 @@ public class HomeController {
 
     @FXML
     public void onReportGenerationButtonClicked(MouseEvent mouseEvent) {
+        if (GuideConfig.testResults.isEmpty()) {
+            try {
+                guideConfig.chargeTemplates(TEST_RESULTS);
+            } catch (URISyntaxException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (GuideConfig.testResults.get(0).getTest().getCode().equals(TestService.firstCode())) {
+            initPrintViewYesNoUndefChart();
+        }
         visibilityChange(false, false, false, false, true, false, false);
+    }
+
+    private void initPrintViewYesNoUndefChart() {
+        var testResultEntity= TestResultService.findById(TestService.firstCode());
+        var series = new XYChart.Series<String, Integer>();
+        series.getData().add(new XYChart.Data<>("Si", testResultEntity.getYes()));
+        series.getData().add(new XYChart.Data<>("No", testResultEntity.getNo()));
+        series.getData().add(new XYChart.Data<>("No definida", testResultEntity.getUndef()));
+        printViewYesNoUndefChart.getData().add(series);
     }
 
     @FXML
@@ -894,6 +923,10 @@ public class HomeController {
                 }
             }
         });
+    }
+    @FXML
+    public void onPrintViewGenerateReportButtonClicked(MouseEvent mouseEvent) {
+
     }
 
     @Data

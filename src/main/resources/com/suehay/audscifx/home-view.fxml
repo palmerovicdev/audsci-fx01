@@ -5,6 +5,10 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -28,7 +32,7 @@
 <BorderPane fx:id="homePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.suehay.audscifx.controller.HomeController">
     <left>
         <VBox fx:id="leftOptionsPane" prefHeight="560.0" prefWidth="40.0" style="-fx-background-color: #161616;" BorderPane.alignment="CENTER">
-            <JFXButton fx:id="enterpriseButton" focusTraversable="false" onMouseClicked="#onEnterpriseButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
+            <JFXButton fx:id="enterpriseButton" alignment="CENTER" focusTraversable="false" onMouseClicked="#onEnterpriseButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
                 <VBox.margin>
                     <Insets top="10.0" />
                 </VBox.margin>
@@ -42,7 +46,7 @@
                     <Tooltip text="Enterprise Management" />
                 </tooltip>
             </JFXButton>
-            <JFXButton fx:id="testCreationButton" focusTraversable="false" onMouseClicked="#onTestCreationButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
+            <JFXButton fx:id="testCreationButton" alignment="CENTER" focusTraversable="false" onMouseClicked="#onTestCreationButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
                 <graphic>
                     <FontAwesomeIconView fill="WHITE" glyphName="CUBES" size="14" />
                 </graphic>
@@ -56,7 +60,7 @@
                     <Tooltip text="Test Creation" />
                 </tooltip>
             </JFXButton>
-            <JFXButton fx:id="testEvaluateButton" focusTraversable="false" onMouseClicked="#onTestEvaluateButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
+            <JFXButton fx:id="testEvaluateButton" alignment="CENTER" focusTraversable="false" onMouseClicked="#onTestEvaluateButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
                 <padding>
                     <Insets left="8.0" />
                 </padding>
@@ -67,7 +71,7 @@
                     <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" size="14" />
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="reportGenerationButton" focusTraversable="false" onMouseClicked="#onReportGenerationButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
+            <JFXButton fx:id="reportGenerationButton" alignment="CENTER" focusTraversable="false" onMouseClicked="#onReportGenerationButtonClicked" prefHeight="35.0" prefWidth="40.0" text=" ">
                 <graphic>
                     <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="14" />
                 </graphic>
@@ -92,7 +96,7 @@
                             <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         </rowConstraints>
-                        <JFXButton fx:id="helpButton" focusTraversable="false" maxHeight="40.0" maxWidth="40.0" onMouseClicked="#onHelpButtonClicked" prefHeight="40.0" prefWidth="40.0" text=" " GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                        <JFXButton fx:id="helpButton" alignment="CENTER" focusTraversable="false" maxHeight="40.0" maxWidth="40.0" onMouseClicked="#onHelpButtonClicked" prefHeight="40.0" prefWidth="40.0" text=" " GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                             <graphic>
                                 <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" size="20" />
                             </graphic>
@@ -103,7 +107,7 @@
                                 <Tooltip text="Help" />
                             </tooltip>
                         </JFXButton>
-                        <JFXButton fx:id="configButton" focusTraversable="false" maxHeight="40.0" maxWidth="40.0" onMouseClicked="#onConfigButtonClicked" prefHeight="40.0" prefWidth="40.0" text=" " GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                        <JFXButton fx:id="configButton" alignment="CENTER" focusTraversable="false" maxHeight="40.0" maxWidth="40.0" onMouseClicked="#onConfigButtonClicked" prefHeight="40.0" prefWidth="40.0" text=" " GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                             <graphic>
                                 <FontAwesomeIconView fill="WHITE" glyphName="COG" size="18" />
                             </graphic>
@@ -114,7 +118,7 @@
                                 <Tooltip text="Config" />
                             </tooltip>
                         </JFXButton>
-                        <JFXButton fx:id="homeButton" focusTraversable="false" maxHeight="40.0" maxWidth="40.0" onMouseClicked="#onHomeButtonClicked" prefHeight="40.0" prefWidth="40.0" text=" ">
+                        <JFXButton fx:id="homeButton" alignment="CENTER" focusTraversable="false" maxHeight="40.0" maxWidth="40.0" onMouseClicked="#onHomeButtonClicked" prefHeight="40.0" prefWidth="40.0" text=" ">
                             <padding>
                                 <Insets left="8.0" />
                             </padding>
@@ -132,7 +136,7 @@
     </left>
     <center>
         <StackPane BorderPane.alignment="CENTER">
-            <AnchorPane fx:id="homeView" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="homeView" prefHeight="200.0" prefWidth="200.0" visible="false">
             <AnchorPane layoutX="88.0" layoutY="366.0" prefHeight="292.0" prefWidth="884.0" styleClass="card3" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="366.0" />
                 <AnchorPane prefHeight="271.0" prefWidth="1040.0" style="-fx-background-color: #AE6EEC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="307.0" layoutY="63.0" prefHeight="65.0" prefWidth="650.0" text="Una herramienta para aplicar las guias de autocontrol interno empresarial de forma sencilla. Asegurate de crear tu estructura empresarial, asigna evaluadores y evaluados a cada componente de la guia y comienza a evaluar!!!" textAlignment="CENTER" textFill="#000001" wrapText="true" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="63.0">
@@ -209,7 +213,7 @@
                                 </VBox.margin>
                             </Label>
                         </VBox>
-                    </StackPane>`
+                    </StackPane>
                     <StackPane styleClass="stack-pane" stylesheets="@css/fullpackstyling.css">
                         <GridPane style="-fx-background-radius: 5px;" styleClass="card2" stylesheets="@css/fullpackstyling.css">
                             <columnConstraints>
@@ -479,7 +483,7 @@
                             <VBox.margin>
                                 <Insets top="5.0" />
                             </VBox.margin>
-                            <FontAwesomeIconView fill="WHITE" glyphName="CUBE" size="35" wrappingWidth="51.42856979370117" />
+                            <FontAwesomeIconView fill="WHITE" glyphName="CUBE" selectionFill="#ae6eec" size="35" text="" wrappingWidth="51.42856979370117" />
                             <Label text="AUDSCI" textFill="WHITE">
                                 <font>
                                     <Font name="System Bold" size="18.0" />
@@ -891,7 +895,122 @@
                     </Tab>
                 </TabPane>
             </AnchorPane>
-            <AnchorPane fx:id="printReportView" prefHeight="200.0" prefWidth="200.0" visible="false" />
+            <AnchorPane fx:id="printReportView" prefHeight="200.0" prefWidth="200.0">
+                <AnchorPane prefHeight="426.0" prefWidth="1040.0" style="-fx-background-color: #AE6EEC;" AnchorPane.bottomAnchor="274.0"
+                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <BarChart fx:id="printViewYesNoUndefChart" layoutX="17.0" layoutY="12.0" prefHeight="337.0" prefWidth="279.0"
+                              title="Relacion total de respuestas" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="15.0"
+                              AnchorPane.topAnchor="12.0">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT"/>
+                        </yAxis>
+                    </BarChart>
+                    <StackedBarChart fx:id="printViewComponentsYesNoChart" layoutX="346.0" layoutY="10.0" prefHeight="340.0" prefWidth="646.0"
+                                     title="Relacion de respuestas por componente" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="345.0"
+                                     AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="12.0">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT"/>
+                        </yAxis>
+                    </StackedBarChart>
+                </AnchorPane>
+                <GridPane layoutX="38.0" layoutY="407.0" prefHeight="297.0" prefWidth="960.0" AnchorPane.bottomAnchor="40.0"
+                          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <AnchorPane prefHeight="253.0" prefWidth="404.0" styleClass="card4" stylesheets="@css/fullpackstyling.css">
+                        <GridPane.margin>
+                            <Insets right="25.0"/>
+                        </GridPane.margin>
+                        <FontAwesomeIconView glyphName="USERS" layoutX="14.0" layoutY="50.0" size="40" AnchorPane.leftAnchor="12.0"
+                                             AnchorPane.topAnchor="12.0"/>
+                        <Label layoutX="63.0" layoutY="14.0" text="AUDSCI" AnchorPane.leftAnchor="60.0">
+                            <font>
+                                <Font name="System Bold" size="32.0"/>
+                            </font>
+                        </Label>
+                        <GridPane layoutX="23.0" layoutY="66.0" prefHeight="157.0" prefWidth="358.0" AnchorPane.bottomAnchor="30.0"
+                                  AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <BorderPane>
+                                <center>
+                                    <AnchorPane>
+                                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="76.0" prefWidth="309.0"
+                                               style="-fx-background-color: #d0d0d0; -fx-background-radius: 5px;"
+                                               text=" A la izquierda encontrara un grafico de barras que le proporcionara informacion sobre los resultados actuales en total de respuestas de &quot;SI&quot;, &quot;NO&quot; y &quot;NO DEFINIDA&quot;"
+                                               wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+                                            <padding>
+                                                <Insets left="8.0" top="4.0"/>
+                                            </padding>
+                                        </Label>
+                                    </AnchorPane>
+                                </center>
+                            </BorderPane>
+                            <BorderPane GridPane.columnIndex="1">
+                                <center>
+                                    <AnchorPane>
+                                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="76.0" prefWidth="309.0"
+                                               style="-fx-background-color: #d9d9d9; -fx-background-radius: 5px;"
+                                               text=" A la derecha usted podra encontrar un grafico de barras superpuestas que representan la cantidad de respuestas de &quot;SI&quot;, &quot;NO&quot; y &quot;NO DEFINIDA&quot; de cada uno de los componentes de la prueba."
+                                               wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0"
+                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <padding>
+                                                <Insets left="8.0" top="4.0"/>
+                                            </padding>
+                                        </Label>
+                                    </AnchorPane>
+                                </center>
+                            </BorderPane>
+                        </GridPane>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="253.0" prefWidth="404.0" styleClass="card4" stylesheets="@css/fullpackstyling.css"
+                                GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets left="25.0"/>
+                        </GridPane.margin>
+                        <FontAwesomeIconView glyphName="USERS" layoutX="398.0" layoutY="50.0" size="40" AnchorPane.leftAnchor="12.0"
+                                             AnchorPane.topAnchor="12.0"/>
+                        <Label layoutX="272.0" layoutY="11.0" text="AUDSCI" AnchorPane.leftAnchor="60.0">
+                            <font>
+                                <Font name="System Bold" size="32.0"/>
+                            </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="27.0" layoutY="77.0" prefHeight="121.0" prefWidth="403.0"
+                               style="-fx-background-color: #d0d0d0; -fx-background-radius: 5px;"
+                               text=" Antes de presionar el boton de generar reporte por favor asegurese de que la cuenta de respuestas del tipo &quot;NO DEFINIDA&quot; sea 0."
+                               wrapText="true" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="76.0">
+                            <padding>
+                                <Insets left="8.0" top="4.0"/>
+                            </padding>
+                        </Label>
+                        <JFXButton alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="260.0" layoutY="220.0"
+                                   onMouseClicked="#onPrintViewGenerateReportButtonClicked" prefHeight="39.0" prefWidth="87.0"
+                                   styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="31.0"
+                                   AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="26.0">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="RECYCLE" size="25"/>
+                            </graphic>
+                        </JFXButton>
+                    </AnchorPane>
+                </GridPane>
+            </AnchorPane>
             <AnchorPane fx:id="helpView" prefHeight="200.0" prefWidth="200.0" visible="false" />
             <AnchorPane fx:id="configurationView" prefHeight="200.0" prefWidth="200.0" visible="false">
                 <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="215.0" prefWidth="308.0" styleClass="card2" stylesheets="@css/fullpackstyling.css">

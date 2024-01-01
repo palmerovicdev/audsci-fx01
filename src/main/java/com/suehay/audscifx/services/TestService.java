@@ -22,4 +22,7 @@ public class TestService {
         return testRepository.findAll().stream().toList();
     }
 
+    public static String firstCode() {
+        return testRepository.findAll().stream().toList().get(0).getCode();
+    }
 }

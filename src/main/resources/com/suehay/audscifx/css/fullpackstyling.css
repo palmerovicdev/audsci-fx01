@@ -241,6 +241,16 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0.0, 0, 2);
 }
 
+.card4 {
+    -fx-background-color: #e2e2e2;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0.0, 0, 2);
+}
+
 /* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
 .scroll-bar .thumb:hover,
 .scroll-bar .thumb:pressed {
