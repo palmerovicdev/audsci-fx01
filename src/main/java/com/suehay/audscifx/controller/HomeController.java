@@ -58,7 +58,22 @@ public class HomeController {
             kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY),
             kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
     private static final Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    private final boolean isTesting = true;
+    public static final double FIFTY_PERCENT = 0.5;
+    public static final int BEGIN_INDEX = 0;
+    public static final int END_INDEX = 2;
+    public static final int ATOMIC_INTEGER_INITIAL_VALUE = 1;
+    public static final int ROW_SIZE = 25;
+    public static final int MAX_HEIGHT = 280;
+    public static final String RGBA_255_0_0_0_5 = "rgba(255, 0, 0, 0.5)";
+    public static final String RGBA_0_0_0_0_1 = "rgba(0,0,0,0.1)";
+    public static final int FIFTY = 50;
+    public static final int HUNDRED = 100;
+    public static final int THIRTY = 30;
+    public static final int CONTROL_ENVIROMENT_COMPONENT_ID = 1;
+    public static final int MANAGEMENT_AND_PERVENTION_COMPONENT_ID = 2;
+    public static final int CONTROL_ACTIVITIES_COMPONENT_ID = 3;
+    public static final int INFORMATION_AND_COMUNICATION_COMPONENT_ID = 4;
+    public static final int PREVISION_AND_MONITORING_COMPONENT_ID = 5;
     private final GuideConfig guideConfig = new GuideConfig();
     @FXML
     public JFXListView<CheckBoxModel> managementAndPreventionListView = new JFXListView<>(),
@@ -157,24 +172,25 @@ public class HomeController {
     @FXML
     public ListView<EmployeeEntity> employeeListView = new ListView<>();
     @FXML
-    public BarChart<String, Integer> printViewYesNoUndefChart;
+    public BarChart<String, Long> printViewYesNoUndefChart;
     @FXML
-    public StackedBarChart<String, List<Integer>> printViewComponentsYesNoChart;
+    public StackedBarChart<String, List<Long>> printViewComponentsYesNoChart;
 
     private AreaEntity latestArea;
+    private final boolean IS_TESTING = true;
 
     @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
         var areaId = AreaService.getLatestAreaId();
         if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
             showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area ya existe!!!", null);
-            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            areaNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         var areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
         if (areaNameTextField.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area esta vacio!!!", null);
-            areaNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            areaNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         areasListView.getItems().addAll(FXCollections.observableList(List.of(new AreaEntity(
@@ -183,8 +199,8 @@ public class HomeController {
         if (areasListView.getSelectionModel().getSelectedItem() != null)
             latestArea = areasListView.getItems().get(Math.max((areasListView.getSelectionModel().getSelectedItem().getId() - 1), 0));
         AreaService.saveArea(areaEntity.getId(), areaEntity.getAreaName());
-        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
-        areaNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
+        areaNameTextField.setStyle("-fx-border-color: " + RGBA_0_0_0_0_1);
         setAreasListViewSelectionModel();
     }
 
@@ -205,7 +221,7 @@ public class HomeController {
                     System.out.println(latestArea.getId());
                     System.out.println(EmployeeService.findByAreaId(latestArea.getId()).toString());
                     employeeListView.getItems().setAll(FXCollections.observableList(EmployeeService.findByAreaId(latestArea.getId())));
-                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+                    employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
                 });
             }
         });
@@ -216,7 +232,7 @@ public class HomeController {
         if (areasListView.getSelectionModel().getSelectedItem() == null) return;
         AreaService.deleteArea(areasListView.getSelectionModel().getSelectedItem().getId());
         areasListView.getItems().remove(areasListView.getSelectionModel().getSelectedItem());
-        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
         if (areasListView.getItems().isEmpty()) {
             return;
         }
@@ -228,24 +244,24 @@ public class HomeController {
     public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
         if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
             showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado o el cargo esta vacio!!!", null);
-            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
-            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            employeeNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
+            employeePositionTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
-        if (employeePositionTextField.getText().length() > 50) {
+        if (employeePositionTextField.getText().length() > FIFTY) {
             showAlert(Alert.AlertType.ERROR, "Error!!!", "El cargo del empleado no puede tener mas de 50 caracteres!!!", null);
-            employeePositionTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            employeePositionTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
-        if (employeeNameTextField.getText().length() > 50) {
+        if (employeeNameTextField.getText().length() > FIFTY) {
             showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado no puede tener mas de 50 caracteres!!!", null);
-            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            employeeNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         var employees = EmployeeService.findAllByAreaId(latestArea.getId());
         if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
             showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado ya existe!!!", null);
-            employeeNameTextField.setStyle("-fx-border-color: rgba(255, 0, 0, 0.5)");
+            employeeNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         var latestId = EmployeeService.getLatestId();
@@ -255,7 +271,7 @@ public class HomeController {
                                      .position(employeePositionTextField.getText())
                                      .build();
         employeeListView.getItems().add(employee);
-        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
         var area = latestArea;
         employee.setAreaId(area.getId());
         EmployeeService.saveEmployee(
@@ -264,8 +280,8 @@ public class HomeController {
                 employee.getPosition(),
                 employee.getAreaId());
         System.out.println(employee);
-        employeeNameTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
-        employeePositionTextField.setStyle("-fx-border-color: rgba(0,0,0,0.1)");
+        employeeNameTextField.setStyle("-fx-border-color: " + RGBA_0_0_0_0_1);
+        employeePositionTextField.setStyle("-fx-border-color: " + RGBA_0_0_0_0_1);
     }
 
     @FXML
@@ -273,7 +289,7 @@ public class HomeController {
         if (employeeListView.getSelectionModel().getSelectedItem() == null) return;
         EmployeeService.deleteEmployee(employeeListView.getSelectionModel().getSelectedItem());
         employeeListView.getItems().remove(employeeListView.getSelectionModel().getSelectedItem());
-        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
     }
 
     @FXML
@@ -307,7 +323,7 @@ public class HomeController {
 
     private void animateListView(ListView<RegulationEntity> regulationEntityListView) {
         var timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(100), new KeyValue(regulationEntityListView.prefWidthProperty(), 400)));
+        timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(HUNDRED), new KeyValue(regulationEntityListView.prefWidthProperty(), 400)));
         timeline.play();
     }
 
@@ -317,7 +333,7 @@ public class HomeController {
     }
 
     private void exitedListView(ListView<RegulationEntity> regulationEntityListView) {
-        regulationEntityListView.setPrefWidth(30);
+        regulationEntityListView.setPrefWidth(THIRTY);
     }
 
     @FXML
@@ -568,9 +584,9 @@ public class HomeController {
                 startTestDate,
                 endTestDate,
                 LocalDate.parse(guideVersion)));
-        var i = new AtomicInteger(1);
-        var j = new AtomicInteger(1);
-        var k = new AtomicInteger(1);
+        var i = new AtomicInteger(ATOMIC_INTEGER_INITIAL_VALUE);
+        var j = new AtomicInteger(ATOMIC_INTEGER_INITIAL_VALUE);
+        var k = new AtomicInteger(ATOMIC_INTEGER_INITIAL_VALUE);
         for (ComponentTemplate componentTemplate : testResultDB.getTest().getComponentTemplates()) {
             componentTemplate.setId(i.getAndIncrement());
             componentTemplate.setTestCode(testCode);
@@ -582,13 +598,13 @@ public class HomeController {
                 for (QuestionTemplate questionTemplate : regulationTemplate.getQuestionTemplates()) {
                     questionTemplate.setRegulationId(regulationTemplate.getId());
                     questionTemplate.setId(k.getAndIncrement());
-                    var randomResult = Math.random() < 0.5;
+                    var randomResult = Math.random() < FIFTY_PERCENT;
                     QuestionService.saveQuestion(new QuestionEntity(
                             questionTemplate.getId(),
                             questionTemplate.getLabel(),
                             questionTemplate.getDescription(),
-                            isTesting ? randomResult : questionTemplate.getResult(),
-                            questionTemplate.getLabel().substring(0, 2),
+                            IS_TESTING ? randomResult : questionTemplate.getResult(),
+                            questionTemplate.getLabel().substring(BEGIN_INDEX, END_INDEX),
                             regulationTemplate.getId(),
                             null));
                     for (QuestionTemplate subQuestionTemplate : questionTemplate.getSubQuestions()) {
@@ -598,8 +614,8 @@ public class HomeController {
                                 subQuestionTemplate.getId(),
                                 subQuestionTemplate.getLabel(),
                                 subQuestionTemplate.getDescription(),
-                                isTesting ? randomResult : subQuestionTemplate.getResult(),
-                                subQuestionTemplate.getLabel().substring(0, 2),
+                                IS_TESTING ? randomResult : subQuestionTemplate.getResult(),
+                                subQuestionTemplate.getLabel().substring(BEGIN_INDEX, END_INDEX),
                                 regulationTemplate.getId(),
                                 subQuestionTemplate.getSuperquestionId()));
                     }
@@ -624,11 +640,11 @@ public class HomeController {
                                                        supervisionAndMonitoringId.stream().map(employeeId -> new EvaluatorComponentEntity(employeeId, 5)).toList()
                                                      ).flatMap(List::stream).toList());
         testResultDB.setEvaluatedComponents(Stream.of(
-                controlEnvironmentIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 1)).toList(),
-                managementAndPreventionIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 2)).toList(),
-                controlActivitiesIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 3)).toList(),
-                informationAndCommunicationIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 4)).toList(),
-                supervisionAndMonitoringIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, 5)).toList()
+                controlEnvironmentIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, CONTROL_ENVIROMENT_COMPONENT_ID)).toList(),
+                managementAndPreventionIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, MANAGEMENT_AND_PERVENTION_COMPONENT_ID)).toList(),
+                controlActivitiesIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, CONTROL_ACTIVITIES_COMPONENT_ID)).toList(),
+                informationAndCommunicationIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, INFORMATION_AND_COMUNICATION_COMPONENT_ID)).toList(),
+                supervisionAndMonitoringIdEvaluated.stream().map(employeeId -> new EvaluatedComponentEntity(employeeId, PREVISION_AND_MONITORING_COMPONENT_ID)).toList()
                                                      ).flatMap(List::stream).toList());
         EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
         EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
@@ -676,19 +692,19 @@ public class HomeController {
     @FXML
     public void onTestEvaluateButtonClicked(MouseEvent mouseEvent) {
         initTestEvaluationViewRegulationListView(
-                1,
+                CONTROL_ENVIROMENT_COMPONENT_ID,
                 controlEnvironmentRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
-                2,
+                MANAGEMENT_AND_PERVENTION_COMPONENT_ID,
                 managementAndPreventionRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
-                3,
+                CONTROL_ACTIVITIES_COMPONENT_ID,
                 controlActivitiesRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
-                4,
+                INFORMATION_AND_COMUNICATION_COMPONENT_ID,
                 informationAndCommunicationRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
-                5,
+                PREVISION_AND_MONITORING_COMPONENT_ID,
                 supMonRegulationEntityListView);
 
         setRegulationEntityListViewSelectionModel(
@@ -765,15 +781,14 @@ public class HomeController {
             return;
         }
 
-        // when an area is selected in the areasListView, the employeeListView should be updated with the employees of the selected area
         areasListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         setAreasListViewSelectionModel();
         areasListView.getSelectionModel().select(0);
         latestArea = areasListView.getSelectionModel().getSelectedItem();
         employeeListView.getItems().clear();
         employeeListView.getItems().addAll(FXCollections.observableList(EmployeeService.findByAreaId(areasListView.getSelectionModel().getSelectedItem().getId())));
-        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * 25), 280));
-        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * 25), 280));
+        employeeListView.setPrefHeight(Math.min((employeeListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
+        areasListView.setPrefHeight(Math.min((areasListView.getItems().size() * ROW_SIZE), MAX_HEIGHT));
     }
 
     void initTestCreationView() {
@@ -781,9 +796,7 @@ public class HomeController {
         guideVersionChoiceBox.getSelectionModel().selectFirst();
         var employees = EmployeeService.findAll();
         setCellsFactories();
-        // set the items into the listviews
         setItems(employees, controlEnvironmentListView, controlActivitiesListView, informationAndCommunicationListView, supervisionAndMonitoringListView, managementAndPreventionListView);
-        // set the items into the evaluated listviews
         setItems(employees, controlEnvironmentListViewEvaluated, controlActivitiesListViewEvaluated, informationAndCommunicationListViewEvaluated, supervisionAndMonitoringListViewEvaluated, managementAndPreventionListViewEvaluated);
 
     }
@@ -833,7 +846,8 @@ public class HomeController {
                 throw new RuntimeException(e);
             }
         }
-        if (GuideConfig.testResults.stream().anyMatch(testResult -> testResult.getTest().getCode().equals(TestService.firstCode()))) {
+        var testCode= TestService.firstCode();
+        if (GuideConfig.testResults.stream().anyMatch(testResult -> testResult.getTest().getCode().equals(testCode))) {
             initPrintViewYesNoUndefChart();
             initPrintViewComponentsYesNoChart();
         }
@@ -886,9 +900,6 @@ public class HomeController {
                 for (TreeItem<QuestionEntity> questionEntityTreeItem : root.getChildren()) {
                     if (questionEntityTreeItem.getValue().getId().equals(questionEntity.getSuperquestionId())) {
                         questionEntityTreeItem.getChildren().add(question);
-                        // when you select an item of the tree view, the label of the question will be set into the label
-                        // and the description of the question will be set into the text area
-
                     }
                 }
             }
@@ -902,17 +913,20 @@ public class HomeController {
                 checkBox1.setSelected(t11.getValue().getResult() != null && !t11.getValue().getResult());
             }
         });
-        questionEntityTreeView.setPrefHeight(questionEntityTreeView.getChildrenUnmodifiable().size() * 25);
+        questionEntityTreeView.setPrefHeight(questionEntityTreeView.getChildrenUnmodifiable().size() * ROW_SIZE);
         questionEntityTreeView.refresh();
     }
 
     private void initPrintViewYesNoUndefChart() {
         try {
-            var testResultEntity = TestResultService.findById(TestService.firstCode());
-            var series = new XYChart.Series<String, Integer>();
-            series.getData().add(new XYChart.Data<>("Si", testResultEntity.getYes()));
-            series.getData().add(new XYChart.Data<>("No", testResultEntity.getNo()));
-            series.getData().add(new XYChart.Data<>("No definida", testResultEntity.getUndef()));
+            var questionResults= QuestionService.getAllQuestions();
+            var yesCount= questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && questionEntity.getResult()).count();
+            var noCount= questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && !questionEntity.getResult()).count();
+            var undefCount= questionResults.stream().filter(questionEntity -> questionEntity.getResult() == null).count();
+            var series = new XYChart.Series<String, Long>();
+            series.getData().add(new XYChart.Data<>("Si", yesCount));
+            series.getData().add(new XYChart.Data<>("No", noCount));
+            series.getData().add(new XYChart.Data<>("No definida", undefCount));
             printViewYesNoUndefChart.getData().add(series);
         } catch (Exception e) {
             log.error("Error al cargar el grafico general", e);
@@ -922,17 +936,18 @@ public class HomeController {
 
     private void initPrintViewComponentsYesNoChart() {
         try {
-            var series = new ArrayList<XYChart.Series<String, List<Integer>>>();
+            var series = new ArrayList<XYChart.Series<String, List<Long>>>();
             GuideConfig.testResults.forEach(testResult -> {
                 if (Objects.equals(testResult.getTest().getCode(), TestService.firstCode())) {
                     testResult.getTestResultData().getComponentsRessults().forEach((component, result) -> {
-                        var series1 = new XYChart.Series<String, List<Integer>>();
-                        series1.getData().add(new XYChart.Data<>(component, List.of(result.getYesCount(), result.getNoCount(), result.getUndefinedCount())));
+                        var series1 = new XYChart.Series<String, List<Long>>();
+                        series1.getData().add(new XYChart.Data<>(component, List.of(Long.valueOf(result.getYesCount()), Long.valueOf(result.getNoCount()),
+                                                                                     Long.valueOf(result.getUndefinedCount()))));
                         series.add(series1);
                     });
                 }
             });
-            printViewComponentsYesNoChart.getData().addAll(series);
+            series.forEach(serie->printViewComponentsYesNoChart.getData().add(serie));
         } catch (Exception e) {
             log.error("Error al cargar el grafico por componentes", e);
             showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico por componentes!!!", null);

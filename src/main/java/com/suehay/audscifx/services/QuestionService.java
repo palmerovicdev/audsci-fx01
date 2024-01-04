@@ -25,4 +25,8 @@ public class QuestionService {
     public static String getTestCodeByQuestionId(Integer id) {
         return questionRepository.findTestCodeByQuestionId(id);
     }
+
+    public static List<QuestionEntity> getAllQuestions() {
+        return questionRepository.findAll().stream().toList();
+    }
 }
