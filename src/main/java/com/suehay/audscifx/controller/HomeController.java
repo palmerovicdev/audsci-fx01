@@ -13,6 +13,7 @@ import com.suehay.audscifx.model.common.TestResultData;
 import com.suehay.audscifx.model.enums.Routes;
 import com.suehay.audscifx.model.templates.*;
 import com.suehay.audscifx.services.*;
+import com.suehay.audscifx.utils.classes.CustomDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -24,9 +25,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.StackedBarChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -50,14 +48,6 @@ import static com.suehay.audscifx.model.enums.Routes.TEST_RESULTS;
 @Slf4j
 public class HomeController {
 
-    private static final KeyCodeCombination kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY),
-            kc2 = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.ALT_ANY),
-            kc3 = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.ALT_ANY),
-            kc4 = new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.ALT_ANY),
-            kc5 = new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.ALT_ANY),
-            kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY),
-            kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
-    private static final Alert alert = new Alert(Alert.AlertType.INFORMATION);
     public static final double FIFTY_PERCENT = 0.5;
     public static final int BEGIN_INDEX = 0;
     public static final int END_INDEX = 2;
@@ -74,7 +64,16 @@ public class HomeController {
     public static final int CONTROL_ACTIVITIES_COMPONENT_ID = 3;
     public static final int INFORMATION_AND_COMUNICATION_COMPONENT_ID = 4;
     public static final int PREVISION_AND_MONITORING_COMPONENT_ID = 5;
+    private static final KeyCodeCombination kc = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.ALT_ANY),
+            kc2 = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.ALT_ANY),
+            kc3 = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.ALT_ANY),
+            kc4 = new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.ALT_ANY),
+            kc5 = new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.ALT_ANY),
+            kc6 = new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.ALT_ANY),
+            kc7 = new KeyCodeCombination(KeyCode.DIGIT7, KeyCombination.ALT_ANY);
+    private static final CustomDialog alert = new CustomDialog();
     private final GuideConfig guideConfig = new GuideConfig();
+    private final boolean IS_TESTING = true;
     @FXML
     public JFXListView<CheckBoxModel> managementAndPreventionListView = new JFXListView<>(),
             controlEnvironmentListView = new JFXListView<>(),
@@ -152,13 +151,13 @@ public class HomeController {
             managementAndPreventionQuestionEntityTreeView = new JFXTreeView<>(),
             controlActivitiesQuestionEntityTreeView = new JFXTreeView<>(),
             informationAndCommunicationQuestionEntityTreeView = new JFXTreeView<>(),
-            supMonQuestionEntityTreeView = new JFXTreeView<>();
+            supervisionAndMonitoringQuestionEntityTreeView = new JFXTreeView<>();
     @FXML
     public ListView<RegulationEntity> informationAndCommunicationRegulationEntityListView = new ListView<>(),
             managementAndPreventionRegulationEntityListView = new ListView<>(),
             controlEnvironmentRegulationEntityListView = new ListView<>(),
             controlActivitiesRegulationEntityListView = new ListView<>(),
-            supMonRegulationEntityListView = new ListView<>();
+            supervisionAndMonitoringRegulationEntityListView = new ListView<>();
     @FXML
     public ChoiceBox<String> guideVersionChoiceBox = new ChoiceBox<>();
     @FXML
@@ -172,12 +171,22 @@ public class HomeController {
     @FXML
     public ListView<EmployeeEntity> employeeListView = new ListView<>();
     @FXML
-    public BarChart<String, Long> printViewYesNoUndefChart;
-    @FXML
-    public StackedBarChart<String, List<Long>> printViewComponentsYesNoChart;
-
+    public Label controlEnviromentYesLabel,
+            controlEnviromentNoLabel,
+            controlEnviromentEndefLabel,
+            controlActitvitiesYesLabel,
+            controlActivitiesNoLabel,
+            controlActivitiesUndefLabel,
+            managementAndPreventionYesLabel,
+            managementAndPreventionNoLabel,
+            managementAndPreventionUndefLabel,
+            informationAndMonitoringYesLabel,
+            informationAndMonitoringNoLabel,
+            informationAndMonitoringUndefLabel,
+            supervisionAndMonitoringYesLabel,
+            supervisionAndMonitoringNoLabel,
+            supervisionAndMonitoringUndefLabel;
     private AreaEntity latestArea;
-    private final boolean IS_TESTING = true;
 
     @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
@@ -204,13 +213,11 @@ public class HomeController {
         setAreasListViewSelectionModel();
     }
 
-    private static void showAlert(Alert.AlertType error, String title, String headerText, String contentText) {
-        alert.setAlertType(error);
+    private static void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
         alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        if (contentText != null) alert.setContentText(contentText);
-        alert.showAndWait();
+        alert.showDialog(alertType.name(), contentText == null ? headerText : contentText);
     }
+
 
     private void setAreasListViewSelectionModel() {
         areasListView.getSelectionModel().selectedItemProperty().addListener((observableValue, areaEntity, t1) -> {
@@ -296,7 +303,7 @@ public class HomeController {
     public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
         showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??", "Si atualizas " +
                 "las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
-        if (alert.getResult() != ButtonType.OK) return;
+        if (!alert.getResult()) return;
         EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
                                                             databaseConfigTextField.getText(), "audsci"));
         showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!", "Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
@@ -306,7 +313,7 @@ public class HomeController {
     public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
         try {
             showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??", null);
-            if (alert.getResult() != ButtonType.OK) return;
+            if (!alert.getResult()) return;
             guideConfig.updateGuidesTemplates();
             guideConfig.saveTemplates();
             guideConfig.chargeTemplates(Routes.TEST_TEMPLATES);
@@ -368,12 +375,12 @@ public class HomeController {
 
     @FXML
     public void onSupervisionAndMonitoringListViewTestMouseEntered(MouseEvent mouseEvent) {
-        animateListView(supMonRegulationEntityListView);
+        animateListView(supervisionAndMonitoringRegulationEntityListView);
     }
 
     @FXML
     public void onSupervisionAndMonitoringListViewTestMouseExited(MouseEvent mouseEvent) {
-        exitedListView(supMonRegulationEntityListView);
+        exitedListView(supervisionAndMonitoringRegulationEntityListView);
     }
 
     @FXML
@@ -522,17 +529,17 @@ public class HomeController {
 
     @FXML
     public void onSupervisionAndMonitoringCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(supMonQuestionEntityTreeView, true, supervisionAndMonitoringNoCheckBox);
+        checkBoxChanged(supervisionAndMonitoringQuestionEntityTreeView, true, supervisionAndMonitoringNoCheckBox);
     }
 
     @FXML
     public void onSupervisionAndMonitoringNoCheckBoxClicked(MouseEvent mouseEvent) {
-        checkBoxChanged(supMonQuestionEntityTreeView, false, supervisionAndMonitoringYesCheckBox);
+        checkBoxChanged(supervisionAndMonitoringQuestionEntityTreeView, false, supervisionAndMonitoringYesCheckBox);
     }
 
     @FXML
     public void onSupervisionAndMonitoringTextAreaChanged(KeyEvent inputMethodEvent) {
-        textAreaChanged(supMonQuestionEntityTreeView, supervisionAndMonitoringTextArea, inputMethodEvent);
+        textAreaChanged(supervisionAndMonitoringQuestionEntityTreeView, supervisionAndMonitoringTextArea, inputMethodEvent);
     }
 
     @FXML
@@ -566,6 +573,7 @@ public class HomeController {
     }
 
     public void onIFinishedButtonClicked(MouseEvent mouseEvent) {
+        TestService.truncateDb();
         var testResultDB = GuideConfig.testTemplates.stream().filter(testResult -> testResult.getTest().getGuideVersion().equals(guideVersionChoiceBox.getSelectionModel().getSelectedItem())).findFirst().orElse(null);
         var testCode = testCodeTextField.getText();
         var startTestDate = startTestDatePicker.getValue();
@@ -705,7 +713,7 @@ public class HomeController {
                 informationAndCommunicationRegulationEntityListView);
         initTestEvaluationViewRegulationListView(
                 PREVISION_AND_MONITORING_COMPONENT_ID,
-                supMonRegulationEntityListView);
+                supervisionAndMonitoringRegulationEntityListView);
 
         setRegulationEntityListViewSelectionModel(
                 controlEnvironmentQuestionEntityTreeView,
@@ -736,8 +744,8 @@ public class HomeController {
                 informationAndCommunicationYesCheckBox,
                 informationAndCommunicationNoCheckBox);
         setRegulationEntityListViewSelectionModel(
-                supMonQuestionEntityTreeView,
-                supMonRegulationEntityListView,
+                supervisionAndMonitoringQuestionEntityTreeView,
+                supervisionAndMonitoringRegulationEntityListView,
                 supervisionAndMonitoringTextLabel,
                 supervisionAndMonitoringTextArea,
                 supervisionAndMonitoringYesCheckBox,
@@ -846,7 +854,8 @@ public class HomeController {
                 throw new RuntimeException(e);
             }
         }
-        var testCode= TestService.firstCode();
+        saveButtonClickedLogic();
+        var testCode = TestService.firstCode();
         if (GuideConfig.testResults.stream().anyMatch(testResult -> testResult.getTest().getCode().equals(testCode))) {
             initPrintViewYesNoUndefChart();
             initPrintViewComponentsYesNoChart();
@@ -918,11 +927,12 @@ public class HomeController {
     }
 
     private void initPrintViewYesNoUndefChart() {
+        /*printViewYesNoUndefChart.getData().clear();
         try {
-            var questionResults= QuestionService.getAllQuestions();
-            var yesCount= questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && questionEntity.getResult()).count();
-            var noCount= questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && !questionEntity.getResult()).count();
-            var undefCount= questionResults.stream().filter(questionEntity -> questionEntity.getResult() == null).count();
+            var questionResults = QuestionService.getAllQuestions();
+            var yesCount = questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && questionEntity.getResult()).count();
+            var noCount = questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && !questionEntity.getResult()).count();
+            var undefCount = questionResults.stream().filter(questionEntity -> questionEntity.getResult() == null).count();
             var series = new XYChart.Series<String, Long>();
             series.getData().add(new XYChart.Data<>("Si", yesCount));
             series.getData().add(new XYChart.Data<>("No", noCount));
@@ -931,23 +941,19 @@ public class HomeController {
         } catch (Exception e) {
             log.error("Error al cargar el grafico general", e);
             showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico general!!!", null);
-        }
+        }*/
     }
 
     private void initPrintViewComponentsYesNoChart() {
         try {
-            var series = new ArrayList<XYChart.Series<String, List<Long>>>();
             GuideConfig.testResults.forEach(testResult -> {
                 if (Objects.equals(testResult.getTest().getCode(), TestService.firstCode())) {
+                    var i = new AtomicInteger(ATOMIC_INTEGER_INITIAL_VALUE);
                     testResult.getTestResultData().getComponentsRessults().forEach((component, result) -> {
-                        var series1 = new XYChart.Series<String, List<Long>>();
-                        series1.getData().add(new XYChart.Data<>(component, List.of(Long.valueOf(result.getYesCount()), Long.valueOf(result.getNoCount()),
-                                                                                     Long.valueOf(result.getUndefinedCount()))));
-                        series.add(series1);
+                        filterAndFillComponent(result, i.getAndIncrement());
                     });
                 }
             });
-            series.forEach(serie->printViewComponentsYesNoChart.getData().add(serie));
         } catch (Exception e) {
             log.error("Error al cargar el grafico por componentes", e);
             showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico por componentes!!!", null);
@@ -972,6 +978,40 @@ public class HomeController {
                 }
             }
         });
+    }
+
+    private void filterAndFillComponent(Result result, int component) {
+        switch (component) {
+            case 1:
+                controlEnviromentYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
+                controlActivitiesNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
+                controlActivitiesUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                break;
+            case 2:
+                managementAndPreventionYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
+                managementAndPreventionNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
+                managementAndPreventionUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                break;
+            case 3:
+                controlActitvitiesYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
+                controlActivitiesNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
+                controlActivitiesUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                break;
+            case 4:
+                informationAndMonitoringYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
+                informationAndMonitoringNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
+                informationAndMonitoringUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                break;
+            case 5:
+                supervisionAndMonitoringYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
+                supervisionAndMonitoringNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
+                supervisionAndMonitoringUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                break;
+        }
+    }
+
+    private static int getNotNullInteger(Integer result) {
+        return result != null ? result : 0;
     }
 
     @FXML

@@ -51,4 +51,10 @@ public class TestRepository {
         entityManager.getTransaction().commit();
     }
 
+    public void truncateDb() {
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("DELETE FROM TestEntity t")
+                     .executeUpdate();
+        entityManager.getTransaction().commit();
+    }
 }

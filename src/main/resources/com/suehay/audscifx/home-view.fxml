@@ -5,10 +5,6 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -859,11 +855,11 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <BorderPane prefHeight="667.0" prefWidth="797.0">
                                 <left>
-                                    <ListView fx:id="supMonRegulationEntityListView" focusTraversable="false" onMouseEntered="#onSupervisionAndMonitoringListViewTestMouseEntered" onMouseExited="#onSupervisionAndMonitoringListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
+                                    <ListView fx:id="supervisionAndMonitoringRegulationEntityListView" focusTraversable="false" onMouseEntered="#onSupervisionAndMonitoringListViewTestMouseEntered" onMouseExited="#onSupervisionAndMonitoringListViewTestMouseExited" prefHeight="667.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                                 </left>
                                 <center>
                                     <AnchorPane BorderPane.alignment="CENTER">
-                                        <TreeView fx:id="supMonQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                        <TreeView fx:id="supervisionAndMonitoringQuestionEntityTreeView" prefHeight="25.0" prefWidth="109.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </AnchorPane>
                                 </center>
                             </BorderPane>
@@ -896,118 +892,326 @@
                 </TabPane>
             </AnchorPane>
             <AnchorPane fx:id="printReportView" prefHeight="200.0" prefWidth="200.0">
-                <AnchorPane prefHeight="426.0" prefWidth="1040.0" style="-fx-background-color: #AE6EEC;" AnchorPane.bottomAnchor="274.0"
-                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <BarChart fx:id="printViewYesNoUndefChart" layoutX="17.0" layoutY="12.0" prefHeight="337.0" prefWidth="279.0"
-                              title="Relacion total de respuestas" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="15.0"
-                              AnchorPane.topAnchor="12.0">
-                        <xAxis>
-                            <CategoryAxis side="BOTTOM"/>
-                        </xAxis>
-                        <yAxis>
-                            <NumberAxis side="LEFT"/>
-                        </yAxis>
-                    </BarChart>
-                    <StackedBarChart fx:id="printViewComponentsYesNoChart" layoutX="346.0" layoutY="10.0" prefHeight="340.0" prefWidth="646.0"
-                                     title="Relacion de respuestas por componente" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="345.0"
-                                     AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="12.0">
-                        <xAxis>
-                            <CategoryAxis side="BOTTOM"/>
-                        </xAxis>
-                        <yAxis>
-                            <NumberAxis side="LEFT"/>
-                        </yAxis>
-                    </StackedBarChart>
-                </AnchorPane>
-                <GridPane layoutX="38.0" layoutY="407.0" prefHeight="297.0" prefWidth="960.0" AnchorPane.bottomAnchor="40.0"
-                          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+                <GridPane layoutX="40.0" layoutY="35.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0"
+                          AnchorPane.topAnchor="35.0">
                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <AnchorPane prefHeight="253.0" prefWidth="404.0" styleClass="card4" stylesheets="@css/fullpackstyling.css">
-                        <GridPane.margin>
-                            <Insets right="25.0"/>
-                        </GridPane.margin>
-                        <FontAwesomeIconView glyphName="USERS" layoutX="14.0" layoutY="50.0" size="40" AnchorPane.leftAnchor="12.0"
-                                             AnchorPane.topAnchor="12.0"/>
-                        <Label layoutX="63.0" layoutY="14.0" text="AUDSCI" AnchorPane.leftAnchor="60.0">
-                            <font>
-                                <Font name="System Bold" size="32.0"/>
-                            </font>
-                        </Label>
-                        <GridPane layoutX="23.0" layoutY="66.0" prefHeight="157.0" prefWidth="358.0" AnchorPane.bottomAnchor="30.0"
-                                  AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                            <BorderPane>
-                                <center>
-                                    <AnchorPane>
-                                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="76.0" prefWidth="309.0"
-                                               style="-fx-background-color: #d0d0d0; -fx-background-radius: 5px;"
-                                               text=" A la izquierda encontrara un grafico de barras que le proporcionara informacion sobre los resultados actuales en total de respuestas de &quot;SI&quot;, &quot;NO&quot; y &quot;NO DEFINIDA&quot;"
-                                               wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                               AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
-                                            <padding>
-                                                <Insets left="8.0" top="4.0"/>
-                                            </padding>
+                    <GridPane prefHeight="633.0" prefWidth="400.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <AnchorPane prefHeight="175.0" prefWidth="180.0" styleClass="card3" stylesheets="@css/fullpackstyling.css">
+                            <GridPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0"/>
+                            </GridPane.margin>
+                            <Label contentDisplay="CENTER" layoutX="71.0" layoutY="14.0" text="Ambiente de control" wrapText="true"
+                                   AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <font>
+                                    <Font name="System Bold" size="13.0"/>
+                                </font>
+                            </Label>
+                            <GridPane layoutX="83.0" layoutY="56.0" prefHeight="115.0" prefWidth="71.0" AnchorPane.bottomAnchor="35.0"
+                                      AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="50.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <BorderPane>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="controlEnviromentYesLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" text="0" textFill="#68d013"
+                                               wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
                                         </Label>
-                                    </AnchorPane>
-                                </center>
-                            </BorderPane>
-                            <BorderPane GridPane.columnIndex="1">
-                                <center>
-                                    <AnchorPane>
-                                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="76.0" prefWidth="309.0"
-                                               style="-fx-background-color: #d9d9d9; -fx-background-radius: 5px;"
-                                               text=" A la derecha usted podra encontrar un grafico de barras superpuestas que representan la cantidad de respuestas de &quot;SI&quot;, &quot;NO&quot; y &quot;NO DEFINIDA&quot; de cada uno de los componentes de la prueba."
-                                               wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0"
-                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <padding>
-                                                <Insets left="8.0" top="4.0"/>
-                                            </padding>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="1">
+                                    <center>
+                                        <Label fx:id="controlEnviromentNoLabel" alignment="CENTER_RIGHT" text="0" textFill="#eb4a4a" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
                                         </Label>
-                                    </AnchorPane>
-                                </center>
-                            </BorderPane>
-                        </GridPane>
-                    </AnchorPane>
-                    <AnchorPane prefHeight="253.0" prefWidth="404.0" styleClass="card4" stylesheets="@css/fullpackstyling.css"
-                                GridPane.columnIndex="1">
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets top="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="controlEnviromentEndefLabel" alignment="CENTER_RIGHT" text="0" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                            </GridPane>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="175.0" prefWidth="180.0" styleClass="card3" stylesheets="@css/fullpackstyling.css"
+                                    GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </GridPane.margin>
+                            <Label contentDisplay="CENTER" layoutX="70.0" layoutY="15.0" text="Actividades de control" wrapText="true"
+                                   AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <font>
+                                    <Font name="System Bold" size="13.0"/>
+                                </font>
+                            </Label>
+                            <GridPane layoutX="82.0" layoutY="34.0" prefHeight="115.0" prefWidth="71.0" AnchorPane.bottomAnchor="35.0"
+                                      AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="50.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <BorderPane>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="controlActitvitiesYesLabel" alignment="CENTER_RIGHT" text="0" textFill="#68d013" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="1">
+                                    <center>
+                                        <Label fx:id="controlActivitiesNoLabel" alignment="CENTER_RIGHT" text="0" textFill="#eb4a4a" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets top="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="controlActivitiesUndefLabel" alignment="CENTER_RIGHT" text="0" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                            </GridPane>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="175.0" prefWidth="180.0" styleClass="card3" stylesheets="@css/fullpackstyling.css"
+                                    GridPane.columnIndex="1">
+                            <GridPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0"/>
+                            </GridPane.margin>
+                            <Label contentDisplay="CENTER" layoutX="29.0" layoutY="14.0" text="Gestion y prevencion" wrapText="true"
+                                   AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <font>
+                                    <Font name="System Bold" size="13.0"/>
+                                </font>
+                            </Label>
+                            <GridPane layoutX="131.0" layoutY="89.0" prefHeight="115.0" prefWidth="71.0" AnchorPane.bottomAnchor="35.0"
+                                      AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="50.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <BorderPane>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="managementAndPreventionYesLabel" alignment="CENTER_RIGHT" text="0" textFill="#68d013" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="1">
+                                    <center>
+                                        <Label fx:id="managementAndPreventionNoLabel" alignment="CENTER_RIGHT" text="0" textFill="#eb4a4a" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets top="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="managementAndPreventionUndefLabel" alignment="CENTER_RIGHT" text="0" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                            </GridPane>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="175.0" prefWidth="180.0" styleClass="card3" stylesheets="@css/fullpackstyling.css"
+                                    GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </GridPane.margin>
+                            <Label contentDisplay="CENTER" layoutX="29.0" layoutY="14.0" text="Informacion y monitoreo" wrapText="true"
+                                   AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <font>
+                                    <Font name="System Bold" size="13.0"/>
+                                </font>
+                            </Label>
+                            <GridPane layoutX="87.0" layoutY="56.0" prefHeight="115.0" prefWidth="71.0" AnchorPane.bottomAnchor="35.0"
+                                      AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="50.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <BorderPane>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="informationAndMonitoringYesLabel" alignment="CENTER_RIGHT" text="0" textFill="#68d013" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="1">
+                                    <center>
+                                        <Label fx:id="informationAndMonitoringNoLabel" alignment="CENTER_RIGHT" text="0" textFill="#eb4a4a" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets top="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="informationAndMonitoringUndefLabel" alignment="CENTER_RIGHT" text="0" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                            </GridPane>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="175.0" prefWidth="180.0" styleClass="card3" stylesheets="@css/fullpackstyling.css"
+                                    GridPane.rowIndex="2">
+                            <GridPane.margin>
+                                <Insets left="5.0" right="5.0" top="5.0"/>
+                            </GridPane.margin>
+                            <Label contentDisplay="CENTER" layoutX="19.0" layoutY="14.0" text="Supervicion y monitoreo" wrapText="true"
+                                   AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <font>
+                                    <Font name="System Bold" size="13.0"/>
+                                </font>
+                            </Label>
+                            <GridPane layoutX="73.0" layoutY="43.0" prefHeight="115.0" prefWidth="71.0" AnchorPane.bottomAnchor="35.0"
+                                      AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="50.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <BorderPane>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="supervisionAndMonitoringYesLabel" alignment="CENTER_RIGHT" text="0" textFill="#68d013" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="1">
+                                    <center>
+                                        <Label fx:id="supervisionAndMonitoringNoLabel" alignment="CENTER_RIGHT" text="0" textFill="#eb4a4a" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                                <BorderPane GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets top="10.0"/>
+                                    </GridPane.margin>
+                                    <center>
+                                        <Label fx:id="supervisionAndMonitoringUndefLabel" alignment="CENTER_RIGHT" text="0" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                        </Label>
+                                    </center>
+                                </BorderPane>
+                            </GridPane>
+                        </AnchorPane>
+                    </GridPane>
+                    <AnchorPane prefHeight="630.0" prefWidth="249.0" styleClass="card3" stylesheets="@css/fullpackstyling.css"
+                                GridPane.columnIndex="2">
                         <GridPane.margin>
-                            <Insets left="25.0"/>
+                            <Insets left="5.0" right="5.0"/>
                         </GridPane.margin>
-                        <FontAwesomeIconView glyphName="USERS" layoutX="398.0" layoutY="50.0" size="40" AnchorPane.leftAnchor="12.0"
-                                             AnchorPane.topAnchor="12.0"/>
-                        <Label layoutX="272.0" layoutY="11.0" text="AUDSCI" AnchorPane.leftAnchor="60.0">
-                            <font>
-                                <Font name="System Bold" size="32.0"/>
-                            </font>
-                        </Label>
-                        <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="27.0" layoutY="77.0" prefHeight="121.0" prefWidth="403.0"
-                               style="-fx-background-color: #d0d0d0; -fx-background-radius: 5px;"
-                               text=" Antes de presionar el boton de generar reporte por favor asegurese de que la cuenta de respuestas del tipo &quot;NO DEFINIDA&quot; sea 0."
-                               wrapText="true" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="76.0">
-                            <padding>
-                                <Insets left="8.0" top="4.0"/>
-                            </padding>
-                        </Label>
-                        <JFXButton alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="260.0" layoutY="220.0"
-                                   onMouseClicked="#onPrintViewGenerateReportButtonClicked" prefHeight="39.0" prefWidth="87.0"
-                                   styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="31.0"
-                                   AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="26.0">
+                        <JFXButton alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="302.0" layoutY="577.0"
+                                   onMouseClicked="#onPrintViewGenerateReportButtonClicked" prefHeight="39.0" prefWidth="108.0"
+                                   styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text=" " AnchorPane.bottomAnchor="14.0"
+                                   AnchorPane.rightAnchor="14.0">
                             <graphic>
                                 <FontAwesomeIconView glyphName="RECYCLE" size="25"/>
                             </graphic>
                         </JFXButton>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="630.0" prefWidth="249.0" styleClass="card3" stylesheets="@css/fullpackstyling.css"
+                                GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets left="5.0" right="5.0"/>
+                        </GridPane.margin>
                     </AnchorPane>
                 </GridPane>
             </AnchorPane>

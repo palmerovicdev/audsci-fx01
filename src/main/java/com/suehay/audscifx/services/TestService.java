@@ -25,4 +25,8 @@ public class TestService {
     public static String firstCode() {
         return testRepository.findAll().stream().toList().get(0).getCode();
     }
+
+    public static void truncateDb() {
+        testRepository.truncateDb();
+    }
 }
