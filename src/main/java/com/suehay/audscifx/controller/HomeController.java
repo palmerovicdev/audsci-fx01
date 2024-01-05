@@ -173,7 +173,7 @@ public class HomeController {
     @FXML
     public Label controlEnviromentYesLabel,
             controlEnviromentNoLabel,
-            controlEnviromentEndefLabel,
+            controlEnviromentUndefLabel,
             controlActitvitiesYesLabel,
             controlActivitiesNoLabel,
             controlActivitiesUndefLabel,
@@ -955,13 +955,13 @@ public class HomeController {
                     AtomicInteger totalNoCount = new AtomicInteger();
                     AtomicInteger totalUndefCount = new AtomicInteger();
                     testResult.getTestResultData().getComponentsRessults().forEach((component, result) -> {
-                        totalCount.addAndGet(result.getYesCount() + result.getNoCount() + result.getUndefinedCount());
-                        totalYesCount.addAndGet(result.getYesCount());
-                        totalNoCount.addAndGet(result.getNoCount());
-                        totalUndefCount.addAndGet(result.getUndefinedCount());
+                        totalCount.addAndGet(getNotNullInteger(result.getYesCount()) + getNotNullInteger(result.getNoCount()) + getNotNullInteger(result.getUndefinedCount()));
+                        totalYesCount.addAndGet(getNotNullInteger(result.getYesCount()));
+                        totalNoCount.addAndGet(getNotNullInteger(result.getNoCount()));
+                        totalUndefCount.addAndGet(getNotNullInteger(result.getUndefinedCount()));
                         filterAndFillComponent(result, i.getAndIncrement());
-                        fillTotals(totalCount, totalYesCount, totalNoCount, totalUndefCount);
                     });
+                    fillTotals(totalCount, totalYesCount, totalNoCount, totalUndefCount);
                 }
             });
         } catch (Exception e) {
@@ -990,19 +990,24 @@ public class HomeController {
         });
     }
 
+    private static int getNotNullInteger(Integer result) {
+        return result != null ? result : 0;
+    }
+
     private void filterAndFillComponent(Result result, int component) {
-        var total = result.getYesCount() + result.getNoCount() + result.getUndefinedCount();
-        var percentageOfYes = result.getYesCount() * 100 / total;
-        var percentageOfNo = result.getNoCount() * 100 / total;
-        var percentageOfUndef = result.getUndefinedCount() * 100 / total;
+        var total = getNotNullInteger(result.getYesCount()) + getNotNullInteger(result.getNoCount()) + getNotNullInteger(result.getUndefinedCount());
+        var percentageOfYes = getNotNullInteger(result.getYesCount()) * 100 / total;
+        var percentageOfNo = getNotNullInteger(result.getNoCount()) * 100 / total;
+        var percentageOfUndef = getNotNullInteger(result.getUndefinedCount()) * 100 / total;
+        log.warn("Total: " + total + " Yes: " + percentageOfYes + " No: " + percentageOfNo + " Undef: " + percentageOfUndef);
         switch (component) {
             case 1:
                 controlEnviromentYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
-                controlActivitiesNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
-                controlActivitiesUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                controlEnviromentNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
+                controlEnviromentUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
                 controlEnviromentYesPercentLabel.setText(percentageOfYes + "%");
-                controlActivitiesNoPercentLabel.setText(percentageOfNo + "%");
-                controlActivitiesUndefPercentLabel.setText(percentageOfUndef + "%");
+                controlEnviromentNoPercentLabel.setText(percentageOfNo + "%");
+                controlEnviromentUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
             case 2:
                 managementAndPreventionYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
@@ -1040,16 +1045,16 @@ public class HomeController {
     }
 
     private void fillTotals(AtomicInteger totalCount, AtomicInteger totalYesCount, AtomicInteger totalNoCount, AtomicInteger totalUndefCount) {
-        var totalYesPercentage = (totalYesCount.get() * 100) / totalCount.get();
-        var totalNoPercentage = (totalNoCount.get() * 100) / totalCount.get();
-        var totalUndefPercentage = (totalUndefCount.get() * 100) / totalCount.get();
-        totalYesPercentLabel.setText(String.valueOf(totalYesPercentage));
-        totalNoPercentLabel.setText(String.valueOf(totalNoPercentage));
-        totalUndefPercentLabel.setText(String.valueOf(totalUndefPercentage));
+        var totalYesPercentage = (totalYesCount.get() * 100) / getOrOne(totalCount);
+        var totalNoPercentage = (totalNoCount.get() * 100) / getOrOne(totalCount);
+        var totalUndefPercentage = (totalUndefCount.get() * 100) / getOrOne(totalCount);
+        totalYesPercentLabel.setText(totalYesPercentage + "%");
+        totalNoPercentLabel.setText(totalNoPercentage + "%");
+        totalUndefPercentLabel.setText(totalUndefPercentage + "%");
     }
 
-    private static int getNotNullInteger(Integer result) {
-        return result != null ? result : 0;
+    private static int getOrOne(AtomicInteger totalCount) {
+        return totalCount.get() != 0 ? totalCount.get() : 1;
     }
 
     @FXML
