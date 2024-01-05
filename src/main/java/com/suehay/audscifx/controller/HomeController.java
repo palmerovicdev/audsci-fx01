@@ -1001,31 +1001,50 @@ public class HomeController {
     }
 
     private void filterAndFillComponent(Result result, int component) {
+        var total = result.getYesCount() + result.getNoCount() + result.getUndefinedCount();
+        var percentageOfYes = result.getYesCount() * 100 / total;
+        var percentageOfNo = result.getNoCount() * 100 / total;
+        var percentageOfUndef = result.getUndefinedCount() * 100 / total;
         switch (component) {
             case 1:
                 controlEnviromentYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
                 controlActivitiesNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
                 controlActivitiesUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                controlEnviromentYesPercentLabel.setText(percentageOfYes + "%");
+                controlActivitiesNoPercentLabel.setText(percentageOfNo + "%");
+                controlActivitiesUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
             case 2:
                 managementAndPreventionYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
                 managementAndPreventionNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
                 managementAndPreventionUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                managementAndPreventionYesPercentLabel.setText(percentageOfYes + "%");
+                managementAndPreventionNoPercentLabel.setText(percentageOfNo + "%");
+                managementAndPreventionUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
             case 3:
                 controlActitvitiesYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
                 controlActivitiesNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
                 controlActivitiesUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                controlActitvitiesYesPercentLabel.setText(percentageOfYes + "%");
+                controlActivitiesNoPercentLabel.setText(percentageOfNo + "%");
+                controlActivitiesUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
             case 4:
                 informationAndMonitoringYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
                 informationAndMonitoringNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
                 informationAndMonitoringUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                informationAndMonitoringYesPercentLabel.setText(percentageOfYes + "%");
+                informationAndMonitoringNoPercentLabel.setText(percentageOfNo + "%");
+                informationAndMonitoringUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
             case 5:
                 supervisionAndMonitoringYesLabel.setText(String.valueOf(getNotNullInteger(result.getYesCount())));
                 supervisionAndMonitoringNoLabel.setText(String.valueOf(getNotNullInteger(result.getNoCount())));
                 supervisionAndMonitoringUndefLabel.setText(String.valueOf(getNotNullInteger(result.getUndefinedCount())));
+                supervisionAndMonitoringYesPercentLabel.setText(percentageOfYes + "%");
+                supervisionAndMonitoringNoPercentLabel.setText(percentageOfNo + "%");
+                supervisionAndMonitoringUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
         }
     }
