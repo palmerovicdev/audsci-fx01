@@ -877,7 +877,6 @@ public class HomeController {
         saveButtonClickedLogic();
         var testCode = TestService.firstCode();
         if (GuideConfig.testResults.stream().anyMatch(testResult -> testResult.getTest().getCode().equals(testCode))) {
-            initPrintViewYesNoUndefChart();
             initPrintViewComponentsYesNo();
         }
     }
@@ -946,31 +945,22 @@ public class HomeController {
         questionEntityTreeView.refresh();
     }
 
-    private void initPrintViewYesNoUndefChart() {
-        /*printViewYesNoUndefChart.getData().clear();
-        try {
-            var questionResults = QuestionService.getAllQuestions();
-            var yesCount = questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && questionEntity.getResult()).count();
-            var noCount = questionResults.stream().filter(questionEntity -> questionEntity.getResult() != null && !questionEntity.getResult()).count();
-            var undefCount = questionResults.stream().filter(questionEntity -> questionEntity.getResult() == null).count();
-            var series = new XYChart.Series<String, Long>();
-            series.getData().add(new XYChart.Data<>("Si", yesCount));
-            series.getData().add(new XYChart.Data<>("No", noCount));
-            series.getData().add(new XYChart.Data<>("No definida", undefCount));
-            printViewYesNoUndefChart.getData().add(series);
-        } catch (Exception e) {
-            log.error("Error al cargar el grafico general", e);
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico general!!!");
-        }*/
-    }
-
     private void initPrintViewComponentsYesNo() {
         try {
             GuideConfig.testResults.forEach(testResult -> {
                 if (Objects.equals(testResult.getTest().getCode(), TestService.firstCode())) {
                     var i = new AtomicInteger(ATOMIC_INTEGER_INITIAL_VALUE);
+                    AtomicInteger totalCount = new AtomicInteger();
+                    AtomicInteger totalYesCount = new AtomicInteger();
+                    AtomicInteger totalNoCount = new AtomicInteger();
+                    AtomicInteger totalUndefCount = new AtomicInteger();
                     testResult.getTestResultData().getComponentsRessults().forEach((component, result) -> {
+                        totalCount.addAndGet(result.getYesCount() + result.getNoCount() + result.getUndefinedCount());
+                        totalYesCount.addAndGet(result.getYesCount());
+                        totalNoCount.addAndGet(result.getNoCount());
+                        totalUndefCount.addAndGet(result.getUndefinedCount());
                         filterAndFillComponent(result, i.getAndIncrement());
+                        fillTotals(totalCount, totalYesCount, totalNoCount, totalUndefCount);
                     });
                 }
             });
@@ -1047,6 +1037,15 @@ public class HomeController {
                 supervisionAndMonitoringUndefPercentLabel.setText(percentageOfUndef + "%");
                 break;
         }
+    }
+
+    private void fillTotals(AtomicInteger totalCount, AtomicInteger totalYesCount, AtomicInteger totalNoCount, AtomicInteger totalUndefCount) {
+        var totalYesPercentage = (totalYesCount.get() * 100) / totalCount.get();
+        var totalNoPercentage = (totalNoCount.get() * 100) / totalCount.get();
+        var totalUndefPercentage = (totalUndefCount.get() * 100) / totalCount.get();
+        totalYesPercentLabel.setText(String.valueOf(totalYesPercentage));
+        totalNoPercentLabel.setText(String.valueOf(totalNoPercentage));
+        totalUndefPercentLabel.setText(String.valueOf(totalUndefPercentage));
     }
 
     private static int getNotNullInteger(Integer result) {
