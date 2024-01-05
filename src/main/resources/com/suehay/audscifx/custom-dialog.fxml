@@ -23,7 +23,7 @@
          <GridPane.margin>
             <Insets right="5.0" />
          </GridPane.margin>
-         <JFXButton fx:id="okButton" prefHeight="26.0" prefWidth="62.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text="OK" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <JFXButton fx:id="okButton" onMouseClicked="#setOnOkAction" prefHeight="26.0" prefWidth="62.0" styleClass="button-plus" stylesheets="@css/fullpackstyling.css" text="OK" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                <Font name="System Bold" size="13.0" />
             </font>
@@ -33,7 +33,7 @@
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin>
-         <JFXButton fx:id="cancelButton" styleClass="button-remove" stylesheets="@css/fullpackstyling.css" text="Cancel" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <JFXButton fx:id="cancelButton" onMouseClicked="#setOnCancelAction" styleClass="button-remove" stylesheets="@css/fullpackstyling.css" text="Cancel" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                <Font name="System Bold" size="13.0" />
             </font>

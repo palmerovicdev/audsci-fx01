@@ -1,10 +1,9 @@
 package com.suehay.audscifx.controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -18,34 +17,20 @@ public class DialogController {
     @FXML
     public Label message;
     @FXML
-    public AnchorPane root;
-    @FXML
-    private Label messageLabel;
+    public AnchorPane root=new AnchorPane();
     @FXML
     private JFXButton okButton;
     @FXML
     private JFXButton cancelButton;
-    @Getter
-    private Optional<Boolean> result = Optional.empty();
-    private final Stage stage;
+    private Optional<Boolean> result;
 
-    public DialogController(Stage stage) {
-        this.stage = stage;
+    public void setOnOkAction(MouseEvent mouseEvent) {
+        result = Optional.of(true);
+        ((Stage) okButton.getScene().getWindow()).close();
     }
 
-    public void setOnOkAction(EventHandler<ActionEvent> handler) {
-        okButton.setOnAction(event -> {
-            handler.handle(event);
-            result = Optional.of(true);
-            stage.close();
-        });
-    }
-
-    public void setOnCancelAction(EventHandler<ActionEvent> handler) {
-        cancelButton.setOnAction(event -> {
-            handler.handle(event);
-            result = Optional.of(false);
-            stage.close();
-        });
+    public void setOnCancelAction(MouseEvent mouseEvent) {
+        result = Optional.of(false);
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 }

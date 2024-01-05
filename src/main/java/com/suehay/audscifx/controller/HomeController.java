@@ -186,19 +186,38 @@ public class HomeController {
             supervisionAndMonitoringYesLabel,
             supervisionAndMonitoringNoLabel,
             supervisionAndMonitoringUndefLabel;
+    @FXML
+    public Label controlEnviromentYesPercentLabel,
+            controlEnviromentNoPercentLabel,
+            controlEnviromentUndefPercentLabel,
+            managementAndPreventionYesPercentLabel,
+            managementAndPreventionNoPercentLabel,
+            managementAndPreventionUndefPercentLabel,
+            controlActitvitiesYesPercentLabel,
+            controlActivitiesNoPercentLabel,
+            controlActivitiesUndefPercentLabel,
+            informationAndMonitoringYesPercentLabel,
+            informationAndMonitoringNoPercentLabel,
+            informationAndMonitoringUndefPercentLabel,
+            supervisionAndMonitoringYesPercentLabel,
+            supervisionAndMonitoringNoPercentLabel,
+            supervisionAndMonitoringUndefPercentLabel,
+            totalYesPercentLabel,
+            totalNoPercentLabel,
+            totalUndefPercentLabel;
     private AreaEntity latestArea;
 
     @FXML
     public void onAreaAddButtonClicked(MouseEvent mouseEvent) {
         var areaId = AreaService.getLatestAreaId();
         if (areasListView.getItems().stream().anyMatch(areaEntity -> areaEntity.getAreaName().equals(areaNameTextField.getText()))) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area ya existe!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area ya existe!!!");
             areaNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         var areaEntity = new AreaEntity(areaId == null ? 1 : areaId + 1, areaNameTextField.getText());
         if (areaNameTextField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area esta vacio!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del area esta vacio!!!");
             areaNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
@@ -213,9 +232,9 @@ public class HomeController {
         setAreasListViewSelectionModel();
     }
 
-    private static void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
+    private static void showAlert(Alert.AlertType alertType, String title, String headerText) {
         alert.setTitle(title);
-        alert.showDialog(alertType.name(), contentText == null ? headerText : contentText);
+        alert.showDialog(alertType.name(), headerText);
     }
 
 
@@ -250,24 +269,24 @@ public class HomeController {
     @FXML
     public void onEmployeeAddButtonClicked(MouseEvent mouseEvent) {
         if (employeeNameTextField.getText().isEmpty() || employeePositionTextField.getText().isEmpty() || areasListView.getSelectionModel().getSelectedItem() == null) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado o el cargo esta vacio!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado o el cargo esta vacio!!!");
             employeeNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             employeePositionTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         if (employeePositionTextField.getText().length() > FIFTY) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El cargo del empleado no puede tener mas de 50 caracteres!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El cargo del empleado no puede tener mas de 50 caracteres!!!");
             employeePositionTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         if (employeeNameTextField.getText().length() > FIFTY) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado no puede tener mas de 50 caracteres!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado no puede tener mas de 50 caracteres!!!");
             employeeNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
         var employees = EmployeeService.findAllByAreaId(latestArea.getId());
         if (employees.stream().anyMatch(employeeEntity -> employeeEntity.getEmployeeName().equals(employeeNameTextField.getText()))) {
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado ya existe!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "El nombre del empleado ya existe!!!");
             employeeNameTextField.setStyle("-fx-border-color: " + RGBA_255_0_0_0_5);
             return;
         }
@@ -301,18 +320,19 @@ public class HomeController {
 
     @FXML
     public void onUdateDatabaseButtonClicked(MouseEvent mouseEvent) {
-        showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??", "Si atualizas " +
+        showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres actualizar las propiedades??. Si atualizas " +
                 "las propiedades y no son correctas, la aplicacion no funcionara correctamente!!!");
         if (!alert.getResult()) return;
         EntityManagerProvider.saveProperties(new Properties(userConfigTextField.getText(), passwordConfigTextField.getText(),
                                                             databaseConfigTextField.getText(), "audsci"));
-        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!", "Debe reiniciar la aplicacion para que los cambios tengan efecto!!!");
+        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Propiedades actualizadas correctamente!!!. Debe reiniciar la aplicacion para que los" +
+                " cambios tengan efecto!!!");
     }
 
     @FXML
     public void onRechargeGuidesButtonClicked(MouseEvent mouseEvent) {
         try {
-            showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??", null);
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmacion!!!", "Estas seguro que quieres recargar las guias??");
             if (!alert.getResult()) return;
             guideConfig.updateGuidesTemplates();
             guideConfig.saveTemplates();
@@ -656,7 +676,7 @@ public class HomeController {
                                                      ).flatMap(List::stream).toList());
         EvaluatedComponentService.saveEvaluatedComponents(testResultDB.getEvaluatedComponents());
         EvaluatorComponentService.saveEvaluatorComponents(testResultDB.getEvaluatorComponents());
-        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Evaluacion creada correctamente!!!", null);
+        showAlert(Alert.AlertType.INFORMATION, "Perfecto!!!", "Evaluacion creada correctamente!!!");
 
     }
 
@@ -858,7 +878,7 @@ public class HomeController {
         var testCode = TestService.firstCode();
         if (GuideConfig.testResults.stream().anyMatch(testResult -> testResult.getTest().getCode().equals(testCode))) {
             initPrintViewYesNoUndefChart();
-            initPrintViewComponentsYesNoChart();
+            initPrintViewComponentsYesNo();
         }
     }
 
@@ -940,11 +960,11 @@ public class HomeController {
             printViewYesNoUndefChart.getData().add(series);
         } catch (Exception e) {
             log.error("Error al cargar el grafico general", e);
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico general!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico general!!!");
         }*/
     }
 
-    private void initPrintViewComponentsYesNoChart() {
+    private void initPrintViewComponentsYesNo() {
         try {
             GuideConfig.testResults.forEach(testResult -> {
                 if (Objects.equals(testResult.getTest().getCode(), TestService.firstCode())) {
@@ -956,7 +976,7 @@ public class HomeController {
             });
         } catch (Exception e) {
             log.error("Error al cargar el grafico por componentes", e);
-            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico por componentes!!!", null);
+            showAlert(Alert.AlertType.ERROR, "Error!!!", "No se pudo cargar el grafico por componentes!!!");
         }
     }
 
