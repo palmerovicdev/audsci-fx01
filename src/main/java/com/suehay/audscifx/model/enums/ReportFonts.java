@@ -16,9 +16,9 @@ public enum ReportFonts {
     SUB_FONT(new Font(
             com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 16,
             com.itextpdf.text.Font.BOLD)),
-    SMALL_BOLD(new Font(
+    SMALL_NORMAL(new Font(
             com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12,
-            com.itextpdf.text.Font.BOLD));
+            Font.NORMAL));
     private final Font font;
     ReportFonts(Font font) {
         this.font = font;

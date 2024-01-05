@@ -1059,7 +1059,11 @@ public class HomeController {
 
     @FXML
     public void onPrintViewGenerateReportButtonClicked(MouseEvent mouseEvent) {
-
+        GuideConfig.testResults.forEach(testResult -> {
+            if (Objects.equals(testResult.getTest().getCode(), TestService.firstCode())) {
+                ReportService.printReport(testResult);
+            }
+        });
     }
 
     @Data
